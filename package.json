@@ -1,0 +1,25 @@
+{
+  "name": "naturescape_project",
+  "version": "1.0.0",
+  "description": "CS546 Final Project - NatureScape",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/priyankade/NatureScape_Project.git"
+  },
+  "author": "Group 1",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/priyankade/NatureScape_Project/issues"
+  },
+  "homepage": "https://github.com/priyankade/NatureScape_Project#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6",
+    "mongo": "^0.1.0"
+  }
+}
