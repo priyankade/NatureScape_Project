@@ -110,11 +110,11 @@ router.post('/signup', async (req, res) => {
             await validation.checkString(lname, 'Last Name');
             await validation.alphanumeric(username);
             //await validation.checkString(age, 'age');
-            await validation.checkString(gender, 'gender');
+            //await validation.checkString(gender, 'gender');
             //await validation.checkString(dob, 'dob');
             //await validation.checkString(email, 'email');
-            await validation.checkPhone(phone, 'phone number');
-            await validation.checkPhone(emer_phone, 'emergency phone number');
+            // await validation.checkPhone(phone, 'phone number');
+            // await validation.checkPhone(emer_phone, 'emergency phone number');
             await validation.checkPassword(password, 'password');
             //await validation.checkConfirmPassword(confirmPassword, 'confirmPassword');
 

@@ -47,7 +47,7 @@
       <div class="form-group">
         <label for="emer_phone">Emergency phone number:</label>
         <input required type="number" class="form-control" id="emer_phone" name="emer_phone" placeholder="Enter emergency phone"
-          value="{{gender}}">
+          value="{{emer_phone}}">
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
@@ -60,9 +60,8 @@
           value="{{confirmPassword}}">
       </div>
       <br>
-      <div class="form-group">
-        <button type="submit" id="submitbtn" class="btn">Submit</button>
-      </div>
+      <button style="margin: auto;" type="submit" class="btn btn-outline-success col-6" id="signup">Sign up</button>
+
       <div id="error" class="text-center" hidden></div>
       {{! error }}
       {{#if error}}

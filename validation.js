@@ -10,35 +10,37 @@ module.exports = {
     if (typeof id !== 'string') throw 'Error: id must be a string';
     id = id.trim();
     if (id.length === 0)
-        throw 'Error: id cannot be an empty string or just spaces';
+      throw 'Error: id cannot be an empty string or just spaces';
     if (!ObjectId.isValid(id)) throw 'Error: invalid object ID';
     return id;
-},
+  },
 
-checkActivity(strVal, varName) {
+  checkActivity(strVal, varName) {
     if (!strVal) {
-        throw `Error: You must supply a ${varName}!`;}
+      throw `Error: You must supply a ${varName}!`;
+    }
     if (typeof strVal !== 'string') {
-        throw `${varName} must be a string`;
+      throw `${varName} must be a string`;
     }
     strVal = strVal.trim();
     if (strVal.length === 0)
-        throw `${varName} cannot be empty string or just spaces`;
+      throw `${varName} cannot be empty string or just spaces`;
     if (!isNaN(strVal)) {
-        throw `${strVal} is invalid for ${varName}. Must have non-numeric characters. `;
+      throw `${strVal} is invalid for ${varName}. Must have non-numeric characters. `;
     }
-    
+
     return strVal;
-},
-checkDescription(strdesc,varDesc){
-    if(!strdesc){
-        throw 'Description is required for users to understand the activity'
+  },
+
+  checkDescription(strdesc, varDesc) {
+    if (!strdesc) {
+      throw 'Description is required for users to understand the activity'
     }
-    
-    strdesc=strdesc.trim();
-    
-    if(strdesc.length===0){
-        throw 'Description cannot consist of only spaces'
+
+    strdesc = strdesc.trim();
+
+    if (strdesc.length === 0) {
+      throw 'Description cannot consist of only spaces'
     }
     // strdescLength= strdesc.split(" ").length;
     // console.log(strdescLength);
@@ -46,23 +48,23 @@ checkDescription(strdesc,varDesc){
     //     throw 'Description should have atleast 50 words'
     // }
     return strdesc;
-},
+  },
 
-//incomplete.
-// async checkDuplicateActivity(activityName,varActivityName){
-//     const activityCollection = await activities();
+  //incomplete.
+  // async checkDuplicateActivity(activityName,varActivityName){
+  //     const activityCollection = await activities();
 
-//     const activity1 = await activityCollection.find({}).toArray();
-//     for (let i = 0; i < activity1.length; i++) {
-//         let str = activity1[i].activityName.toString();
+  //     const activity1 = await activityCollection.find({}).toArray();
+  //     for (let i = 0; i < activity1.length; i++) {
+  //         let str = activity1[i].activityName.toString();
 
-//         if (activity1[i].activityName == un) {
-//             // console.log(user1[i].username,un)
-//             return 0
-//         }
-//     }
-//     return activityName;
-// }
+  //         if (activity1[i].activityName == un) {
+  //             // console.log(user1[i].username,un)
+  //             return 0
+  //         }
+  //     }
+  //     return activityName;
+  // }
 
 
   // checkId(id, varName) {
@@ -85,20 +87,20 @@ checkDescription(strdesc,varDesc){
     //   throw `Error: ${varName} should be at least 4 characters long`;
     if (!isNaN(strVal))
       throw `Error: ${strVal} is not a valid value for ${varName} as it only contains digits`;
-    if(strVal.includes(" "))
-    throw `Error: ${varName} should not have spaces`;
-    
+    if (strVal.includes(" "))
+      throw `Error: ${varName} should not have spaces`;
+
     return strVal;
-    
+
   },
 
   alphanumeric(input) {
     var letterNumber = /^[0-9a-zA-Z]+$/i;
     if ((input.match(letterNumber)))
-      return true; 
+      return true;
     else {
       throw "Only alphanumeric input allowed in username";
-  
+
     }
   },
 
@@ -115,17 +117,17 @@ checkDescription(strdesc,varDesc){
     return strVal;
   },
 
-  checkPhone(phone, varName) {
-    checkString(phone, varName);
-    phone = phone.trim();
-    let num = /^\d{10}$/;     //validate a phone number of 10 digits
-    if ((phone.match(num)))
-      return true; 
-    else {
-      throw `Error: Please enter a 10 digit ${varName}`;
-  
-    }
-  }
+  // checkPhone(phone, varName) {
+  //   checkString(phone, varName);
+  //   phone = phone.trim();
+  //   let num = /^\d{10}$/;     //validate a phone number of 10 digits
+  //   if ((phone.match(num)))
+  //     return true;
+  //   else {
+  //     throw `Error: Please enter a 10 digit ${varName}`;
+
+  //   }
+  // }
 
 
 
