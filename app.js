@@ -4,6 +4,19 @@ const static = express.static(__dirname + '/public');
 const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
 
+const session = require('express-session');
+const bp = require('body-parser')
+
+//Required to parse the {body}
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
+
+//For CSS files
+app.use(express.static(__dirname + '/public'));
+
+app.use(express.json());
+const bcrypt = require('bcryptjs');
+
 const handlebarsInstance = exphbs.create({
     defaultLayout: 'main',
     // Specify helpers which are only registered on this instance.
@@ -38,6 +51,35 @@ app.use(rewriteUnsupportedBrowserMethods);
 
 app.engine('handlebars', handlebarsInstance.engine);
 app.set('view engine', 'handlebars');
+
+app.use(
+    session({
+        name: 'AuthCookie',
+        secret: "This is a secret.. shhh don't tell anyone",
+        saveUninitialized: true,
+        resave: false,
+        cookie: { maxAge: 600000 }
+    })
+);
+
+app.use('/private', (req, res, next) => {
+    //console.log(req.session.id);
+    if (!req.session.user) {
+        res.status(403).render("display/no-login", { username: req.body.username, password: req.body.password, title: "Not logged in" });
+    } else {
+        next();
+    }
+});
+
+//dont see login page if they are already logged in. This is for logged in users
+app.use('/users/login', (req, res, next) => {
+    if (req.session.user) {
+        return res.redirect('/private');
+    } else {
+        next();
+    }
+});
+
 
 configRoutes(app);
 

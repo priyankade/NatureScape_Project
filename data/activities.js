@@ -2,7 +2,7 @@ const mongoCollections = require('../config/mongoCollections');
 var mongo = require('mongodb');
 const activities = mongoCollections.activities;
 const { ObjectId } = require('mongodb');
-var validate= require('../data/validation')
+var validate= require('../validation')
 
 
 

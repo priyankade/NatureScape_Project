@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const validate = require('../data/validation')
+const validate = require('../validation')
 const activitiesData = require('../data/activities');
 
 
