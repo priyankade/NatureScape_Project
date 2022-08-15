@@ -30,6 +30,7 @@ async function main() {
   const skyDiving = await activities.createActivity('skyDiving','Skydiving is parachuting from an airplane for fun. Skydiving can be done individually and with groups of people. Training is required. Unlike most paratroopers, skydivers often wait until they are low, before opening the parachute. The jump can also be made from a helicopter or a balloon that is high enough in the sky. Skydiving can be an exciting sport.Skydiving includes free falling (usually from an airplane) through the air prior to opening a parachute. Typically skydives are carried out from around 4,000m (or 12,500ft) offering 40 to 50 seconds of freefall time. Longer free fall times can be achieved by exiting an aircraft at altitudes much higher than 4,000m, but very high jumps require pressurized oxygen within the aircraft, and bottled oxygen for the diver.')
 
   await hikingActivity.createHiking("Smoky Mountains-Gatlinburg", "Gatlinburg", "Tennesse", "08/22/2022", "Invisible Inc.", "Intermediate", "100")
+  await hikingActivity.createHiking("Centro comercial Moctezuma", "Townsend", "Mexico", "07/12/2022", "Rachel", "Easy", "200")
   
 
   

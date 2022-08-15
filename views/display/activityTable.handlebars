@@ -11,21 +11,18 @@
     <th>Price($)</th>
   </tr>
   <tr>
-    <td>Smoky Mountains - Gatlinburg </td>
-    <td>Gatlinburg</td>
-    <td>Tennesse</td>
-    <td>08/22/2022</td>
-    <td>Invisible Inc.</td>
-    <td>Intermediate</td>
-    <td>100</td>
+    {{#each hiking}}
+    <div class='hiking'></div>
+        <td>{{this.location}} </td>
+        <td>{{this.city}} </td>
+        <td>{{this.state}} </td>
+        <td>{{this.date}} </td>
+        <td>{{this.organizer}} </td>
+        <td>{{this.expertise}} </td>
+        <td>{{this.price}} </td>
+    </div>
+    {{/each}}  
   </tr>
   <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-    <td>08/22/2022</td>
-    <td>Invisible Inc.</td>
-    <td>Intermediate</td>
-    <td>200</td>
   </tr>
 </table>
