@@ -1,10 +1,17 @@
 <main>
-    
+
     <h1>Activities we offer</h1>
+    <form id="searchForm">
+        <label for="search_term">Search Activity</label>
+        <input type="text" id="search_term" placeholder="Search with activity's name" />
+        <button type="submit">Search Activity</button>
+    </form>
+    <ul id="activityList" hidden></ul>
+    
     {{#each activities}}
-    <div class = 'activity'>
-        <h2><a href="/{{this.name}}">{{this.name}}</a></h2>
-        <p class="'description">{{this.description}}</p>
+    <div class='activity'>
+        <h2><a href="/{{this.name}}">{{this.activityName}}</a></h2>
+        <p class="description">{{this.activityDesc}}</p>
     </div>
     {{/each}}
 
@@ -12,5 +19,9 @@
         <a href="/users/login">Login</a>
 
         <a href="/users/signup">Signup</a>
-    <form class=""></form>
+
+    <form class="addActivity">
+        <input type="submit" value="Add Activity">
+    </form>
+    <script src="../../public/js/activities.js"/>
 </main>

@@ -17,8 +17,8 @@ router.get("/", async (req, res) => {
             activities[i] = {};
             let name = db_result[i].activityName;
             let description = db_result[i].activityDesc;
-            activities[i]['name'] = name;
-            activities[i]['description'] = description;
+            activities[i]['activityName'] = name;
+            activities[i]['activityDesc'] = description;
         }
     } catch (e) {
         errormessage = {
@@ -32,9 +32,48 @@ router.get("/", async (req, res) => {
     res.render("display/homepage", { activities: activities });
 });
 
-// This route should be for adding activity on clicking a button. The route can be /addActivity
-router.post("/", (req, res) => {
-    res.render("display/homepage", {});
+// This route is for adding activity on clicking a button. The route can be /addActivity
+router.get('/search/:activityName', async (req, res) => {
+
+    // const searchTitle = req.body.title.trim();
+    console.log(req.params.activityName);
+    searchTitle = req.params.activityName;
+    if (!searchTitle || searchTitle == null || typeof searchTitle !== 'string') {
+        errormessage = {
+            className: "No search item supplied",
+            message: "No search item was supplied, directly Search button was clicked.",
+            hasErrors: "Error",
+            title: "Error"
+        }
+        res.status(400).render("display/error", errormessage);
+        return;
+
+    }
+
+    searchResult = await activitiesData.getActivityByName(searchTitle);
+    console.log('activityDetails in routes' + searchResult.activityName);
+    console.log('activityDetails in routes' + searchResult.activityDesc);
+    if (!searchResult) {
+        res.status(400).render("No search item was supplied, directly submit button was clicked or blank spaces were provided.");
+    }
+    res.render('display/homepage', { activities: searchResult });
+
+    // let url = 'https://api.tvmaze.com/search/shows?q=' + searchTitle;
+    // try {
+    //     //console.log('Sending http request', url);
+    //     const showsResponse = await axios.get(url);
+    //     const shows = showsResponse.data;
+    //     if (shows.length > 10) {
+    //         shows = shows.slice(0, 10);
+    //     }
+    //     res.render("tvmaze/search", {title: "Shows Found", shows: shows, searchTitle: searchTitle });
+    // }
+
+    // catch (e) {
+    //     res.status(400).render("No search item was supplied, directly submit button was clicked or blank spaces were provided.");
+    // }
 });
+
+
 
 module.exports = router;

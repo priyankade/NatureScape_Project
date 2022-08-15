@@ -16,10 +16,9 @@
 
 }
 
-
 .footer {
     position: relative;
-    height: 80px;
+    height: 200px;
     background-color: #f4f3f3;
     text-align: center;
     font-size: 12px;
@@ -45,4 +44,9 @@
     float:right;
 margin-right:20px;
 height:5px;
+}
+
+.addActivty button:hover{
+    background-color: greenyellow;
+
 }

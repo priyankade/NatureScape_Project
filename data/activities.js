@@ -4,16 +4,14 @@ const activities = mongoCollections.activities;
 const { ObjectId } = require('mongodb');
 var validate= require('../validation')
 
-
-
-async function createActivity(activityName, activityDesc){
+async function createActivity(activityName, activityDesc) {
     validate.checkActivity(activityName, 'activityName');
-    validate.checkDescription(activityDesc,'description');
-//validate.checkDuplicateActivity(activityName,'activityName') //verify
+    validate.checkDescription(activityDesc, 'description');
+    //validate.checkDuplicateActivity(activityName,'activityName') //verify
     const activityCollection = await activities();
     let newActivity = {
-        activityName : activityName,
-        activityDesc : activityDesc
+        activityName: activityName,
+        activityDesc: activityDesc
     };
     const insertInfo = await activityCollection.insertOne(newActivity);
     if (insertInfo.insertedCount === 0) throw 'Could not add new Activity';
@@ -23,41 +21,48 @@ async function createActivity(activityName, activityDesc){
 
 }
 
-async function getActivityById(Id){
+async function getActivityById(Id) {
     validate.checkId(Id);
     let newObjId = ObjectId();
     if (!ObjectId.isValid(newObjId)) throw 'Object id is not valid'
     let parsedId = ObjectId(Id);
     const activityCollection = await activities();
-    const activityDetails = await activityCollection.findOne({ _id : parsedId });
+    const activityDetails = await activityCollection.findOne({ _id: parsedId });
     if (activityDetails === null) throw 'No activity is present with that Id'
     return activityDetails
 }
 
-async function getAllActivities(){
+async function getAllActivities() {
     const activities_data = await activities();
-    const list_all_Activities = await activities_data.find({}, {'_id': 0}).toArray();
+    const list_all_Activities = await activities_data.find({}, { '_id': 0 }).toArray();
     return JSON.parse(JSON.stringify(list_all_Activities));
 
 }
 
-async function getActivityByName(activityName){
+async function getActivityByName(activityName) {
+    console.log('activityName searched:', activityName);
     validate.checkActivity(activityName);
+    //searchActivity=activityName.toLowerCase();
     const activityCollection = await activities();
-    const activityDetails = await activityCollection.findOne({ activityName :"activityName" });
-    if (activityDetails === null) throw 'No activity is present with that name'
-    return activityDetails
-
+    const activityDetails = await activityCollection.find({"activityName": activityName }).toArray();
+    for (key in activityDetails) {console.log(key, activityDetails[key]);}
+    console.log('activityDetails in data ' + activityDetails);
+    try {
+        if (activityDetails === null) throw 'No activity is present with that name'
+    } catch (e) { 
+        //TODO: render page with error message
+    }
+    return JSON.parse(JSON.stringify(activityDetails));
 }
 
-async function deleteActivity(activityName){
+async function deleteActivity(activityName) {
     validate.checkActivity(activityName);
     const activityCollection = await activities();
-    const checkActivity = await activityCollection.findOne({ activityName :"activityName" })
+    const checkActivity = await activityCollection.findOne({ activityName: "activityName" })
     if (checkActivity === null) {
         throw `Could not delete activity ${activityName}`;
     }
-    const deletionInfo = await activityCollection.deleteOne({ activityName :"activityName" });
+    const deletionInfo = await activityCollection.deleteOne({ activityName: "activityName" });
     if (deletionInfo.deletedCount === 0) {
         throw `Could not delete activity ${activityName}`;
     }
@@ -65,7 +70,7 @@ async function deleteActivity(activityName){
     return { deleted: true };
 }
 
-async function updateActivity(activityId,updatedActivity){
+async function updateActivity(activityId, updatedActivity) {
     validate.checkId(activityId);
     validate.checkActivity(updatedActivty.activityName);
     validate.checkDescription(updatedActivity.activityDesc);
@@ -90,9 +95,10 @@ async function updateActivity(activityId,updatedActivity){
 
 }
 
-module.exports={createActivity,
-getActivityByName,
-getAllActivities,
-deleteActivity,
-updateActivity
+module.exports = {
+    createActivity,
+    getActivityByName,
+    getAllActivities,
+    deleteActivity,
+    updateActivity
 }
