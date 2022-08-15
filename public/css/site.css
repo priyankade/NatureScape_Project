@@ -50,3 +50,7 @@ height:5px;
     background-color: greenyellow;
 
 }
+
+table, th, td {
+    border:1px solid black;
+  }
