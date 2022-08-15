@@ -1,4 +1,4 @@
-<h2>Hiking</h2>
+<h2>{{activity}}</h2>
 
 <table style="width:100%">
   <tr>
@@ -10,9 +10,10 @@
     <th>Expertise level</th>
     <th>Price($)</th>
   </tr>
-  <tr>
-    {{#each hiking}}
-    <div class='hiking'></div>
+  
+    {{#each activityTable}}
+    <tr>
+    <div class='activityTable'></div>
         <td>{{this.location}} </td>
         <td>{{this.city}} </td>
         <td>{{this.state}} </td>
@@ -21,8 +22,7 @@
         <td>{{this.expertise}} </td>
         <td>{{this.price}} </td>
     </div>
+    </tr>
     {{/each}}  
-  </tr>
-  <tr>
-  </tr>
+  
 </table>

@@ -6,7 +6,7 @@ const activityTableData = require('../data/activityTable');
 
 
 router.get("/", async (req, res) => {
-    let hiking = {};
+    let kayaking = {};
     try {
         let db_result = await activityTableData.getAllActivityTable();
         //TODO check db_result is valid
@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
         //console.log(db_result);
 
         for (let i = 0; i < db_result.length; i++) {
-            hiking[i] = {};
+            kayaking[i] = {};
             let location = db_result[i].location;
             let city = db_result[i].city;
             let state = db_result[i].state;
@@ -23,25 +23,25 @@ router.get("/", async (req, res) => {
             let organizer = db_result[i].organizer;
             let expertise = db_result[i].expertise;
             let price = db_result[i].price;
-            hiking[i]['location'] = location;
-            hiking[i]['city'] = city;
-            hiking[i]['state'] = state;
-            hiking[i]['date'] = date;
-            hiking[i]['organizer'] = organizer;
-            hiking[i]['expertise'] = expertise;
-            hiking[i]['price'] = price;
+            kayaking[i]['location'] = location;
+            kayaking[i]['city'] = city;
+            kayaking[i]['state'] = state;
+            kayaking[i]['date'] = date;
+            kayaking[i]['organizer'] = organizer;
+            kayaking[i]['expertise'] = expertise;
+            kayaking[i]['price'] = price;
         }
     } catch (e) {
         errormessage = {
-            className: "Could not get hiking activities",
-            message: `No hiking activities found`,
+            className: "Could not get kayaking activities",
+            message: `No kayaking activities found`,
             hasErrors: "Error"
         };
         res.status(404).render('display/error', errormessage);
         return;
     }
 
-    res.render("display/activityTable", { activityTable: hiking, activity: "Hiking" });
+    res.render("display/activityTable", { activityTable: kayaking, activity: "Kayaking" });
 });
 
 
