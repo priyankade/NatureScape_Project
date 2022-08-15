@@ -6,7 +6,6 @@ const activitiesData = require('../data/activities');
 
 
 router.get("/", async (req, res) => {
-    // console.log(req);
     let activities = {};
     try {
         let db_result = await activitiesData.getAllActivities();
@@ -32,11 +31,8 @@ router.get("/", async (req, res) => {
     res.render("display/homepage", { activities: activities });
 });
 
-// This route is for adding activity on clicking a button. The route can be /addActivity
+// This route is for searching for an activity by name.
 router.get('/search/:activityName', async (req, res) => {
-
-    // const searchTitle = req.body.title.trim();
-    console.log(req.params.activityName);
     searchTitle = req.params.activityName;
     if (!searchTitle || searchTitle == null || typeof searchTitle !== 'string') {
         errormessage = {
@@ -47,31 +43,13 @@ router.get('/search/:activityName', async (req, res) => {
         }
         res.status(400).render("display/error", errormessage);
         return;
-
     }
 
     searchResult = await activitiesData.getActivityByName(searchTitle);
-    console.log('activityDetails in routes' + searchResult.activityName);
-    console.log('activityDetails in routes' + searchResult.activityDesc);
     if (!searchResult) {
         res.status(400).render("No search item was supplied, directly submit button was clicked or blank spaces were provided.");
     }
     res.render('display/homepage', { activities: searchResult });
-
-    // let url = 'https://api.tvmaze.com/search/shows?q=' + searchTitle;
-    // try {
-    //     //console.log('Sending http request', url);
-    //     const showsResponse = await axios.get(url);
-    //     const shows = showsResponse.data;
-    //     if (shows.length > 10) {
-    //         shows = shows.slice(0, 10);
-    //     }
-    //     res.render("tvmaze/search", {title: "Shows Found", shows: shows, searchTitle: searchTitle });
-    // }
-
-    // catch (e) {
-    //     res.status(400).render("No search item was supplied, directly submit button was clicked or blank spaces were provided.");
-    // }
 });
 
 

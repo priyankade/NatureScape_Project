@@ -40,13 +40,10 @@ async function getAllActivities() {
 }
 
 async function getActivityByName(activityName) {
-    console.log('activityName searched:', activityName);
     validate.checkActivity(activityName);
-    //searchActivity=activityName.toLowerCase();
+    searchActivity=activityName.toLowerCase();
     const activityCollection = await activities();
     const activityDetails = await activityCollection.find({"activityName": activityName }).toArray();
-    for (key in activityDetails) {console.log(key, activityDetails[key]);}
-    console.log('activityDetails in data ' + activityDetails);
     try {
         if (activityDetails === null) throw 'No activity is present with that name'
     } catch (e) { 
