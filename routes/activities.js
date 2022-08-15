@@ -6,7 +6,6 @@ const activitiesData = require('../data/activities');
 
 
 router.get("/", async (req, res) => {
-    // console.log(req);
     let activities = {};
     try {
         let db_result = await activitiesData.getAllActivities();
@@ -17,8 +16,8 @@ router.get("/", async (req, res) => {
             activities[i] = {};
             let name = db_result[i].activityName;
             let description = db_result[i].activityDesc;
-            activities[i]['name'] = name;
-            activities[i]['description'] = description;
+            activities[i]['activityName'] = name;
+            activities[i]['activityDesc'] = description;
         }
     } catch (e) {
         errormessage = {
@@ -32,9 +31,27 @@ router.get("/", async (req, res) => {
     res.render("display/homepage", { activities: activities });
 });
 
-// This route should be for adding activity on clicking a button. The route can be /addActivity
-router.post("/", (req, res) => {
-    res.render("display/homepage", {});
+// This route is for searching for an activity by name.
+router.get('/search/:activityName', async (req, res) => {
+    searchTitle = req.params.activityName;
+    if (!searchTitle || searchTitle == null || typeof searchTitle !== 'string') {
+        errormessage = {
+            className: "No search item supplied",
+            message: "No search item was supplied, directly Search button was clicked.",
+            hasErrors: "Error",
+            title: "Error"
+        }
+        res.status(400).render("display/error", errormessage);
+        return;
+    }
+
+    searchResult = await activitiesData.getActivityByName(searchTitle);
+    if (!searchResult) {
+        res.status(400).render("No search item was supplied, directly submit button was clicked or blank spaces were provided.");
+    }
+    res.render('display/homepage', { activities: searchResult });
 });
+
+
 
 module.exports = router;

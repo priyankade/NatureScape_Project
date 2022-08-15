@@ -9,6 +9,7 @@ const constructorMethod = (app) => {
 //   app.use("/reviews", reviewsRoute);
   app.use(" ", homeRoutes);
   app.use("/",homeRoutes);
+  app.use("/search",homeRoutes);
 
   app.use("*", (req, res) => {
     res.status(404).json({ error: "this route is not being used" });
