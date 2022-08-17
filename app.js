@@ -27,6 +27,10 @@ const handlebarsInstance = exphbs.create({
 
             return new Handlebars.SafeString(JSON.stringify(obj));
         },
+
+        urlEncode: (val) => {
+            return encodeURIComponent(val);
+        }
     }
 });
 
