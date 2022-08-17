@@ -1,0 +1,14 @@
+<div>
+    <h1>Add a New Activity Here!</h1>
+    <form id="addActivity" action="/createActivity" method="POST">
+        <label>Enter Activity Name
+            <input type="text" id="newActivityName" placeholder="Activity name" name="activityName" required>
+        </label>
+        <br>
+        <label>Enter Description for activity
+            <input type="text" id="newActivityDesc" placeholder="Activity description" name="activityDescription" minlength="100" rows="4" cols="50" required>
+        </label>
+        <br>
+        <input type="submit" value="Add Activity" id="createActivitybtn" name="createActivityButton"><br>
+    </form>
+</div>

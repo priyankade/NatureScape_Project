@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 const validate = require('../validation')
 const activitiesData = require('../data/activities');
-
+const xss = require('xss');
 
 
 router.get("/", async (req, res) => {
+    console.log('[/]');
     let activities = {};
     try {
         let db_result = await activitiesData.getAllActivities();
@@ -28,13 +29,24 @@ router.get("/", async (req, res) => {
         res.status(404).render('display/error', errormessage);
         return;
     }
-    res.render("display/homepage", { activities: activities });
+    let is_user_logged_in = false;
+    if (req.session.user)
+        is_user_logged_in = true;
+    res.render("display/homepage", {
+        activities: activities,
+        is_user_logged_in: is_user_logged_in
+    });
 });
 
 // This route is for searching for an activity by name.
 router.get('/search/:activityName', async (req, res) => {
-    searchTitle = req.params.activityName;
-    if (!searchTitle || searchTitle == null || typeof searchTitle !== 'string') {
+    console.log('[search]', req.params.activityName);
+    let sTitle = xss(req.params.activityName);
+    const searchTitle = sTitle.toLowerCase();
+    let validatedSearchActivity = "";
+    try {
+        validatedSearchActivity = validate.checkActivity(searchTitle);
+    } catch (error) {
         errormessage = {
             className: "No search item supplied",
             message: "No search item was supplied, directly Search button was clicked.",
@@ -44,14 +56,74 @@ router.get('/search/:activityName', async (req, res) => {
         res.status(400).render("display/error", errormessage);
         return;
     }
-
-    searchResult = await activitiesData.getActivityByName(searchTitle);
-    if (!searchResult) {
-        res.status(400).render("No search item was supplied, directly submit button was clicked or blank spaces were provided.");
+    searchResult = await activitiesData.getActivityByName(validatedSearchActivity);
+    if ("hasErrors" in searchResult) {
+        res.status(400).render('display/error', errormessage);
+        return;
     }
-    res.render('display/homepage', { activities: searchResult });
+    let is_user_logged_in = false;
+    if (req.session.user) is_user_logged_in = true;
+    res.render('display/homepage', {
+        activities: searchResult,
+        is_user_logged_in: is_user_logged_in
+    });
 });
 
+router.get('/addActivity', async (req, res) => {
+    console.log('[addActivity]');
+    if (req.session.user) {
+        res.render('display/addActivity');
+        return;
+    }
+    else {
+        errormessage = {
+            className: "User not logged in",
+            message: "User needs to log in to create activity",
+            hasErrors: "Error",
+            title: "Error"
+        }
+        res.status(401).render('display/error', errormessage);
+        return;
+    }
+});
 
+router.post('/createActivity', async (req, res) => {
+    console.log('[createActivity]');
+    if (req.session.user) {
+        try {
+            let activityName = xss(req.body.activityName);
+            var validatedActivity = validate.checkActivity(activityName);
+            let activityDesc = xss(req.body.activityDescription);
+            var validatedDesc = validate.checkDescription(activityDesc);
+            let checkdup = await validate.checkDuplicateActivity(validatedActivity);
+            if ("hasErrors" in checkdup) {
+                throw 'Activity already exists';
+            }
+        }
+        catch (error) {
+            errormessage = {
+                className: "Cannot add activity",
+                message: error,
+                hasErrors: "Error",
+                title: "Error"
+            }
+            res.status(400).render('display/error', errormessage);
+            return;
+        }
+        checkActivityCreated = activitiesData.createActivity(validatedActivity, validatedDesc);
+        if ("hasErrors" in checkActivityCreated) {
+            errormessage = {
+                className: "Could not add activity",
+                message: "could not add activity",
+                hasErrors: "True",
+                title: "Error"
+            }
+            res.status(400).render('display/error', "could not add activity");
+            return;
+        }
+        res.status(200).send("Successfully inserted activity");
+    }
+
+});
 
 module.exports = router;

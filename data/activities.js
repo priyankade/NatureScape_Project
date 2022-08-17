@@ -1,24 +1,56 @@
 const mongoCollections = require('../config/mongoCollections');
-var mongo = require('mongodb');
 const activities = mongoCollections.activities;
 const { ObjectId } = require('mongodb');
-var validate= require('../validation')
+var validate = require('../validation')
 
-async function createActivity(activityName, activityDesc) {
-    validate.checkActivity(activityName, 'activityName');
-    validate.checkDescription(activityDesc, 'description');
-    //validate.checkDuplicateActivity(activityName,'activityName') //verify
+async function createActivity(actName, activityDesc) {
+    let activityName = actName.toLowerCase();
+    validate.checkActivity(activityName);
+    validate.checkDescription(activityDesc);
+    var checkdup = await validate.checkDuplicateActivity(activityName);
+    if ("hasErrors" in checkdup) {
+        return checkdup;
+    }
     const activityCollection = await activities();
     let newActivity = {
         activityName: activityName,
         activityDesc: activityDesc
     };
     const insertInfo = await activityCollection.insertOne(newActivity);
-    if (insertInfo.insertedCount === 0) throw 'Could not add new Activity';
+    if (insertInfo.insertedCount === 0) {
+        errormessage = {
+            className: "Item not added",
+            message: "Item was not added",
+            hasErrors: "True",
+            title: "Error"
+        }
+        return errormessage;
+    }
     const newId = insertInfo.insertedId;
     const activity = await getActivityById(newId.toString());
     return JSON.parse(JSON.stringify(activity));
+}
 
+async function getActivityByName(activityName) {
+    validate.checkActivity(activityName);
+    searchActivity = activityName.toLowerCase();
+    const activityCollection = await activities();
+    const activityDetails = await activityCollection.find({ "activityName": activityName }).toArray();
+    try {
+        if (activityDetails.length == 0) {
+            console.log(activityName, ': No activity found by that name.');
+            throw 'No activity is present with that name';
+        }
+    } catch (e) {
+        errormessage = {
+            className: "Item not found",
+            message: "Item was not found",
+            hasErrors: "True",
+            title: "Error"
+        }
+        return errormessage;
+    }
+    return JSON.parse(JSON.stringify(activityDetails));
 }
 
 async function getActivityById(Id) {
@@ -37,19 +69,6 @@ async function getAllActivities() {
     const list_all_Activities = await activities_data.find({}, { '_id': 0 }).toArray();
     return JSON.parse(JSON.stringify(list_all_Activities));
 
-}
-
-async function getActivityByName(activityName) {
-    validate.checkActivity(activityName);
-    searchActivity=activityName.toLowerCase();
-    const activityCollection = await activities();
-    const activityDetails = await activityCollection.find({"activityName": activityName }).toArray();
-    try {
-        if (activityDetails === null) throw 'No activity is present with that name'
-    } catch (e) { 
-        //TODO: render page with error message
-    }
-    return JSON.parse(JSON.stringify(activityDetails));
 }
 
 async function deleteActivity(activityName) {

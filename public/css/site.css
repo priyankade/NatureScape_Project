@@ -1,3 +1,14 @@
+body {
+    background-color: #fff;
+    font: normal "Times New Roman", Times, serif;
+}
+
+p {
+    display: block;
+    border-bottom: 1px solid #e1c2f7;
+    padding: 0 0 20px 0;
+}
+
 .column {
     float: center;
 }
@@ -10,7 +21,7 @@
     width: 25%;
 }
 
-.col-sm-6{
+.col-sm-6 {
     text-align: center;
 
 
@@ -40,17 +51,29 @@
     width: 100%;
 }
 
-#loginSignup{
-    float:right;
-margin-right:20px;
-height:5px;
-}
 
-.addActivty button:hover{
+
+.addActivty button:hover {
     background-color: greenyellow;
 
 }
 
+
+.activity h2 {
+    margin-top: 32px;
+    color: #e1c2f7;
+    text-transform: uppercase;
+
+}
+
+a {
+    color: #c78bf2;
+}
+
+a:hover {
+    color: greenyellow;
+}
+
 table, th, td {
     border:1px solid black;
-  }
+}
