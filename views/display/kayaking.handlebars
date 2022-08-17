@@ -1,0 +1,28 @@
+<h2>{{activity}}</h2>
+
+<table style="width:100%">
+  <tr>
+    <th>Location</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Date</th>
+    <th>Organizer</th>
+    <th>Expertise level</th>
+    <th>Price($)</th>
+  </tr>
+  
+    {{#each kayaking}}
+    <tr>
+    <div class='kayaking'></div>
+        <td>{{this.location}} </td>
+        <td>{{this.city}} </td>
+        <td>{{this.state}} </td>
+        <td>{{this.date}} </td>
+        <td>{{this.organizer}} </td>
+        <td>{{this.expertise}} </td>
+        <td>{{this.price}} </td>
+    </div>
+    </tr>
+    {{/each}}  
+  
+</table>

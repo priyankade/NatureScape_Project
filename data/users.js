@@ -143,6 +143,16 @@ async function getUserById(id) {
   return found_user;
 }
 
+async function getUserByUsername(username) {
+  //validation.checkUsername(username, 'username');
+  const usersCollection = await users();
+  const found_user = await usersCollection.findOne({ username: username });
+
+  if (!found_user) throw 'User not found';
+
+  return found_user;
+}
+
 async function seedUser(firstName, lastName, email, username, age, activities_arr) {
   const usersCollection = await users();
 
@@ -163,5 +173,6 @@ module.exports = {
   createUser,
   checkUser,
   getUserById,
+  getUserByUsername,
   seedUser
 }

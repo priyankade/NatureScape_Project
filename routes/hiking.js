@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const validate = require('../validation')
+const validation = require('../validation')
 const activityTableData = require('../data/activityTable');
 
 
@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
         return;
     }
 
-    res.render("display/activityTable", { activityTable: hiking, activity: "Hiking" });
+    res.render("display/hiking", { hiking: hiking, activity: "Hiking" });
 });
 
 
