@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
         return;
     }
 
-    res.render("display/activityTable", { activityTable: kayaking, activity: "Kayaking" });
+    res.render("display/kayaking", { kayaking: kayaking, activity: "Kayaking" });
 });
 
 
