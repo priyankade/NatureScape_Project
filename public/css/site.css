@@ -58,6 +58,7 @@ p {
 
 }
 
+
 .activity h2 {
     margin-top: 32px;
     color: #e1c2f7;
@@ -71,4 +72,8 @@ a {
 
 a:hover {
     color: greenyellow;
+}
+
+table, th, td {
+    border:1px solid black;
 }
