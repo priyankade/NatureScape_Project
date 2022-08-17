@@ -1,27 +1,27 @@
-<main>
+<h1>Activities we offer</h1>
+<form id="searchForm">
+    <label for="search_term">Search Activity</label>
+    <input type="text" id="search_term" placeholder="Search with activity's name" name="searchActivity" required />
+    <input type="submit" name="submitSearch">
+</form>
+<ul id="activityList" hidden></ul>
 
-    <h1>Activities we offer</h1>
-    <form id="searchForm">
-        <label for="search_term">Search Activity</label>
-        <input type="text" id="search_term" placeholder="Search with activity's name" />
-        <button type="submit">Search Activity</button>
-    </form>
-    <ul id="activityList" hidden></ul>
-    
-    {{#each activities}}
-    <div class='activity'>
-        <h2><a href="/{{this.activityName}}">{{this.activityName}}</a></h2>
-        <p class="description">{{this.activityDesc}}</p>
-    </div>
-    {{/each}}
+{{#each activities}}
+<div class='activity'>
+    <h2><a href="/{{urlEncode this.activityName}}">{{this.activityName}}</a></h2>
+    <p class="description">{{this.activityDesc}}</p>
+</div>
+{{/each}}
 
-    <div id="login">
-        <a href="/users/login">Login</a>
+{{#unless is_user_logged_in}}
+<div id="login">
+    <a href="/users/login">Login</a>
 
-        <a href="/users/signup">Signup</a>
+    <a href="/users/signup">Signup</a>
+</div>
+{{/unless}}
 
-    <form class="addActivity">
-        <input type="submit" value="Add Activity">
-    </form>
-    <script src="../../public/js/activities.js"/>
-</main>
+<form class="addActivity" action="/addActivity">
+    <input type="submit" id="addActivity" name="addActivity" value="Add Activity">
+</form>
+<script src="../../public/js/activities.js"></script>
