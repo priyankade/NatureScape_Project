@@ -13,8 +13,9 @@ router.get('/', async (req, res) => {
 
 router.get('/profile', async (req, res) => {
   userFound = await usersData.getUserByUsername(req.session.user);
+  //console.log(userFound)
   if(userFound) {
-    res.render("display/profile", {username: req.session.user, firstname: userFound.fname, lastname: userFound.lname, age: userFound.age, gender: userFound.gender, dob: userFound.dob, email: userFound.email, contact: userFound.phone, emergency: userFound.emer_phone, title: "Private"});
+    res.render("display/profile", {username: req.session.user, firstname: userFound.fname, lastname: userFound.lname, age: userFound.age, gender: userFound.gender, dob: userFound.dob, email: userFound.email, contact: userFound.phone, emergency: userFound.emer_phone, activities: userFound.activities, title: "Private"});
 
   }
   

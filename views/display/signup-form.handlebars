@@ -1,79 +1,91 @@
-<h1>Signup Page</h1>
-<p>Please fill this form to create an account on NatureScape!</p>
-
-<div class="row">
-  <div class="col-sm-12">
-    <form method="POST" id="signup-form" class="server-form" action="/users/signup">
-      <div class="form-group">
-        <label for="fname">First name:</label>
-        <input required type="text" class="form-control" id="fname" name="fname" placeholder="Enter first name"
-          value="{{fname}}">
-      </div>
-      <div class="form-group">
-        <label for="lname">Last name:</label>
-        <input required type="text" class="form-control" id="lname" name="lname" placeholder="Enter last name"
-          value="{{lname}}">
-      </div>
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input required type="text" class="form-control" id="username" name="username" placeholder="Enter username"
-          value="{{username}}">
-      </div>
-      <div class="form-group">
-        <label for="age">Age:</label>
-        <input type="number" class="form-control" id="age" name="age" placeholder="Enter age"
-          value="{{age}}">
-      </div>
-      <div class="form-group">
-        <label for="gender">Gender:</label>
-        <input required type="text" class="form-control" id="gender" name="gender" placeholder="Enter gender"
-          value="{{gender}}">
-      </div>
-      <div class="form-group">
-        <label for="dob">Date of Birth:</label>
-        <input required type="date" class="form-control" id="dob" name="dob" placeholder="Enter dob"
-          value="{{dob}}">
-      </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input required type="mail" class="form-control" id="email" name="email" placeholder="Enter Email"
-          value="{{email}}">
-      </div>
-      <div class="form-group">
-        <label for="phone">Primary phone number:</label>
-        <input required type="number" class="form-control" id="phone" name="phone" placeholder="Enter phone"
-          value="{{phone}}">
-      </div>
-      <div class="form-group">
-        <label for="emer_phone">Emergency phone number:</label>
-        <input required type="number" class="form-control" id="emer_phone" name="emer_phone" placeholder="Enter emergency phone"
-          value="{{emer_phone}}">
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input required type="password" class="form-control" id="password" name="password" placeholder="Enter password"
-          value="{{password}}">
-      </div>
-      <div class="form-group">
-        <label for="password">Confirm Password:</label>
-        <input required type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm password"
-          value="{{confirmPassword}}">
-      </div>
-      <br>
-      <button style="margin: auto;" type="submit" class="btn btn-outline-success col-6" id="signup">Sign up</button>
-
-      <div id="error" class="text-center" hidden></div>
-      {{! error }}
-      {{#if error}}
-      <p class="error">{{error}}</p>
-      {{/if}}
-
-    </form>
-
-    <ul style="margin-top: 20px;">
-      <li><a href="/users/login">Already have an account? Click here to log-in</a></li>
-    </ul>
+<div class="container">
+  <h1>Signup Page</h1>
+  <p>Please fill this form to create an account on NatureScape!</p>
 
 
+  <div class="row">
+    <div class="col-sm-4">
+      <form method="POST" id="signup-form" class="server-form" action="/users/signup">
+        <div class="form-group">
+          <label for="fname">First name:</label>
+          <input required type="text" class="form-control" id="fname" name="fname" placeholder="Enter first name"
+            value="{{fname}}">
+        </div>
+        <div class="form-group">
+          <label for="lname">Last name:</label>
+          <input required type="text" class="form-control" id="lname" name="lname" placeholder="Enter last name"
+            value="{{lname}}">
+        </div>
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input required type="text" class="form-control" id="username" name="username" placeholder="Enter username"
+            value="{{username}}">
+        </div>
+        <div class="form-group">
+          <label for="age">Age:</label>
+          <input type="number" class="form-control" id="age" name="age" placeholder="Enter age" value="{{age}}">
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <input required type="text" class="form-control" id="gender" name="gender" placeholder="Enter gender"
+            value="{{gender}}">
+        </div>
+        {{!-- <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Gender
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Female</a></li>
+            <li><a class="dropdown-item" href="#">Male</a></li>
+            <li><a class="dropdown-item" href="#">Transgender</a></li>
+            <li><a class="dropdown-item" href="#">Non Binary</a></li>
+          </ul>
+        </div> --}}
+        <div class="form-group">
+          <label for="dob">Date of Birth:</label>
+          <input required type="date" class="form-control" id="dob" name="dob" placeholder="Enter dob" value="{{dob}}">
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input required type="mail" class="form-control" id="email" name="email" placeholder="Enter Email"
+            value="{{email}}">
+        </div>
+        <div class="form-group">
+          <label for="phone">Primary phone number:</label>
+          <input required type="number" class="form-control" id="phone" name="phone" placeholder="Enter phone"
+            value="{{phone}}">
+        </div>
+        <div class="form-group">
+          <label for="emer_phone">Emergency phone number:</label>
+          <input required type="number" class="form-control" id="emer_phone" name="emer_phone"
+            placeholder="Enter emergency phone" value="{{emer_phone}}">
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input required type="password" class="form-control" id="password" name="password"
+            placeholder="Enter password" value="{{password}}">
+        </div>
+        <div class="form-group">
+          <label for="password">Confirm Password:</label>
+          <input required type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+            placeholder="Confirm password" value="{{confirmPassword}}">
+        </div>
+        <br>
+        <button style="margin: auto;" type="submit" class="btn btn-outline-success col-6" id="signup">Sign up</button>
+
+        <div id="error" class="text-center" hidden></div>
+        {{! error }}
+        {{#if error}}
+        <p class="error">{{error}}</p>
+        {{/if}}
+
+      </form>
+
+      <ul style="margin-top: 20px;">
+        <li><a href="/users/login">Already have an account? Click here to log-in</a></li>
+      </ul>
+
+
+    </div>
   </div>
 </div>

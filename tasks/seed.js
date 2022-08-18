@@ -37,7 +37,7 @@ async function main() {
   await kayakingActivity.createActivityTable("Jennys Eco", "Everglades", "Florida", "07/05/2022", "Rachel", "Easy", "200")
 
   await users.createUser("John", "Doe", "jodoe", "30", "male", "23/08/1990", "jodoe1234@gmail.com", "8888888888", "8888888888", "jodoe1234", "jodoe1234");
-  
+  await users.userActivity("jodoe", "Hiking"); 
 
   
   console.log('Done seeding database');
