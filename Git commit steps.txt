@@ -1,0 +1,31 @@
+1. Checkout main
+git checkout main
+
+2. Pull
+git pull
+
+3. Create new branch:
+git checkout -b <branch_name>
+
+4. Make changes
+
+5. Add changes:
+git add <filename>
+
+6. Commit changes:
+git commit -m "<commit message>"
+
+7. Push these changes to remote:
+git push
+
+(git will throw an error if the upstream for this branch does not exist,
+ in that case use the following line)
+
+git push --set-upstream origin <branch_name>
+
+8. Create Pull Request:
+Go to the web page, select your branch, and click "Create Pull Request"
+
+9. After the Pull Request has been reviewed, merge it. Preferably using "Squash Merge"
+
+DONE :)

@@ -66,7 +66,10 @@ module.exports = {
                 return errormessage;
             }
         }
-        return activityName;
+        obj={
+            actName:activityName
+        };
+        return obj;
     },
 
     checkString(strVal, varName) {
