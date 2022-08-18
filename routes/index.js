@@ -1,13 +1,12 @@
 const userRoutes = require("./users");
 const privateRoutes = require('./private');
 const homeRoutes = require("./activities");
-<<<<<<< HEAD
-=======
+
 
 const hikingRoutes = require("./hiking")
 const kayakingRoutes = require("./kayaking")
 
->>>>>>> 05252398c669cf3a241b1cee869b605450c46df3
+
 // const reviewsRoute = require("./reviews");
 
 const constructorMethod = (app) => {
