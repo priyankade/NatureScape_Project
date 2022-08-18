@@ -74,7 +74,9 @@ async function createUser(fname, lname, username, age, gender, dob, email, phone
       email: email,
       phone: phone,
       emer_phone: emer_phone,
-      password: hash
+      password: hash,
+      reviews: [],
+      activities: []
     };
 
     //Create/Insert new user in db
@@ -153,20 +155,47 @@ async function getUserByUsername(username) {
   return found_user;
 }
 
-async function seedUser(firstName, lastName, email, username, age, activities_arr) {
-  const usersCollection = await users();
+// async function seedUser(firstName, lastName, email, username, age, activities_arr) {
+//   const usersCollection = await users();
 
-  const newUser = {
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
-    username: username,
-    age: age,
-    activities: activities_arr
-  };
-  const newInsertInformation = await usersCollection.insertOne(newUser);
-  const newId = newInsertInformation.insertedId;
-  return await this.getUserById(newId.toString());
+//   const newUser = {
+//     firstName: firstName,
+//     lastName: lastName,
+//     email: email,
+//     username: username,
+//     age: age,
+//     activities: activities_arr
+//   };
+//   const newInsertInformation = await usersCollection.insertOne(newUser);
+//   const newId = newInsertInformation.insertedId;
+//   return await this.getUserById(newId.toString());
+// }
+
+function calculateAge(dob) 
+{
+    var today = new Date();
+    var birthDate = new Date(dob);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+    {
+        age--;
+    }
+    return age;
+}
+
+async function userActivity(username, activity) {
+  const usersCollection = await users();
+  // const found_user = await usersCollection.findOne({ username: username });
+
+  // if (!found_user) throw 'User not found';
+
+  found_user = await getUserByUsername(username);
+  found_user.activities.push(activity);
+  let updatedInfo = await usersCollection.updateOne({ username: username }, { $set: { activities: found_user.activities } });
+  //console.log(updatedInfo);
+  return true;
+
 }
 
 module.exports = {
@@ -174,5 +203,7 @@ module.exports = {
   checkUser,
   getUserById,
   getUserByUsername,
-  seedUser
+  calculateAge,
+  userActivity
+  //seedUser
 }
