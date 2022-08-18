@@ -1,0 +1,34 @@
+<div>
+    <h1>Add a New Event Here!</h1>
+    <form id="addEvent" action="/createEvent" method="POST">
+        <label>Enter Event Location
+            <input type="text" id="location" placeholder="location" name="location" required>
+        </label>
+        <br>
+        <label>Enter City
+            <input type="text" id="city" placeholder="city" name="city" required>
+        </label>
+        <br>
+        <label>Enter State
+            <input type="text" id="state" placeholder="state" name="state" required>
+        </label>
+        <br>
+        <label>Enter Date
+            <input type="date" id="date" placeholder="date" name="date" required>
+        </label>
+        <br>
+        <label>Enter Organizer
+            <input type="text" id="organizer" placeholder="organizer" name="organizer" required>
+        </label>
+        <br>
+        <label>Enter Expertise level
+            <input type="text" id="expertise" placeholder="expertise" name="expertise" required>
+        </label>
+        <br>
+        <label>Enter Price ($)
+            <input type="number" id="price" placeholder="price" name="price" required>
+        </label>
+        <br>
+        <input type="submit" value="Add Event" id="createEventbtn" name="createEventButton"><br>
+    </form>
+</div>

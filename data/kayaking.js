@@ -1,10 +1,10 @@
 const mongoCollections = require('../config/mongoCollections');
 var mongo = require('mongodb');
-const activityTable = mongoCollections.activityTable;
+const kayaking = mongoCollections.kayaking;
 const { ObjectId } = require('mongodb');
 var validate= require('../validation')
 
-async function createActivityTable(location, city, state, date, organizer, expertise, price) {
+async function createKayaking(location, city, state, date, organizer, expertise, price) {
     //validate.checkString(location, 'location');
     validate.checkString(city, 'city');
     //validate.checkString(state, 'state');
@@ -13,8 +13,8 @@ async function createActivityTable(location, city, state, date, organizer, exper
     //validate.checkString(expertise, 'expertise');
     //validate.checkString(price, 'price');
 
-    const activityTableCollection = await activityTable();
-    let newActivityTable = {
+    const kayakingCollection = await kayaking();
+    let newKayaking = {
         location: location,
         city: city,
         state: state,
@@ -24,24 +24,23 @@ async function createActivityTable(location, city, state, date, organizer, exper
         price: price
     };
 
-    //Create/Insert new activity in db
-    const insertInfo = await activityTableCollection.insertOne(newActivityTable);
+    //Create/Insert new kayaking activity in db
+    const insertInfo = await kayakingCollection.insertOne(newKayaking);
     if (!insertInfo.acknowledged || !insertInfo.insertedId)
-      throw 'Could not add new activity table';
+      throw 'Could not add new Kayaking activity';
     else if (insertInfo.acknowledged)
       //return userInserted;
       return { authenticated: true };
   }
 
-  async function getAllActivityTable() {
-    const activityTable_data = await activityTable();
-    const list_all_activityTable = await activityTable_data.find({}, { '_id': 0 }).toArray();
-    return JSON.parse(JSON.stringify(list_all_activityTable));
+  async function getAllKayaking() {
+    const kayaking_data = await kayaking();
+    const list_all_kayaking = await kayaking_data.find({}, { '_id': 0 }).toArray();
+    return JSON.parse(JSON.stringify(list_all_kayaking));
 
 }
 
   module.exports = {
-    createActivityTable,
-    getAllActivityTable
+    createKayaking,
+    getAllKayaking
   }
-

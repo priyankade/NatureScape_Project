@@ -40,8 +40,7 @@ p {
 }
 
 .header {
-    position: relative;
-    height: 80px;
+    height: 40px;
     background-color: #f4f3f3;
     text-align: center;
     font-size: 15px;
@@ -75,5 +74,7 @@ a:hover {
 }
 
 table, th, td {
+    text-align: center;
     border:1px solid black;
 }
+

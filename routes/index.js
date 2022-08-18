@@ -2,8 +2,11 @@ const userRoutes = require("./users");
 const privateRoutes = require('./private');
 const homeRoutes = require("./activities");
 
-const hikingRoutes = require("./hiking")
-const kayakingRoutes = require("./kayaking")
+const hikingRoutes = require("./hiking");
+const kayakingRoutes = require("./kayaking");
+const scubaRoutes = require("./scuba");
+const skydivingRoutes = require("./skydiving");
+
 
 // const reviewsRoute = require("./reviews");
 
@@ -12,6 +15,8 @@ const constructorMethod = (app) => {
   app.use('/private', privateRoutes);
   app.use('/hiking', hikingRoutes);
   app.use('/kayaking', kayakingRoutes);
+  app.use('/scuba diving', scubaRoutes);
+  app.use('/skydiving', skydivingRoutes);
 
   // app.use("/Hiking", (req, res) => {
   //   res.render("display/activityTable");

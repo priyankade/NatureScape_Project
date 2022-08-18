@@ -1,10 +1,12 @@
 const userRoutes = require("./users");
 const homeRoutes = require("./activities")
-const activityTableRoutes = require("./activityTable")
+const hikingRoutes = require("./hiking")
+const kayakingRoutes = require("./kayaking")
 // const reviewsRoute = require("./reviews");
 
 module.exports = {
   users: userRoutes,
   activities: homeRoutes,
-  activityTable: activityTableRoutes
+  hiking: hikingRoutes,
+  kayaking: kayakingRoutes
 };
