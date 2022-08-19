@@ -1,7 +1,12 @@
+<div class="container">
 <h2>{{activity}}</h2>
+<br>
 
-<table style="width:100%">
-  <tr>
+<input type="text" id="searchEvent" onkeyup="myFunction()" placeholder="Filter for events">
+<br>
+
+<table id="eventTable" style="width:100%">
+  <tr class="header">
     <th>Location</th>
     <th>City</th>
     <th>State</th>
@@ -14,7 +19,7 @@
     {{#each activityTable}}
     <tr>
     <div class='activityTable'></div>
-        <td><a href="/`{{activityName}}/{{this.location}}`">{{this.location}}</a></td>
+        <td><a href="/{{this.activity}}/{{this.location}}">{{this.location}}</a></td>
         <td>{{this.city}} </td>
         <td>{{this.state}} </td>
         <td>{{this.date}} </td>
@@ -28,8 +33,12 @@
 </table>
 
 <br>
-<br>
 
 <form class="addEvent" action="/addEvent">
     <input type="submit" id="addEvent" name="addEvent" value="Add Event">
 </form>
+
+<script src="../../public/js/eventFilter.js" </script>
+
+</div>
+
