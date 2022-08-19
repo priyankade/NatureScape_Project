@@ -6,3 +6,9 @@ searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
     location.href = '/search/'+ searchTerm;
 });
+
+const activityLink= document.getElementById("individualActivityName");
+activityLink.onclick= function(){
+    const activityNameinLink= activityLink.value;
+    location.href= '/'+activityNameinLink;
+}

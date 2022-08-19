@@ -1,7 +1,5 @@
 const mongoCollections = require('../config/mongoCollections');
-var mongo = require('mongodb');
 const activityTable = mongoCollections.activityTable;
-const { ObjectId } = require('mongodb');
 var validate= require('../validation')
 
 async function createactivityTable(activityName, location, city, state, date, organizer, expertise, price) {

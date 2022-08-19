@@ -8,7 +8,7 @@
 
 {{#each activities}}
 <div class='activity'>
-    <h2><a href="/{{urlEncode this.activityName}}">{{this.activityName}}</a></h2>
+    <h2 id="individualActivityName"><a href="/{{urlEncode this.activityName}}">{{this.activityName}}</a></h2>
     <p class="description">{{this.activityDesc}}</p>
 </div>
 {{/each}}
