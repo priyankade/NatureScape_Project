@@ -81,7 +81,6 @@ router.get("/signup", async (req, res) => {
                 fname: req.body.fname,
                 lname: req.body.lname,
                 username: req.body.username,
-                age: req.body.age,
                 gender: req.body.gender,
                 email: req.body.email,
                 phone: req.body.phone,
@@ -100,28 +99,37 @@ router.post('/signup', async (req, res) => {
     if (!req.session.user) {
         try {
 
-            if (!req.body.fname || !req.body.lname || !req.body.username || !req.body.age || !req.body.gender
+            if (!req.body.fname || !req.body.lname || !req.body.username || !req.body.gender
                 || !req.body.email || !req.body.phone || !req.body.emer_phone || !req.body.password || !req.body.confirmPassword)
-                        throw "Please supply all the required fields";
+                throw "Please supply all the required fields";
 
-            let { fname, lname, username, age, gender, dob, email, phone, emer_phone, password, confirmPassword } = req.body;
+            let { fname, lname, username, gender, dob, email, phone, emer_phone, password, confirmPassword } = req.body;
 
+            //=========start validations================
             await validation.checkString(fname, 'First Name');
             await validation.checkString(lname, 'Last Name');
             await validation.alphanumeric(username);
-            //await validation.checkString(age, 'age');
-            //await validation.checkString(gender, 'gender');
-            //await validation.checkString(dob, 'dob');
-            //await validation.checkString(email, 'email');
-            // await validation.checkPhone(phone, 'phone number');
-            // await validation.checkPhone(emer_phone, 'emergency phone number');
+            await validation.checkGender(gender);
+            await validation.checkDate(dob, 'dob');
+            await validation.checkEmail(email);
+            await validation.checkPhone(phone, 'phone');
+            await validation.checkPhone(emer_phone, 'emergency phone');
+            if (phone === emer_phone) {
+                throw 'Error: Please provide different phone number for Emergency'
+            }
             await validation.checkPassword(password, 'password');
-            //await validation.checkConfirmPassword(confirmPassword, 'confirmPassword');
+            await validation.checkPassword(confirmPassword, 'confirmPassword');
 
-            let userInserted = await data.users.createUser(fname, lname, username, age, gender, dob, email, phone, emer_phone, password);
+            if (password != confirmPassword) {
+                throw "\nPassword did not match: Please try again...";
+            }
+
+            //=========end validations================
+
+            let userInserted = await data.users.createUser(fname, lname, username, gender, dob, email, phone, emer_phone, password, confirmPassword);
             //console.log("userInserted is " , userInserted)
 
-            if (userInserted.authenticated) {
+            if (userInserted._id != null) {
                 res.redirect("/users/login");
             }
             else {
@@ -132,12 +140,12 @@ router.post('/signup', async (req, res) => {
                 fname: req.body.fname,
                 lname: req.body.lname,
                 username: req.body.username,
-                age: req.body.age,
                 gender: req.body.gender,
+                dob: req.body.dob,
                 email: req.body.email,
                 phone: req.body.phone,
                 emer_phone: req.body.emer_phone,
-              
+
                 title: "Signup",
                 error: e,
             });

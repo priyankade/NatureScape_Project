@@ -90,6 +90,7 @@ module.exports = {
     },
 
     alphanumeric(input) {
+        this.checkString(input)
         var letterNumber = /^[0-9a-zA-Z]+$/i;
         if ((input.match(letterNumber)))
             return true;
@@ -112,17 +113,100 @@ module.exports = {
         return strVal;
     },
 
-    // checkPhone(phone, varName) {
-    //   checkString(phone, varName);
-    //   phone = phone.trim();
-    //   let num = /^\d{10}$/;     //validate a phone number of 10 digits
-    //   if ((phone.match(num)))
-    //     return true;
-    //   else {
-    //     throw `Error: Please enter a 10 digit ${varName}`;
+    checkPhone(phone, varName) {
+      phone = phone.trim();
+      let re = /^\d{10}$/;          //validate phone number of 10 digits
+      if (!re.test(phone)) {
+        throw `Error: Invalid ${varName} number, please enter phone number in 10 digit format`;
+      } else {
+        return true;
+      }
+    },
 
-    //   }
-    // }
+    checkEmail(email) {
+        if (!this.checkString(email)) return false;
+        email = email.toLowerCase().trim();
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!re.test(String(email))) {
+          throw "Invalid, Enter a proper email";
+        } else {
+          return true;
+        }
+    },
+
+    checkGender(gender) {
+        if (["male", "female", "transgender", "gender neutral", "non-binary", "prefer not to say"].includes(gender.toLowerCase().trim())) {
+            return true;
+          } else {
+            throw "Please choose a gender from provided options";
+          }
+    },
+
+    checkDate(date) {
+        this.checkString(date);
+        date = date.trim();
+
+        //Validate Date in YYYY-MM-DD format
+        let arr = date.split("-");
+        if (arr.length !== 3) throw "Error: Date should contain 3 values of month, day, year in YYYY-MM-DD format";
+      
+        let year = parseInt(arr[0]);
+        let month = parseInt(arr[1]);
+        let day = parseInt(arr[2]);
+      
+        if (year != arr[0] || month != arr[1] || day != arr[2]) {
+          throw "Error: Invalid month data present";
+        }
+        
+        //Month validate
+        if (month < 1 || month > 12)  
+           throw "Error: month of Date should be between 1 and 12";
+        //months with 31 days
+        if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
+          if (day < 1 || day > 31) {
+            throw `Error: Value for day should be between 1 and 31 in this month - ${month}`;
+          }
+        } 
+        //months with 30 days
+        else if ([4, 6, 9, 11].includes(month)) {
+          if (day < 1 || day > 30) {
+            throw `Error: Value for day should be between 1 and 30"in this month - ${month}`;
+          }
+        } 
+        //february
+        else if (month === 2) {
+          if (year % 4 === 0) {
+            if (day < 1 || day > 29) {
+              throw "Error: Day should be between 1 and 29";
+            }
+          } else {
+            if (day < 1 || day > 28) {
+              throw "Error: Day should be between 1 and 28";
+            }
+          }
+        }
+
+        // if date in the past, throws error
+        // new Date() returns the current date in YYYY-MM-DD format
+      
+        let currentYear = new Date().getFullYear();
+        if (year < 1900 || year > currentYear) {
+          throw "Error: Year should be between 1900 and current year";
+        } else if (year === currentYear) {
+          let currentMonth = new Date().getMonth() + 1;
+          if (month > currentMonth) {
+            throw "Error: Month should be less than or equal to current month";
+          } else if (month === currentMonth) {
+            let currentDay = new Date().getDate();
+            if (day > currentDay) {
+              throw "Error: Day should be less than or equal to current day";
+            }
+          }
+        }
+        return true;
+      }
+      
+    
 
 
 

@@ -46,9 +46,7 @@ async function getActivityTableByName(activityName) {
   const activityTableCollection = await activityTable();
 
   const activityDetails = await (await activityTableCollection.find({ activityName: activityName })).toArray();
-  //const activityDetails = await (await activityTableCollection.find({ activityName: { $elemMatch: { $eq: activityName } } })).toArray();
-  //console.log(activityDetails)
-  //console.log("yes")
+
   try {
       if (activityDetails.length == 0) {
           console.log(activityName, ': No activity found by that name.');
