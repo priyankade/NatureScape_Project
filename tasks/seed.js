@@ -32,8 +32,12 @@ async function main() {
   // await skydivingActivity.createSkydiving("Skydive Arizona", "Tucson", "Arizona", "12/2/2022", "Skydiveaz", "Advanced", "1000")
   // await skydivingActivity.createSkydiving("Skydive Chicago", "Chicago", "Illinois", "07/06/2022", "Skydivechicago", "Advanced", "2000")
 
-  await users.createUser("John", "Doe", "jodoe", "30", "male", "23/08/1990", "jodoe1234@gmail.com", "8888888888", "8888888888", "jodoe1234", "jodoe1234");
+  let user1 = await users.createUser("John", "Doe", "jodoe", "30", "male", "23/08/1990", "jodoe1234@gmail.com", "8888888888", "8888888888", "jodoe1234", "jodoe1234");
   await users.userActivity("jodoe", "Hiking"); 
+
+  let admin = await users.createUser("Admin", "User", "admin", "35", "female", "23/08/1990", "admin@gmail.com", "8888888888", "8888888888", "admin1234", "admin1234");
+  await users.setAdmin(admin._id.toString())
+  await users.userActivity("admin", "Hiking"); 
 
   
   console.log('Done seeding database');
