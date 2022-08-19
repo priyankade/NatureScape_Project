@@ -126,4 +126,43 @@ router.post('/createActivity', async (req, res) => {
 
 });
 
+//This route is for going to indivdual activity's page
+router.get("/:activityName", async (req, res) => {
+    let activityName = req.params.activityName;
+    let activityTable = {};
+    try {
+        let db_result = await activitiesData.getActivityByName(activityName);
+        console.log(db_result);
+        for (let i = 0; i < db_result.length; i++) {
+            activityTable[i] = {};
+            let actName= db_result[i].activityName;
+            let location = db_result[i].location;
+            let city = db_result[i].city;
+            let state = db_result[i].state;
+            let date = db_result[i].date;
+            let organizer = db_result[i].organizer;
+            let expertise = db_result[i].expertise;
+            let price = db_result[i].price;
+            activityTable[i]['location'] = location;
+            activityTable[i]['city'] = city;
+            activityTable[i]['state'] = state;
+            activityTable[i]['date'] = date;
+            activityTable[i]['organizer'] = organizer;
+            activityTable[i]['expertise'] = expertise;
+            activityTable[i]['price'] = price;
+        }
+    } catch (e) {
+        errormessage = {
+            className: "Could not get activityTable activities",
+            message: `No activityTable activities found`,
+            hasErrors: "Error"
+        };
+        res.status(404).render('display/error', errormessage);
+        return;
+    }
+
+    res.render("display/activityTable", { activityTable: activityTable, activity: "activityTable" });
+});
+
+
 module.exports = router;
