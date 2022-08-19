@@ -76,16 +76,22 @@ async function createUser(fname, lname, username, age, gender, dob, email, phone
       emer_phone: emer_phone,
       password: hash,
       reviews: [],
-      activities: []
+      activities: [],
+      Admin: false
     };
 
     //Create/Insert new user in db
     const userInserted = await usersCollection.insertOne(newUser);
     if (!userInserted.acknowledged || !userInserted.insertedId)
       throw 'Could not add user';
-    else if (userInserted.acknowledged)
+    else if (userInserted.acknowledged) {
+      const newId = userInserted.insertedId;
+      const user = await getUserById(newId.toString());
+      return JSON.parse(JSON.stringify(user));
+    }
+        
       //return userInserted;
-      return { authenticated: true };
+      //return { authenticated: true };
   }
 
 }
@@ -198,12 +204,33 @@ async function userActivity(username, activity) {
 
 }
 
+async function setAdmin(id) {
+  if (!id) throw 'You must provide an id';
+  if (typeof id !== 'string') throw 'user Id must be a string';
+  if (id.trim().length === 0)
+      throw 'user Id cannot be an empty string or just spaces';
+  id = id.trim();
+  if (!ObjectId.isValid(id)) throw 'invalid object ID';
+  //let userObjId = ObjectId.createFromHexString(userId);
+  let userCollection = await users();
+  let userUpdateInfo = {
+      Admin:true
+  };
+  let updatedInfo = await userCollection.updateOne({ _id: ObjectId(id) }, { $set: userUpdateInfo });
+  if (updatedInfo.modifiedCount === 0) {
+      throw 'could not set Admin access successfully';
+  }
+  return this.getUserById(id);
+};
+
+
 module.exports = {
   createUser,
   checkUser,
   getUserById,
   getUserByUsername,
   calculateAge,
-  userActivity
+  userActivity,
+  setAdmin
   //seedUser
 }
