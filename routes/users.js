@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require("../data");
 const usersData = data.users;
 const validation = require('../validation');
+const xss = require('xss');
 
 router.get("/login", async (req, res) => {
     if (req.session.user)

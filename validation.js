@@ -89,6 +89,21 @@ module.exports = {
 
     },
 
+    checkStringWithSpaces(strVal, varName) {
+        if (!strVal) throw `Error: You must supply a ${varName}!`;
+        if (typeof strVal !== 'string') throw `Error: ${varName} must be a string!`;
+        strVal = strVal.trim();
+        if (strVal.length === 0)
+            throw `Error: ${varName} cannot be an empty string or string with just spaces`;
+        // if (strVal.length < 4)
+        //   throw `Error: ${varName} should be at least 4 characters long`;
+        if (!isNaN(strVal))
+            throw `Error: ${strVal} is not a valid value for ${varName} as it only contains digits`;
+
+        return strVal;
+
+    },
+
     alphanumeric(input) {
         this.checkString(input)
         var letterNumber = /^[0-9a-zA-Z]+$/i;
@@ -204,11 +219,162 @@ module.exports = {
           }
         }
         return true;
-      }
+      },
       
+      checkDateforFutureActivities(date) {
+        this.checkString(date);
+        date = date.trim();
+
+        //Validate Date in YYYY-MM-DD format
+        let arr = date.split("-");
+        if (arr.length !== 3) throw "Error: Date should contain 3 values of month, day, year in YYYY-MM-DD format";
+      
+        let year = parseInt(arr[0]);
+        let month = parseInt(arr[1]);
+        let day = parseInt(arr[2]);
+      
+        if (year != arr[0] || month != arr[1] || day != arr[2]) {
+          throw "Error: Invalid month data present";
+        }
+        
+        //Month validate
+        if (month < 1 || month > 12)  
+           throw "Error: month of Date should be between 1 and 12";
+        //months with 31 days
+        if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
+          if (day < 1 || day > 31) {
+            throw `Error: Value for day should be between 1 and 31 in this month - ${month}`;
+          }
+        } 
+        //months with 30 days
+        else if ([4, 6, 9, 11].includes(month)) {
+          if (day < 1 || day > 30) {
+            throw `Error: Value for day should be between 1 and 30"in this month - ${month}`;
+          }
+        } 
+        //february
+        else if (month === 2) {
+          if (year % 4 === 0) {
+            if (day < 1 || day > 29) {
+              throw "Error: Day should be between 1 and 29";
+            }
+          } else {
+            if (day < 1 || day > 28) {
+              throw "Error: Day should be between 1 and 28";
+            }
+          }
+        }
+
+        // if date in the past, throws error
+        // new Date() returns the current date in YYYY-MM-DD format
+      
+        let currentYear = new Date().getFullYear();
+        if (year < currentYear) {
+          throw "Error: Year should be in current year or in future";
+        } else if (year === currentYear) {
+          let currentMonth = new Date().getMonth() + 1;
+          if (month < currentMonth) {
+            throw "Error: Month should be greater than or equal to current month";
+          } else if (month === currentMonth) {
+            let currentDay = new Date().getDate();
+            if (day < currentDay) {
+              throw "Error: Day should be greater than or equal to current day";
+            }
+          }
+        }
+        return true;
+      },
     
+      checkState (state) {
+        this.checkString(state);
+        state = state.trim();
+        let allStates = [
+          "AL",
+          "AK",
+          "AZ",
+          "AR",
+          "CA",
+          "CO",
+          "CT",
+          "DE",
+          "FL",
+          "GA",
+          "HI",
+          "ID",
+          "IL",
+          "IN",
+          "IA",
+          "KS",
+          "KY",
+          "LA",
+          "ME",
+          "MD",
+          "MA",
+          "MI",
+          "MN",
+          "MS",
+          "MO",
+          "MT",
+          "NE",
+          "NV",
+          "NH",
+          "NJ",
+          "NM",
+          "NY",
+          "NC",
+          "ND",
+          "OH",
+          "OK",
+          "OR",
+          "PA",
+          "RI",
+          "SC",
+          "SD",
+          "TN",
+          "TX",
+          "UT",
+          "VT",
+          "VA",
+          "WA",
+          "WV",
+          "WI",
+          "WY",
+        ];
+        if (!allStates.includes(state.toUpperCase())) {
+          throw "Error: Please enter state in 2 letter format (eg. NJ for New Jersey)";
+        }
+      },
 
+      checkExpertise(expertise) {
+        if (["easy", "intermediate", "advanced"].includes(expertise.toLowerCase().trim())) {
+            return true;
+          } else {
+            throw "Please choose expertise level from provided options : easy, intermediate, advanced";
+          }
+    },
 
+    checkIsProperNumber(val, variableName) {
+        if (val === undefined) {
+            throw `${variableName || 'provided variable'} is undefined`;
+        }
+    
+        if (val === null) {
+            throw `${variableName || 'provided variable'} is null`;
+        }
+    
+        if (typeof val !== 'number') {
+            throw `${variableName || 'provided variable'} is not a number`;
+        }
+    
+        if (isNaN(val)) {
+            throw `${variableName || 'provided variable'} is NaN`;
+        }
+
+        if (val < 0) {
+            throw `${variableName || 'provided variable'} is negative. Please provide positive value`;
+        }
+    
+    }
 
 
 };

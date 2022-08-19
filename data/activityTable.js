@@ -1,15 +1,16 @@
 const mongoCollections = require('../config/mongoCollections');
 const activityTable = mongoCollections.activityTable;
-var validate= require('../validation')
+var validation= require('../validation')
 
 async function createactivityTable(activityName, location, city, state, date, organizer, expertise, price) {
-    //validate.checkString(location, 'location');
-    validate.checkString(city, 'city');
-    //validate.checkString(state, 'state');
-    //validate.checkString(date, 'date');
-    //validate.checkString(organizer, 'organizer');
-    //validate.checkString(expertise, 'expertise');
-    //validate.checkString(price, 'price');
+    validation.checkActivity(activityName);
+    validation.checkStringWithSpaces(location, 'location');
+    validation.checkString(city, 'city');
+    validation.checkState(state, 'state');
+    validation.checkDateforFutureActivities(date, 'date');
+    validation.checkStringWithSpaces(organizer, 'organizer');
+    validation.checkExpertise(expertise, 'expertise');
+    validation.checkIsProperNumber(price, 'price');
 
     const activityTableCollection = await activityTable();
    
@@ -41,7 +42,7 @@ async function createactivityTable(activityName, location, city, state, date, or
 }
 
 async function getActivityTableByName(activityName) {
-  validate.checkActivity(activityName);
+  validation.checkActivity(activityName);
   activityName = activityName.toLowerCase();
   const activityTableCollection = await activityTable();
 
