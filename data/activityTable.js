@@ -12,6 +12,7 @@ async function createactivityTable(activityName, location, city, state, date, or
     //validate.checkString(price, 'price');
 
     const activityTableCollection = await activityTable();
+   
     let newactivityTable = {
         activityName: activityName,
         location: location,
@@ -39,7 +40,34 @@ async function createactivityTable(activityName, location, city, state, date, or
 
 }
 
+async function getActivityTableByName(activityName) {
+  validate.checkActivity(activityName);
+  activityName = activityName.toLowerCase();
+  const activityTableCollection = await activityTable();
+
+  const activityDetails = await (await activityTableCollection.find({ activityName: activityName })).toArray();
+  //const activityDetails = await (await activityTableCollection.find({ activityName: { $elemMatch: { $eq: activityName } } })).toArray();
+  //console.log(activityDetails)
+  //console.log("yes")
+  try {
+      if (activityDetails.length == 0) {
+          console.log(activityName, ': No activity found by that name.');
+          throw 'No activity is present with that name';
+      }
+  } catch (e) {
+      errormessage = {
+          className: "Item not found",
+          message: "Item was not found",
+          hasErrors: "True",
+          title: "Error"
+      }
+      return errormessage;
+  }
+  return JSON.parse(JSON.stringify(activityDetails));
+}
+
   module.exports = {
     createactivityTable,
-    getAllactivityTable
+    getAllactivityTable,
+    getActivityTableByName
   }
