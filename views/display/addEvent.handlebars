@@ -1,34 +1,45 @@
 <div>
-    <h1>Add a New Event Here!</h1>
-    <form id="addEvent" action="/createEvent" method="POST">
+    <h1>Add a New {{activityName}} Event Here!</h1>
+    <form id="addEvent" action="/events/createEvent" method="POST">
+        <label>Activity
+            <input type="text" id="activityName" placeholder="activityName" name="activityName" value="{{activityName}}">
+        </label>
+        <br>
         <label>Enter Event Location
-            <input type="text" id="location" placeholder="location" name="location" required>
+            <input type="text" id="location" placeholder="location" name="location" value="{{location}}" required>
         </label>
         <br>
         <label>Enter City
-            <input type="text" id="city" placeholder="city" name="city" required>
+            <input type="text" id="city" placeholder="city" name="city" value="{{city}}" required>
         </label>
         <br>
         <label>Enter State
-            <input type="text" id="state" placeholder="state" name="state" required>
+            <input type="text" id="state" placeholder="state" name="state" value="{{state}}" required>
         </label>
         <br>
         <label>Enter Date
-            <input type="date" id="date" placeholder="date" name="date" required>
+            <input type="date" id="date" placeholder="date" name="date" value="{{date}}" required>
         </label>
         <br>
         <label>Enter Organizer
-            <input type="text" id="organizer" placeholder="organizer" name="organizer" required>
+            <input type="text" id="organizer" placeholder="organizer" name="organizer" value="{{organizer}}" required>
         </label>
         <br>
         <label>Enter Expertise level
-            <input type="text" id="expertise" placeholder="expertise" name="expertise" required>
+            <input type="text" id="expertise" placeholder="expertise" name="expertise" value="{{expertise}}" required>
         </label>
         <br>
         <label>Enter Price ($)
-            <input type="number" id="price" placeholder="price" name="price" required>
+            <input type="number" id="price" placeholder="price" name="price" value="{{price}}" required>
         </label>
         <br>
         <input type="submit" value="Add Event" id="createEventbtn" name="createEventButton"><br>
+
+         <div id="error" class="text-center" hidden></div>
+        {{! error }}
+        {{#if error}}
+        <p class="error">{{error}}</p>
+        {{/if}}
+
     </form>
 </div>
