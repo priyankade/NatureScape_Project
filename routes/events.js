@@ -45,9 +45,6 @@ router.post('/createEvent', async (req, res) => {
             let EventPrice = xss(req.body.price);
             var validatedPrice = validate.checkIsProperNumber(EventPrice, "price");
 
-            console.log("expertise is ", validatedExpertise);
-            console.log("price is ", validatedPrice);
-
             let checkdup = await validate.checkDuplicateEvent(validatedActivity, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, validatedExpertise, validatedPrice);
             if ("hasErrors" in checkdup) {
                 throw 'Event already exists';
@@ -98,6 +95,9 @@ router.post('/createEvent', async (req, res) => {
             return;
         }
         res.status(200).send("Successfully inserted Event");
+        //res.status(200).redirect(`/activityName`);
+        //res.status(200).render("display/activityTable");
+    
     }
 
 });
