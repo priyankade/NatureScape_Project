@@ -262,7 +262,7 @@ module.exports = {
             }
           }
         }
-        return true;
+        return date;
       },
       
       checkDateforFutureActivities(date) {
@@ -326,7 +326,7 @@ module.exports = {
             }
           }
         }
-        return true;
+        return date;
       },
     
       checkState (state) {
@@ -387,18 +387,22 @@ module.exports = {
         if (!allStates.includes(state.toUpperCase())) {
           throw "Error: Please enter state in 2 letter format (eg. NJ for New Jersey)";
         }
+        else
+          return state;
       },
 
     checkExpertise(expertise) {
-        console.log(expertise)
+       
         if (["easy", "intermediate", "advanced"].includes(expertise.toLowerCase().trim())) {
-            return true;
+            return expertise;
           } else {
             throw "Error: Please choose expertise level from provided options : easy, intermediate, advanced";
           }
+       
     },
 
     checkIsProperNumber(val, variableName) {
+        //console.log(val)
         if (val === undefined) {
             throw `${variableName || 'provided variable'} is undefined`;
         }
@@ -407,9 +411,9 @@ module.exports = {
             throw `${variableName || 'provided variable'} is null`;
         }
     
-        if (typeof val !== 'number') {
-            throw `${variableName || 'provided variable'} is not a number`;
-        }
+        // if (typeof val != 'number' || !Number.isInteger(num)) {
+        //     throw `${variableName || 'provided variable'} is not a number`;
+        // }
     
         if (isNaN(val)) {
             throw `${variableName || 'provided variable'} is NaN`;
@@ -418,6 +422,8 @@ module.exports = {
         if (val < 0) {
             throw `${variableName || 'provided variable'} is negative. Please provide positive value`;
         }
+
+        return val;
     
     }
 

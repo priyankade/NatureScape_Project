@@ -27,7 +27,7 @@ async function main() {
   await kayakingActivity.createactivityTable("kayaking", "Sea Quest Expeditions", "San-Juan-Islands", "WA", "2023-10-02", "Invisible Inc.", "Intermediate", 100)
   await kayakingActivity.createactivityTable("kayaking", "Jennys Eco", "Everglades", "FL", "2023-10-02", "Rachel", "Easy", 200)
 
-  await scubaActivity.createactivityTable("scuba", "Dutch Springs", "Bethlehem", "PA", "2023-10-02", "Invisible Inc.", "Intermediate", 100)
+  await scubaActivity.createactivityTable("scuba", "Dutch Springs", "Bethlehem", "PA", "2023-08-02", "Invisible Inc.", "Intermediate", 100)
   await scubaActivity.createactivityTable("scuba", "Casino Point", "Catalina", "CA", "2023-10-02", "Rachel", "Easy", 200)
 
   await skydivingActivity.createactivityTable("skydiving", "Skydive Arizona", "Tucson", "AR", "2023-11-02", "Skydiveaz", "Advanced", 2000)
