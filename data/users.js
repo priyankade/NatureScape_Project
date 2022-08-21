@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 16;
 const validation = require('../validation');
 
-async function createUser(fname, lname, username, age, gender, dob, email, phone, emer_phone, password) {
+async function createUser(fname, lname, username, gender, dob, email, phone, emer_phone, password, confirmPassword) {
   if (!fname || typeof fname !== "string")
     throw 'Please provide first name';
 
@@ -15,40 +15,47 @@ async function createUser(fname, lname, username, age, gender, dob, email, phone
   if (!username || typeof username !== "string")
     throw 'Please provide username';
 
-  // if (!age || typeof age !== "string")
-  //   throw 'Please provide age';
+  if (!gender)
+    throw 'Please provide gender';
 
-  // if (!gender || typeof gender !== "string")
-  //   throw 'Please provide gender';
+  if (!dob)
+    throw 'Please enter valid date of birth';
 
-  // if (typeof dob !== "string")
-  //   throw 'Please enter valid date of birth';
+  if (!email)
+    throw 'Please provide email';
 
-  // if (!email || typeof email !== "string")
-  //   throw 'Please provide email';
+  if (!phone)
+    throw 'Please provide phone number';
 
-  // if (!phone || typeof phone !== "string")
-  //   throw 'Please provide phone number';
+  if (!emer_phone)
+    throw 'Please provide emergency phone number';
 
-  // if (!emer_phone || typeof emer_phone !== "string")
-  //   throw 'Please provide emeergency phone number';
+  if (!password || !confirmPassword)
+    throw 'Please provide password';
 
-  // if (!password || typeof password !== "string")
-  //   throw 'Please provide password';
-
-  const hash = await bcrypt.hash(password, saltRounds);
-  //console.log(hash);
-
+  //=========start validations================
   await validation.checkString(fname, 'First Name');
   await validation.checkString(lname, 'Last Name');
   await validation.alphanumeric(username);
-  // await validation.checkString(age, 'age');
-  //await validation.checkString(gender, 'gender');
-  // await validation.checkString(dob, 'dob');
-  // await validation.checkString(email, 'email');
-  // await validation.checkPhone(phone, 'phone number');
-  // await validation.checkPhone(emer_phone, 'emergency phone number');
+  await validation.checkGender(gender);
+  await validation.checkDate(dob, 'dob');
+  await validation.checkEmail(email);
+  await validation.checkPhone(phone, 'phone');
+  await validation.checkPhone(emer_phone, 'emergency phone');
+  if (phone === emer_phone) {
+    throw 'Error: Please provide different phone number for Emergency'
+  }
   await validation.checkPassword(password, 'password');
+  await validation.checkPassword(confirmPassword, 'confirmPassword');
+
+  if (password != confirmPassword) {
+    throw "\nPassword did not match: Please try again...";
+  }
+
+  //=========end validations================
+
+  const hash = await bcrypt.hash(password, saltRounds);
+  //console.log(hash);
 
   username = username.trim();
   username = username.toLowerCase();  //preventing duplicate usernames in the system
@@ -68,7 +75,6 @@ async function createUser(fname, lname, username, age, gender, dob, email, phone
       fname: fname,
       lname: lname,
       username: username,
-      age: age,
       gender: gender,
       dob: dob,
       email: email,
@@ -89,9 +95,8 @@ async function createUser(fname, lname, username, age, gender, dob, email, phone
       const user = await getUserById(newId.toString());
       return JSON.parse(JSON.stringify(user));
     }
-        
-      //return userInserted;
-      //return { authenticated: true };
+    //return userInserted;
+    //return { authenticated: true };
   }
 
 }
@@ -142,7 +147,7 @@ async function checkUser(username, password) {
 
 
 async function getUserById(id) {
-  //id = validation.checkId(id, 'ID');
+  id = validation.checkId(id, 'ID');
   const usersCollection = await users();
   const found_user = await usersCollection.findOne({ _id: ObjectId(id) });
 
@@ -152,7 +157,7 @@ async function getUserById(id) {
 }
 
 async function getUserByUsername(username) {
-  //validation.checkUsername(username, 'username');
+  await validation.alphanumeric(username);
   const usersCollection = await users();
   const found_user = await usersCollection.findOne({ username: username });
 
@@ -161,36 +166,20 @@ async function getUserByUsername(username) {
   return found_user;
 }
 
-// async function seedUser(firstName, lastName, email, username, age, activities_arr) {
-//   const usersCollection = await users();
-
-//   const newUser = {
-//     firstName: firstName,
-//     lastName: lastName,
-//     email: email,
-//     username: username,
-//     age: age,
-//     activities: activities_arr
-//   };
-//   const newInsertInformation = await usersCollection.insertOne(newUser);
-//   const newId = newInsertInformation.insertedId;
-//   return await this.getUserById(newId.toString());
-// }
-
-function calculateAge(dob) 
-{
-    var today = new Date();
-    var birthDate = new Date(dob);
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
-    {
-        age--;
-    }
-    return age;
+function calculateAge(dob) {
+  var today = new Date();
+  var birthDate = new Date(dob);
+  var age = today.getFullYear() - birthDate.getFullYear();
+  var m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
 }
 
 async function userActivity(username, activity) {
+  await validation.alphanumeric(username);
+  await validation.checkActivity(activity);
   const usersCollection = await users();
   // const found_user = await usersCollection.findOne({ username: username });
 
@@ -208,17 +197,17 @@ async function setAdmin(id) {
   if (!id) throw 'You must provide an id';
   if (typeof id !== 'string') throw 'user Id must be a string';
   if (id.trim().length === 0)
-      throw 'user Id cannot be an empty string or just spaces';
+    throw 'user Id cannot be an empty string or just spaces';
   id = id.trim();
   if (!ObjectId.isValid(id)) throw 'invalid object ID';
   //let userObjId = ObjectId.createFromHexString(userId);
   let userCollection = await users();
   let userUpdateInfo = {
-      Admin:true
+    Admin: true
   };
   let updatedInfo = await userCollection.updateOne({ _id: ObjectId(id) }, { $set: userUpdateInfo });
   if (updatedInfo.modifiedCount === 0) {
-      throw 'could not set Admin access successfully';
+    throw 'could not set Admin access successfully';
   }
   return this.getUserById(id);
 };

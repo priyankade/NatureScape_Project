@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const validate = require('../validation')
 const activitiesData = require('../data/activities');
+const activitiesTableData = require('../data/activityTable');
 const xss = require('xss');
 
 
@@ -129,13 +130,15 @@ router.post('/createActivity', async (req, res) => {
 //This route is for going to indivdual activity's page
 router.get("/:activityName", async (req, res) => {
     let activityName = req.params.activityName;
+    //console.log("activityName in req.params is : " , activityName)
+
     let activityTable = {};
     try {
-        let db_result = await activitiesData.getActivityByName(activityName);
-        console.log(db_result);
+        let db_result = await activitiesTableData.getActivityTableByName(activityName);
+        //console.log("in routes the db_result is " , db_result);
         for (let i = 0; i < db_result.length; i++) {
             activityTable[i] = {};
-            let actName= db_result[i].activityName;
+            //let actName= db_result[i].activityName;
             let location = db_result[i].location;
             let city = db_result[i].city;
             let state = db_result[i].state;
@@ -143,6 +146,7 @@ router.get("/:activityName", async (req, res) => {
             let organizer = db_result[i].organizer;
             let expertise = db_result[i].expertise;
             let price = db_result[i].price;
+            //activityTable[i]['actName'] = actName;
             activityTable[i]['location'] = location;
             activityTable[i]['city'] = city;
             activityTable[i]['state'] = state;
@@ -160,8 +164,8 @@ router.get("/:activityName", async (req, res) => {
         res.status(404).render('display/error', errormessage);
         return;
     }
-
-    res.render("display/activityTable", { activityTable: activityTable, activity: "activityTable" });
+   
+    res.render("display/activityTable", { activityTable: activityTable, activity: "activityTable", activityName: activityName});
 });
 
 

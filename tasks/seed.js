@@ -20,22 +20,27 @@ async function main() {
 
   const skyDiving = await activities.createActivity('skyDiving','Skydiving is parachuting from an airplane for fun. Skydiving can be done individually and with groups of people. Training is required. Unlike most paratroopers, skydivers often wait until they are low, before opening the parachute. The jump can also be made from a helicopter or a balloon that is high enough in the sky. Skydiving can be an exciting sport.Skydiving includes free falling (usually from an airplane) through the air prior to opening a parachute. Typically skydives are carried out from around 4,000m (or 12,500ft) offering 40 to 50 seconds of freefall time. Longer free fall times can be achieved by exiting an aircraft at altitudes much higher than 4,000m, but very high jumps require pressurized oxygen within the aircraft, and bottled oxygen for the diver.')
 
-  await hikingActivity.createactivityTable("Hiking", "Smoky Mountains-Gatlinburg", "Gatlinburg", "Tennesse", "08/22/2022", "Invisible Inc.", "Intermediate", "100")
-  await hikingActivity.createactivityTable("Hiking","Centro comercial Moctezuma", "Townsend", "Mexico", "07/12/2022", "Rachel", "Easy", "200")
+  //===================SEEDING ACTIVITIES START=================================//
+  await hikingActivity.createactivityTable("hiking", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2023-08-02", "Invisible Inc.", "Intermediate", 100)
+  await hikingActivity.createactivityTable("hiking","Centro comercial Moctezuma", "Townsend", "MI", "2023-08-02", "Rachel", "Easy", 200)
 
-  // await kayakingActivity.createKayaking("Sea Quest Expeditions", "San-Juan-Islands", "Washington", "12/22/2022", "Invisible Inc.", "Intermediate", "100")
-  // await kayakingActivity.createKayaking("Jennys Eco", "Everglades", "Florida", "07/05/2022", "Rachel", "Easy", "200")
+  await kayakingActivity.createactivityTable("kayaking", "Sea Quest Expeditions", "San-Juan-Islands", "WA", "2023-08-02", "Invisible Inc.", "Intermediate", 100)
+  await kayakingActivity.createactivityTable("kayaking", "Jennys Eco", "Everglades", "FL", "2023-08-02", "Rachel", "Easy", 200)
 
-  // await scubaActivity.createScuba("Dutch Springs", "Bethlehem", "Pennsylvania", "12/22/2022", "Invisible Inc.", "Intermediate", "100")
-  // await scubaActivity.createScuba("Casino Point", "Catalina", "FloriCaliforniada", "07/05/2022", "Rachel", "Easy", "200")
+  await scubaActivity.createactivityTable("scuba", "Dutch Springs", "Bethlehem", "PA", "2023-08-02", "Invisible Inc.", "Intermediate", 100)
+  await scubaActivity.createactivityTable("scuba", "Casino Point", "Catalina", "CA", "2023-08-02", "Rachel", "Easy", 200)
 
-  // await skydivingActivity.createSkydiving("Skydive Arizona", "Tucson", "Arizona", "12/2/2022", "Skydiveaz", "Advanced", "1000")
-  // await skydivingActivity.createSkydiving("Skydive Chicago", "Chicago", "Illinois", "07/06/2022", "Skydivechicago", "Advanced", "2000")
+  await skydivingActivity.createactivityTable("skydiving", "Skydive Arizona", "Tucson", "AR", "2023-08-02", "Skydiveaz", "Advanced", 2000)
+  await skydivingActivity.createactivityTable("skydiving", "Skydive Chicago", "Chicago", "IL", "2022-08-19", "Skydivechicago", "Advanced", 2000)
+  //===================SEEDING ACTIVITIES END=================================//
 
-  let user1 = await users.createUser("John", "Doe", "jodoe", "30", "male", "23/08/1990", "jodoe1234@gmail.com", "8888888888", "8888888888", "jodoe1234", "jodoe1234");
+  let user1 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-02", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
   await users.userActivity("jodoe", "Hiking"); 
 
-  let admin = await users.createUser("Admin", "User", "admin", "35", "female", "23/08/1990", "admin@gmail.com", "8888888888", "8888888888", "admin1234", "admin1234");
+  let user2 = await users.createUser("John2", "Doe", "jodoe2", "male", "1990-08-04", "jodo@mail.com", "8888888888", "9888888888", "jodoe1234", "jodoe1234");
+  await users.userActivity("jodoe", "Hiking"); 
+
+  let admin = await users.createUser("Admin", "User", "admin", "female", "1900-06-04", "admin@gmail.com", "8888888888", "9888888888", "admin1234", "admin1234");
   await users.setAdmin(admin._id.toString())
   await users.userActivity("admin", "Hiking"); 
 

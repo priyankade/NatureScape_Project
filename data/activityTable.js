@@ -1,17 +1,19 @@
 const mongoCollections = require('../config/mongoCollections');
 const activityTable = mongoCollections.activityTable;
-var validate= require('../validation')
+var validation= require('../validation')
 
 async function createactivityTable(activityName, location, city, state, date, organizer, expertise, price) {
-    //validate.checkString(location, 'location');
-    validate.checkString(city, 'city');
-    //validate.checkString(state, 'state');
-    //validate.checkString(date, 'date');
-    //validate.checkString(organizer, 'organizer');
-    //validate.checkString(expertise, 'expertise');
-    //validate.checkString(price, 'price');
+    validation.checkActivity(activityName);
+    validation.checkStringWithSpaces(location, 'location');
+    validation.checkString(city, 'city');
+    validation.checkState(state, 'state');
+    validation.checkDateforFutureActivities(date, 'date');
+    validation.checkStringWithSpaces(organizer, 'organizer');
+    validation.checkExpertise(expertise, 'expertise');
+    validation.checkIsProperNumber(price, 'price');
 
     const activityTableCollection = await activityTable();
+   
     let newactivityTable = {
         activityName: activityName,
         location: location,
@@ -39,7 +41,32 @@ async function createactivityTable(activityName, location, city, state, date, or
 
 }
 
+async function getActivityTableByName(activityName) {
+  validation.checkActivity(activityName);
+  activityName = activityName.toLowerCase();
+  const activityTableCollection = await activityTable();
+
+  const activityDetails = await (await activityTableCollection.find({ activityName: activityName })).toArray();
+
+  try {
+      if (activityDetails.length == 0) {
+          console.log(activityName, ': No activity found by that name.');
+          throw 'No activity is present with that name';
+      }
+  } catch (e) {
+      errormessage = {
+          className: "Item not found",
+          message: "Item was not found",
+          hasErrors: "True",
+          title: "Error"
+      }
+      return errormessage;
+  }
+  return JSON.parse(JSON.stringify(activityDetails));
+}
+
   module.exports = {
     createactivityTable,
-    getAllactivityTable
+    getAllactivityTable,
+    getActivityTableByName
   }

@@ -10,7 +10,7 @@
     <th>Location</th>
     <th>City</th>
     <th>State</th>
-    <th>Date</th>
+    <th>Date (YYYY-MM-DD)</th>
     <th>Organizer</th>
     <th>Expertise level</th>
     <th>Price($)</th>
@@ -19,7 +19,7 @@
     {{#each activityTable}}
     <tr>
     <div class='activityTable'></div>
-        <td><a href="/{{this.activityName}}/{{this.location}}">{{this.location}}</a></td>
+        <td><a href="`/{{this.activityName}}`/{{this.location}}">{{this.location}}</a></td>
         <td>{{this.city}} </td>
         <td>{{this.state}} </td>
         <td>{{this.date}} </td>
