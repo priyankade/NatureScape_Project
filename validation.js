@@ -74,6 +74,7 @@ module.exports = {
     },
 
     async checkDuplicateEvent(activityName, location, city, state, date, organizer, expertise, price) {
+        activityName = activityName.toLowerCase();
         location = location.toLowerCase();
         city = city.toLowerCase();
         state = state.toLowerCase();

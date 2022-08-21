@@ -5,6 +5,9 @@ const usersData = data.users;
 const validation = require('../validation');
 const xss = require('xss');
 
+let gender = ["male", "female", "transgender", "gender neutral", "non-binary", "prefer not to say"];
+
+
 router.get("/login", async (req, res) => {
     if (req.session.user)
         res.redirect("/private");
