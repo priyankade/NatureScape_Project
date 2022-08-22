@@ -13,6 +13,7 @@ const constructorMethod = (app) => {
   app.use("/signup", userRoutes);
   //   app.use("/reviews", reviewsRoute);
   app.use("/activity", homeRoutes);
+  app.use("/events",eventRoutes);
   app.use("/event", homeRoutes);
 
   app.use("*", (req, res) => {
