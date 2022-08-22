@@ -82,3 +82,6 @@ h2.uppercase {
     text-transform: uppercase;
 }
 
+.table-filter {
+    border-radius: 5px;
+}
