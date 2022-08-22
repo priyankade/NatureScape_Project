@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const validate = require('../validation')
-const activitiesData = require('../data/activities');
 const activitiesTableData = require('../data/activityTable');
+const eventData = require('../data/individualevent');
 const xss = require('xss');
 
 router.get('/addEvent', async (req, res) => {
@@ -79,37 +79,40 @@ router.post('/createEvent', async (req, res) => {
                 hasErrors: "True",
                 title: "Error"
             }
-                res.status(400).render("display/addEvent", {
-                    location: req.body.location,
-                    city: req.body.city,
-                    state: req.body.state,
-                    date: req.body.date,
-                    organizer: req.body.organizer,
-                    expertise: req.body.expertise,
-                    price: req.body.price,
-                    title: "Create Event",
-                    error: errormessage,
-                });
-            
-           // res.status(400).render('display/error', "could not add Event");
+            res.status(400).render("display/addEvent", {
+                location: req.body.location,
+                city: req.body.city,
+                state: req.body.state,
+                date: req.body.date,
+                organizer: req.body.organizer,
+                expertise: req.body.expertise,
+                price: req.body.price,
+                title: "Create Event",
+                error: errormessage,
+            });
+
+            // res.status(400).render('display/error', "could not add Event");
             return;
         }
         res.status(200).send("Successfully inserted Event");
         //res.status(200).redirect(`/activityName`);
         //res.status(200).render("display/activityTable");
-    
+
     }
 
 });
 
-router.post('/report/:rid/:uid/:eventid', async function (req, res){
-    const rid = xss(req.body.rid.trim());
-    const uid = xss(req.body.uid.trim());
-    const eventId = xss(req.body.eventId.trim());
+router.post('/', async function (req, res) {
+    console.log('[/REPORT]');
+    const uid = req.session._id;
+    const eventId= req.body.eventId;
+    // const rid = xss(req.body.rid.trim());
+    // const uid = xss(req.body.uid.trim());
+    // const eventId = xss(req.body.eventId.trim());
     const parsedRid = ObjectId(rid);
     const parsedUid = ObjectId(uid);
     const parsedeventId = ObjectId(eventId)
-    
+
     const deleted = await reviewData.updateReviewReport(rid, uid);
     const event = await eventData.geteventById(eventId);
     const allReviews = await reviewData.getAllReviewsOfevent(eventId);

@@ -27,8 +27,8 @@ async function main() {
     {
       question: "How bad is the mosquito situation there?",
       answer: "You definitely need a strong mosquito repellent. We do not recommend mosquito nets as they are a fire hazard"
-    }
-    ]);
+    }],
+    []);
   console.log('created hikingactivity1');
   let hikingactivity2 = await activityTableData.createactivityTable("hiking", "Discover this 3.0-mile out-and-back trail near Moctezuma, Sonora. Generally considered an easy route, it takes an average of 1 h 13 min to complete. This trail is great for hiking, mountain biking, and running, and it's unlikely you'll encounter many other people while exploring.", "Centro comercial Moctezuma", "Townsend", "MI", "2023-10-02", "Rachel", "Easy", 200, faq = [{
     question: "Are trekking boots required?",
@@ -37,8 +37,7 @@ async function main() {
   {
     question: "How chilly does it get? Do I need a winter jacket?",
     answer: "It is fine during the day and during the hike but at night it does get chilly so come with a jacket that can protect you till 15-20 degree celsius."
-  }
-  ]);
+  }],[]);
   console.log('created hikingactivity2');
 
   let kayakingactivity1 = await activityTableData.createactivityTable("kayaking", "Kayak the West-Side of San Juan Island...the federally designated Whale habitat.There is a whole new perspective at sea level. You are really able to just take a breath.The San Juan Islands are known for world-class kayaking, and one local kayak guide, Kelly, has a chance to see it every day.", "San-Juan-Islands", "San-Juan-Islands", "WA", "2023-10-02", "Sea Quest Expeditions", "Intermediate", 100, faq = [{
@@ -49,7 +48,7 @@ async function main() {
     question: "Are children under 18 allowed?",
     answer: "They are allowed if accompanied by an adult. They will get a seaparate two person kayak"
   }
-  ]);
+  ],[]);
   console.log('created kayakingactivity1');
 
   let kayakingactivity2 = await activityTableData.createactivityTable("kayaking", "Everglades National Park offers many paddling opportunities to explore the natural beauty of this area through freshwater marsh, mangrove forests, the 10,000 Islands, and the open waters of Florida Bay.There is a whole new perspective at sea level. You are really able to just take a breath.", "Nine Mile Pond", "Everglades", "FL", "2023-10-02", "Cinnamon", "Easy", 200, faq = [{
@@ -64,7 +63,7 @@ async function main() {
     question: "Are the waters crocodile infested?",
     answer: "It's Florida!"
   }
-  ]);
+  ],[]);
   console.log('created kayakingactivity2');
   let scubaactivity1 = await activityTableData.createactivityTable("scuba", "Located two hours north of Philadelphia, along the border of Lower Nazareth and Bethlehem townships, in Northampton County, Dutch Springs emerged from the remains of the National Portland Cement Quarry at Brodhead. The former limestone mine and cement plant flourished for decades until the operation folded in the mid-1970s, prompting the creation of a unique diving campground, aqua park and adventure course on a portion of the property.", "Dutch Springs", "Bethlehem", "PA", "2023-08-02", "Gauri", "Intermediate", 100, faq = [{
     question: "Are swim suits required?",
@@ -74,7 +73,7 @@ async function main() {
     question: "Are children under 18 allowed?",
     answer: "They are allowed if accompanied by an adult."
   }
-  ]);
+  ],[]);
   console.log('created', scubaactivity1);
 
   let scubaactivity2 = await activityTableData.createactivityTable("scuba", "The Casino Point Underwater Park is located next to the world-famous Casino Building. First established in 1962, this park is the first nonprofit underwater park in the country (and maybe the world), and offers the best shore diving in California! To make entry and exit in and out of the water as easy as possible, there are cement stairs with handrails.", "Casino Point", "Catalina", "CA", "2023-10-02", "Bhargav", "Easy", 200, faq = [{
@@ -85,7 +84,7 @@ async function main() {
     question: "Are children under 18 allowed?",
     answer: "They are allowed if accompanied by an adult."
   }
-  ]);
+  ],[]);
   console.log('created', scubaactivity2);
 
   let skydivingactivity1 = await activityTableData.createactivityTable("skydiving", "Arizona is a popular stomping ground for the parachuting enthusiast with a diversity of landscape throughout Arizona where the beauty of scenes below are breathtaking.You feel temperature change and pressure on your skin. Even on a hot day, it will be noticeably cooler at jump altitude. It's like opening the refrigerator door on a hot day, and having that wave of cool rush over you. The wind resistance from your freefall speed feels like pressure.", "Skydive Arizona", "Tucson", "AR", "2023-11-02", "Skydiveaz", "Advanced", 2000,
@@ -97,7 +96,7 @@ async function main() {
       question: "Are children under 18 allowed?",
       answer: "They are allowed if accompanied by an adult."
     }
-    ]);
+    ],[]);
   console.log('created', skydivingactivity1);
 
   let skydivingactivity2 = await activityTableData.createactivityTable("skydiving", "Chicago is a popular stomping ground for the parachuting enthusiast with a diversity of landscape throughout Chicage where the beauty of scenes below are breathtaking.You feel temperature change and pressure on your skin. Even on a hot day, it will be noticeably cooler at jump altitude. It's like opening the refrigerator door on a hot day, and having that wave of cool rush over you. The wind resistance from your freefall speed feels like pressure.", "Skydive Chicago", "Chicago", "IL", "2022-12-19", "Skydivechicago", "Advanced", 2000,
@@ -109,7 +108,7 @@ async function main() {
       question: "Are children under 18 allowed?",
       answer: "They are allowed if accompanied by an adult."
     }
-    ]);
+    ],[]);
   console.log('created', skydivingactivity2);
 
   //===================SEEDING ACTIVITIES END=================================//
@@ -125,6 +124,7 @@ async function main() {
   await users.userActivity("admin", "Hiking");
 
   let user3 = await users.createUser("shubhangi", "dutt", "sdutt", "female", "1998-04-05", "shubhangidutt99@gmail.com", "4859585894", "8383838383", "sdutt1234", "sdutt1234");
+  
 
   console.log('Done seeding database');
 

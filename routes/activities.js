@@ -6,24 +6,66 @@ const activitiesTableData = require('../data/activityTable');
 const eventsData = require('../data/individualevent');
 const xss = require('xss');
 
-router.post("/register", async (req, res) => {
+
+
+router.post('/register', async (req, res) => {
+    console.log(`[/REGISTER]`);
     let eventId = xss(req.body.eventId);
-    console.log(`POST [/register]`);
-    console.log(eventId);
-    if (!req.session.user) {
+    let username = xss(req.session.user);
+    let oldEvent = '';
+    let validatedId = validate.checkId(eventId);
+    let { ObjectId } = require('mongodb');
+    let parsedId = ObjectId(eventId);
+    let validatedUser = validate.alphanumeric(username);
+//iske aage kyu nhi ja rha?
+    try {
+        oldEvent = await eventsData.getEventById(parsedId.toString());
+        console.log('oldEvent', oldEvent);
+    } catch (error) {
         errormessage = {
-            className: "User not logged in",
-            message: "User needs to log in to register for an event",
+            className: "Cannot register User",
+            message: error,
             showLoginLink: "true",
             hasErrors: "Error",
             title: "Error"
-        }
-        console.log('Event id', eventId);
-        console.log('User', req.session.user);
+        };
         res.status(401).render('display/error', errormessage);
         return;
     }
-    res.status(200).send("Successfully registered for event");
+    try {
+        for (i = 0; i < oldEvent.length; i++) {
+            if (username == oldEvent.registeredMembers[i]) {
+                console.log('username == oldEvent.registeredMembers', username == oldEvent.registeredMembers[i]);
+                throw ' Member already registered'
+            }
+        }
+    } catch (error) {
+        errormessage = {
+            className: "Cannot register User",
+            message: error,
+            showLoginLink: "true",
+            hasErrors: "Error",
+            title: "Error"
+        };
+        res.status(401).render('display/error', errormessage);
+        return;
+
+    }
+    try {
+        //yaha jump kyu kar rha hai?
+        eventsData.updateRegisteredMembers(eventId, req.session.user);
+    } catch (error) {
+        errormessage = {
+            className: "Cannot register User",
+            message: error,
+            showLoginLink: "true",
+            hasErrors: "Error",
+            title: "Error"
+        };
+        res.status(401).render('display/error', errormessage);
+        return;
+    }
+
 });
 
 router.get("/event/:id", async (req, res) => {
@@ -225,16 +267,16 @@ router.post('/:activityName/deleteActivity', async (req, res) => {
     console.log('POST [/deleteActivity]');
     if (req.session.user === "admin") {
         let activityName = xss(req.params.activityName);
-    let validatedactivityName = '';
+        let validatedactivityName = '';
         try {
             validatedactivityName = validate.checkActivity(activityName);
-         }
+        }
         catch (error) {
             errormessage = {
                 className: "Activity name not supplied",
-            message: "Invalid activity name",
-            hasErrors: "Error",
-            title: "Error"
+                message: "Invalid activity name",
+                hasErrors: "Error",
+                title: "Error"
             }
             res.status(401).render('display/error', errormessage);
             return;
