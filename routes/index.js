@@ -9,12 +9,13 @@ const constructorMethod = (app) => {
   app.use("/", homeRoutes);
   app.use("/search", homeRoutes);
   app.use("/addActivity", homeRoutes);
+  app.use("/deleteActivity",homeRoutes);
   app.use("/login", userRoutes);
   app.use("/signup", userRoutes);
-  //   app.use("/reviews", reviewsRoute);
   app.use("/activity", homeRoutes);
   app.use("/events",eventRoutes);
   app.use("/event", homeRoutes);
+  app.use("/register", homeRoutes);
 
   app.use("*", (req, res) => {
     let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;

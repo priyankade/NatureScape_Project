@@ -6,10 +6,43 @@ const activitiesTableData = require('../data/activityTable');
 const eventsData = require('../data/individualevent');
 const xss = require('xss');
 
+router.post("/register", async (req, res) => {
+    let eventId = xss(req.body.eventId);
+    console.log(`POST [/register]`);
+    console.log(eventId);
+    if (!req.session.user) {
+        errormessage = {
+            className: "User not logged in",
+            message: "User needs to log in to register for an event",
+            showLoginLink: "true",
+            hasErrors: "Error",
+            title: "Error"
+        }
+        console.log('Event id', eventId);
+        console.log('User', req.session.user);
+        res.status(401).render('display/error', errormessage);
+        return;
+    }
+    res.status(200).send("Successfully registered for event");
+});
 
 router.get("/event/:id", async (req, res) => {
     let searchid = xss(req.params.id);
     console.log(`GET [/event/${searchid}]`);
+
+    if (!req.session.user) {
+        errormessage = {
+            className: "User not logged in",
+            message: "User needs to log in to view event details",
+            showLoginLink: "true",
+            hasErrors: "Error",
+            title: "Error"
+        }
+        res.status(401).render('display/error', errormessage);
+        return;
+    }
+
+    let username = req.session.user;
 
     try {
         validate.checkId(searchid);
@@ -38,11 +71,14 @@ router.get("/event/:id", async (req, res) => {
         }
         return res.status(400).render("display/error", errormessage);
     }
-    let is_user_logged_in = false;
-    if (req.session.user) is_user_logged_in = true;
+    console.log(searchResult);
+    let isUserRegistered = true;
+    if (!('registeredMembers' in searchResult) || !(username in searchResult.registeredMembers)) {
+        isUserRegistered = false;
+    }
     res.render('display/eventpage', {
         event: searchResult,
-        is_user_logged_in: is_user_logged_in
+        isUserRegistered: isUserRegistered
     });
 });
 
@@ -165,6 +201,81 @@ router.post('/createActivity', async (req, res) => {
         res.status(200).send("Successfully inserted activity");
     }
 
+});
+
+router.get('/deleteActivity', async (req, res) => {
+    console.log('GET [/deleteActivity]');
+    // if (req.session.user) {
+    //     if (req.session.admin) {
+    res.render('display/deleteActivity');
+    // return;
+    // }
+    //     else {
+    //         errormessage = {
+    //             className: "User not admin",
+    //             message: "User needs admin role to delete activity",
+    //             hasErrors: "Error",
+    //             title: "Error"
+    //         }
+    //         res.status(401).render('display/error', errormessage);
+    //         return;
+    //     }
+    // }
+    // else {
+    //     errormessage = {
+    //         className: "User not logged in",
+    //         message: "User needs to log in to delete activity",
+    //         hasErrors: "Error",
+    //         title: "Error"
+    //     }
+    //     res.status(401).render('display/error', errormessage);
+    //     return;
+    // }
+
+});
+router.post('/removeActivity/:activityName', async (req, res) => {
+    console.log('removeActivity [/POST]');
+    let activityName = xss(req.body.activityName);
+    let validatedactivityName = '';
+    try {
+        validatedactivityName = validate.checkActivity(activityName);
+    } catch (error) {
+        errormessage = {
+            className: "Activity name not supplied",
+            message: "Invalid activity name",
+            hasErrors: "Error",
+            title: "Error"
+        }
+        res.status(401).render('display/error', errormessage);
+        return;
+    }
+    console.log('validated ', validatedactivityName);
+    // if (req.session.user) {
+    //     if (req.session.admin) {
+    activitiesData.deleteActivity(validatedactivityName);
+    //     }
+    //     else {
+    //         errormessage = {
+    //             className: "User not admin",
+    //             message: "User needs to admin role to delete activity",
+    //             hasErrors: "Error",
+    //             title: "Error"
+    //         }
+    //         res.status(401).render('display/error', errormessage);
+    //         return;
+    //     }
+    // }
+    // else {
+    //     errormessage = {
+    //         className: "User not logged in",
+    //         message: "User needs to log in to delete activity",
+    //         hasErrors: "Error",
+    //         title: "Error"
+    //     }
+    //     res.status(401).render('display/error', errormessage);
+    //     return;
+    // }
+    res.status(200).send("Successfully deleted activity");
 });
 
 //This route is for going to indivdual activity's page

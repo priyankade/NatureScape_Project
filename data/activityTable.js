@@ -2,8 +2,9 @@ const mongoCollections = require('../config/mongoCollections');
 const activityTable = mongoCollections.activityTable;
 var validation= require('../validation')
 
-async function createactivityTable(activityName, location, city, state, date, organizer, expertise, price) {
+async function createactivityTable(activityName,overview, location, city, state, date, organizer, expertise, price,faq) {
     validation.checkActivity(activityName);
+    validation.checkDescription(overview);
     validation.checkStringWithSpaces(location, 'location');
     validation.checkString(city, 'city');
     validation.checkState(state, 'state');
@@ -16,13 +17,15 @@ async function createactivityTable(activityName, location, city, state, date, or
    
     let newactivityTable = {
         activityName: activityName,
+        overview:overview,
         location: location,
         city: city,
         state: state,
         date: date,
         organizer: organizer,
         expertise: expertise,
-        price: price
+        price: price,
+        faq: faq
     };
 
     //Create/Insert new activityTable activity in db

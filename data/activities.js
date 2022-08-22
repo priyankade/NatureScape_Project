@@ -52,6 +52,22 @@ async function getActivityByName(activityName) {
     }
     return JSON.parse(JSON.stringify(activityDetails));
 }
+async function deleteActivity(activityName) {
+    console.log('data/activities.js deleteActivity()');
+    validate.checkActivity(activityName);
+    deleteActivity = activityName.toLowerCase();
+    const activityCollection = await activities();
+    const checkActivity = await activityCollection.findOne({ "activityName": deleteActivity })
+    if (checkActivity === null) {
+        throw `Could not delete activity ${deleteActivity}`;
+    }
+    const deletionInfo = await activityCollection.deleteOne({ "activityName": deleteActivity });
+    if (deletionInfo.deletedCount === 0) {
+        throw `Could not delete activity ${deleteActivity}`;
+    }
+
+    return { deleted: true };
+}
 
 async function getActivityById(Id) {
     validate.checkId(Id);
@@ -71,20 +87,6 @@ async function getAllActivities() {
 
 }
 
-async function deleteActivity(activityName) {
-    validate.checkActivity(activityName);
-    const activityCollection = await activities();
-    const checkActivity = await activityCollection.findOne({ activityName: "activityName" })
-    if (checkActivity === null) {
-        throw `Could not delete activity ${activityName}`;
-    }
-    const deletionInfo = await activityCollection.deleteOne({ activityName: "activityName" });
-    if (deletionInfo.deletedCount === 0) {
-        throw `Could not delete activity ${activityName}`;
-    }
-
-    return { deleted: true };
-}
 
 async function updateActivity(activityId, updatedActivity) {
     validate.checkId(activityId);
