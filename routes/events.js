@@ -102,4 +102,29 @@ router.post('/createEvent', async (req, res) => {
 
 });
 
+router.post('/report/:rid/:uid/:eventid', async function (req, res){
+    const rid = xss(req.body.rid.trim());
+    const uid = xss(req.body.uid.trim());
+    const eventId = xss(req.body.eventId.trim());
+    const parsedRid = ObjectId(rid);
+    const parsedUid = ObjectId(uid);
+    const parsedeventId = ObjectId(eventId)
+    
+    const deleted = await reviewData.updateReviewReport(rid, uid);
+    const event = await eventData.geteventById(eventId);
+    const allReviews = await reviewData.getAllReviewsOfevent(eventId);
+    const numReviews = allReviews.length;
+    event.rating = (event.rating / numReviews).toFixed(2);
+    event.price = (event.price / numReviews).toFixed(2);
+    event.distancedTables = ((event.distancedTables / numReviews) * 100).toFixed(2);
+    event.maskedEmployees = ((event.maskedEmployees / numReviews) * 100).toFixed(2);
+    event.noTouchPayment = ((event.noTouchPayment / numReviews) * 100).toFixed(2);
+    event.outdoorSeating = ((event.outdoorSeating / numReviews) * 100).toFixed(2);
+    res.status(200).json({
+        success: true,
+        deleted: deleted,
+        event: event
+    });
+});
+
 module.exports = router;

@@ -6,28 +6,60 @@
 </form>
 <ul id="activityList" hidden></ul>
 
+{{#unless is_user_logged_in}}
+<div class="float-right">
+<div id="login">
+    <a class="btn btn-primary" href="/users/login">Login</a>
+
+    <a class="btn btn-primary" href="/users/signup">Signup</a>
+</div>
+</div>
+{{/unless}}
+
+{{#if is_user_logged_in}}
+<div class="float-right">
+<div id="profile">
+    <a class="btn btn-primary" href="/private/profile">Profile</a>
+
+    <a class="btn btn-primary" href="/users/logout">Logout</a>
+</div>
+</div>
+{{/if}}
+
+<div>
+    <form class="addActivity" action="/addActivity">
+        <input type="submit" class="btn btn-primary" id="addActivity" name="addActivity" value="Add Activity">
+    </form>
+</div>
+
 {{#each activities}}
 <div class='activity'>
     <h2 id="individualActivityName"><a href="/activity/{{urlEncode this.activityName}}">{{this.activityName}}</a></h2>
+
+    {{#if ../isAdmin}}
+    <form class="deleteActivitybyName" method="GET" action="/activity/{{urlEncode this.activityName}}/deleteActivity">
+            <button type="submit" formmethod="post" formmethod="post" action="/activity/{{urlEncode this.activityName}}/deleteActivity" class="btn btn-danger btn-sm">Delete</button>
+    </form>
+
+    {{else}}
+    <form hidden class="deleteActivitybyName" method="GET" action="/activity/{{urlEncode this.activityName}}/deleteActivity">
+            <button type="submit" formmethod="post" formmethod="post" action="/activity/{{urlEncode this.activityName}}/deleteActivity" class="btn btn-danger btn-sm">Delete</button>
+    </form>
+
+
+    {{/if}}
+
+
+
+
     <p class="description">{{this.activityDesc}}</p>
 </div>
 {{/each}}
 
-{{#unless is_user_logged_in}}
-<div id="login">
-    <a href="/users/login">Login</a>
 
-    <a href="/users/signup">Signup</a>
-</div>
-{{/unless}}
-<div>
-    <form class="addActivity" action="/addActivity">
-        <input type="submit" id="addActivity" name="addActivity" value="Add Activity">
-    </form>
-</div>
-<div>
+{{!-- <div>
     <form class="deleteActivitybyName" method="GET" action="/deleteActivity">
         <input type="submit" id="deleteActivity" name="DeleteActivity" value="Delete Activity">
     </form>
-</div>
+</div> --}}
 <script src="../../public/js/activities.js"></script>
