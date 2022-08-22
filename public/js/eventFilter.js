@@ -27,7 +27,7 @@ function getUniqueValuesFromColumn() {
   allFilters.forEach((filter_i) => {
       col_index = filter_i.parentElement.getAttribute("col-index");
       alert(col_index);
-      const rows = document.querySelectorAll("#event-table > tbody > tr")
+      const rows = document.querySelectorAll("#eventTable > tbody > tr")
 
       rows.forEach((row) => {
           cell_value = row.querySelector("td:nth-child("+col_index+")").innerHTML;
