@@ -32,6 +32,7 @@ async function main() {
 
   await skydivingActivity.createactivityTable("skydiving", "Skydive Arizona", "Tucson", "AR", "2023-11-02", "Skydiveaz", "Advanced", 2000)
   await skydivingActivity.createactivityTable("skydiving", "Skydive Chicago", "Chicago", "IL", "2022-12-19", "Skydivechicago", "Advanced", 2000)
+
   //===================SEEDING ACTIVITIES END=================================//
 
   let user1 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-02", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");

@@ -1,3 +1,37 @@
+<div class="container">
+	<h2>{{this.actName}}</h2>
+	<br>
+
+	<input type="text" id="searchEvent" onkeyup="myFunction()" placeholder="Filter for events">
+	<br>
+
+	<table id="eventTable" style="width:100%">
+		<tr class="header">
+			<th>Location</th>
+			<th>City</th>
+			<th>State</th>
+			<th>Date (YYYY-MM-DD)</th>
+			<th>Organizer</th>
+			<th>Expertise level</th>
+			<th>Price($)</th>
+		</tr>
+
+		{{#each activityTable}}
+		<tr>
+			<div class='activityTable'></div>
+			<td><a href="/event/{{urlEncode this.id}}">{{this.location}}</a></td>
+			<td>{{this.city}} </td>
+			<td>{{this.state}} </td>
+			<td>{{this.date}} </td>
+			<td>{{this.organizer}} </td>
+			<td>{{this.expertise}} </td>
+			<td>{{this.price}} </td>
+</div>
+</tr>
+{{/each}}
+
+</table>
+
 <div class="container m-5">
   <div class="row mb-4">
     <div class="col">
@@ -43,6 +77,13 @@
     <br>
     <br>
 
+
+<form class="addEvent" action="/addEvent">
+	<input type="submit" id="addEvent" name="addEvent" value="Add Event">
+</form>
+
+<script src="../../public/js/eventFilter.js"></script>
+</div>
 
   <table id="eventTable" class="table table-hover">
     <thead>
@@ -105,4 +146,3 @@
   {{!-- <script src="../../public/js/eventFilter.js"> getUniqueValuesFromColumn() </script> --}}
 
   <script src="../../public/js/eventFilter.js"></script>
-

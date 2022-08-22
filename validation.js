@@ -67,8 +67,8 @@ module.exports = {
                 return errormessage;
             }
         }
-        obj={
-            actName:activityName
+        obj = {
+            actName: activityName
         };
         return obj;
     },
@@ -174,13 +174,13 @@ module.exports = {
     },
 
     checkPhone(phone, varName) {
-      phone = phone.trim();
-      let re = /^\d{10}$/;          //validate phone number of 10 digits
-      if (!re.test(phone)) {
-        throw `Error: Invalid ${varName} number, please enter phone number in 10 digit format`;
-      } else {
-        return true;
-      }
+        phone = phone.trim();
+        let re = /^\d{10}$/;          //validate phone number of 10 digits
+        if (!re.test(phone)) {
+            throw `Error: Invalid ${varName} number, please enter phone number in 10 digit format`;
+        } else {
+            return true;
+        }
     },
 
     checkEmail(email) {
@@ -188,18 +188,18 @@ module.exports = {
         email = email.toLowerCase().trim();
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!re.test(String(email))) {
-          throw "Invalid, Enter a proper email";
+            throw "Invalid, Enter a proper email";
         } else {
-          return true;
+            return true;
         }
     },
 
     checkGender(gender) {
         if (["male", "female", "transgender", "gender neutral", "non-binary", "prefer not to say"].includes(gender.toLowerCase().trim())) {
             return true;
-          } else {
+        } else {
             throw "Please choose a gender from provided options";
-          }
+        }
     },
 
     checkDate(date) {
@@ -209,59 +209,59 @@ module.exports = {
         //Validate Date in YYYY-MM-DD format
         let arr = date.split("-");
         if (arr.length !== 3) throw "Error: Date should contain 3 values of month, day, year in YYYY-MM-DD format";
-      
+
         let year = parseInt(arr[0]);
         let month = parseInt(arr[1]);
         let day = parseInt(arr[2]);
-      
+
         if (year != arr[0] || month != arr[1] || day != arr[2]) {
-          throw "Error: Invalid month data present";
+            throw "Error: Invalid month data present";
         }
-        
+
         //Month validate
-        if (month < 1 || month > 12)  
-           throw "Error: month of Date should be between 1 and 12";
+        if (month < 1 || month > 12)
+            throw "Error: month of Date should be between 1 and 12";
         //months with 31 days
         if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
-          if (day < 1 || day > 31) {
-            throw `Error: Value for day should be between 1 and 31 in this month - ${month}`;
-          }
-        } 
+            if (day < 1 || day > 31) {
+                throw `Error: Value for day should be between 1 and 31 in this month - ${month}`;
+            }
+        }
         //months with 30 days
         else if ([4, 6, 9, 11].includes(month)) {
-          if (day < 1 || day > 30) {
-            throw `Error: Value for day should be between 1 and 30"in this month - ${month}`;
-          }
-        } 
+            if (day < 1 || day > 30) {
+                throw `Error: Value for day should be between 1 and 30"in this month - ${month}`;
+            }
+        }
         //february
         else if (month === 2) {
-          if (year % 4 === 0) {
-            if (day < 1 || day > 29) {
-              throw "Error: Day should be between 1 and 29";
+            if (year % 4 === 0) {
+                if (day < 1 || day > 29) {
+                    throw "Error: Day should be between 1 and 29";
+                }
+            } else {
+                if (day < 1 || day > 28) {
+                    throw "Error: Day should be between 1 and 28";
+                }
             }
-          } else {
-            if (day < 1 || day > 28) {
-              throw "Error: Day should be between 1 and 28";
-            }
-          }
         }
 
         // if date in the past, throws error
         // new Date() returns the current date in YYYY-MM-DD format
-      
+
         let currentYear = new Date().getFullYear();
         if (year < 1900 || year > currentYear) {
-          throw "Error: Year should be between 1900 and current year";
+            throw "Error: Year should be between 1900 and current year";
         } else if (year === currentYear) {
-          let currentMonth = new Date().getMonth() + 1;
-          if (month > currentMonth) {
-            throw "Error: Month should be less than or equal to current month";
-          } else if (month === currentMonth) {
-            let currentDay = new Date().getDate();
-            if (day > currentDay) {
-              throw "Error: Day should be less than or equal to current day";
+            let currentMonth = new Date().getMonth() + 1;
+            if (month > currentMonth) {
+                throw "Error: Month should be less than or equal to current month";
+            } else if (month === currentMonth) {
+                let currentDay = new Date().getDate();
+                if (day > currentDay) {
+                    throw "Error: Day should be less than or equal to current day";
+                }
             }
-          }
         }
         return date;
       },
@@ -273,59 +273,59 @@ module.exports = {
         //Validate Date in YYYY-MM-DD format
         let arr = date.split("-");
         if (arr.length !== 3) throw "Error: Date should contain 3 values of month, day, year in YYYY-MM-DD format";
-      
+
         let year = parseInt(arr[0]);
         let month = parseInt(arr[1]);
         let day = parseInt(arr[2]);
-      
+
         if (year != arr[0] || month != arr[1] || day != arr[2]) {
-          throw "Error: Invalid month data present";
+            throw "Error: Invalid month data present";
         }
-        
+
         //Month validate
-        if (month < 1 || month > 12)  
-           throw "Error: month of Date should be between 1 and 12";
+        if (month < 1 || month > 12)
+            throw "Error: month of Date should be between 1 and 12";
         //months with 31 days
         if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
-          if (day < 1 || day > 31) {
-            throw `Error: Value for day should be between 1 and 31 in this month - ${month}`;
-          }
-        } 
+            if (day < 1 || day > 31) {
+                throw `Error: Value for day should be between 1 and 31 in this month - ${month}`;
+            }
+        }
         //months with 30 days
         else if ([4, 6, 9, 11].includes(month)) {
-          if (day < 1 || day > 30) {
-            throw `Error: Value for day should be between 1 and 30"in this month - ${month}`;
-          }
-        } 
+            if (day < 1 || day > 30) {
+                throw `Error: Value for day should be between 1 and 30"in this month - ${month}`;
+            }
+        }
         //february
         else if (month === 2) {
-          if (year % 4 === 0) {
-            if (day < 1 || day > 29) {
-              throw "Error: Day should be between 1 and 29";
+            if (year % 4 === 0) {
+                if (day < 1 || day > 29) {
+                    throw "Error: Day should be between 1 and 29";
+                }
+            } else {
+                if (day < 1 || day > 28) {
+                    throw "Error: Day should be between 1 and 28";
+                }
             }
-          } else {
-            if (day < 1 || day > 28) {
-              throw "Error: Day should be between 1 and 28";
-            }
-          }
         }
 
         // if date in the past, throws error
         // new Date() returns the current date in YYYY-MM-DD format
-      
+
         let currentYear = new Date().getFullYear();
         if (year < currentYear) {
-          throw "Error: Year should be in current year or in future";
+            throw "Error: Year should be in current year or in future";
         } else if (year === currentYear) {
-          let currentMonth = new Date().getMonth() + 1;
-          if (month < currentMonth) {
-            throw "Error: Month should be greater than or equal to current month";
-          } else if (month === currentMonth) {
-            let currentDay = new Date().getDate();
-            if (day < currentDay) {
-              throw "Error: Day should be greater than or equal to current day";
+            let currentMonth = new Date().getMonth() + 1;
+            if (month < currentMonth) {
+                throw "Error: Month should be greater than or equal to current month";
+            } else if (month === currentMonth) {
+                let currentDay = new Date().getDate();
+                if (day < currentDay) {
+                    throw "Error: Day should be greater than or equal to current day";
+                }
             }
-          }
         }
         return date;
       },
@@ -334,59 +334,59 @@ module.exports = {
         this.checkString(state);
         state = state.trim();
         let allStates = [
-          "AL",
-          "AK",
-          "AZ",
-          "AR",
-          "CA",
-          "CO",
-          "CT",
-          "DE",
-          "FL",
-          "GA",
-          "HI",
-          "ID",
-          "IL",
-          "IN",
-          "IA",
-          "KS",
-          "KY",
-          "LA",
-          "ME",
-          "MD",
-          "MA",
-          "MI",
-          "MN",
-          "MS",
-          "MO",
-          "MT",
-          "NE",
-          "NV",
-          "NH",
-          "NJ",
-          "NM",
-          "NY",
-          "NC",
-          "ND",
-          "OH",
-          "OK",
-          "OR",
-          "PA",
-          "RI",
-          "SC",
-          "SD",
-          "TN",
-          "TX",
-          "UT",
-          "VT",
-          "VA",
-          "WA",
-          "WV",
-          "WI",
-          "WY",
+            "AL",
+            "AK",
+            "AZ",
+            "AR",
+            "CA",
+            "CO",
+            "CT",
+            "DE",
+            "FL",
+            "GA",
+            "HI",
+            "ID",
+            "IL",
+            "IN",
+            "IA",
+            "KS",
+            "KY",
+            "LA",
+            "ME",
+            "MD",
+            "MA",
+            "MI",
+            "MN",
+            "MS",
+            "MO",
+            "MT",
+            "NE",
+            "NV",
+            "NH",
+            "NJ",
+            "NM",
+            "NY",
+            "NC",
+            "ND",
+            "OH",
+            "OK",
+            "OR",
+            "PA",
+            "RI",
+            "SC",
+            "SD",
+            "TN",
+            "TX",
+            "UT",
+            "VT",
+            "VA",
+            "WA",
+            "WV",
+            "WI",
+            "WY",
         ];
         if (!allStates.includes(state.toUpperCase())) {
-          throw "Error: Please enter state in 2 letter format (eg. NJ for New Jersey)";
+            throw "Error: Please enter state in 2 letter format (eg. NJ for New Jersey)";
         }
         else
           return state;
@@ -399,7 +399,6 @@ module.exports = {
           } else {
             throw "Error: Please choose expertise level from provided options : easy, intermediate, advanced";
           }
-       
     },
 
     checkIsProperNumber(val, variableName) {
@@ -407,7 +406,7 @@ module.exports = {
         if (val === undefined) {
             throw `${variableName || 'provided variable'} is undefined`;
         }
-    
+
         if (val === null) {
             throw `${variableName || 'provided variable'} is null`;
         }
@@ -425,7 +424,6 @@ module.exports = {
         }
 
         return val;
-    
     }
 
 
