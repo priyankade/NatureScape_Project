@@ -1,40 +1,44 @@
 <div class="container">
+    <form action="/report" method="POST" >
+        <input type="text" value={{event._id}} name="eventId" hidden>
+        <input type="submit" value="Report" name="Report">
+    </form>
 
     <br>
-<h1>{{event.location}}</h1>
-<h6>{{event.overview}}</h6>
-<h6>Address: {{event.city}},{{event.state}}</h6>
-<h6>Date and Time: {{event.date}}</h6>
-<h6>Organized by: {{event.organizer}} </h6>
-<h6>Expertise Level: {{event.expertise}}</h6>
-<h6>Price: {{event.price}}</h6>
+    <h1>{{event.location}}</h1>
+    <h6>{{event.overview}}</h6>
+    <h6>Address: {{event.city}},{{event.state}}</h6>
+    <h6>Date and Time: {{event.date}}</h6>
+    <h6>Organized by: {{event.organizer}} </h6>
+    <h6>Expertise Level: {{event.expertise}}</h6>
+    <h6>Price: {{event.price}}</h6>
 
-<div id="registered_members">
-<h6>Registered Members:</h6><br>
-{{#each event.registeredMembers}}
-<h5>this.username</h5><br>
-{{/each}}
-</div>
+    <div id="registered_members">
+        <h6>Registered Members:</h6><br>
+        {{#each event.registeredMembers}}
+        <h5>event.registeredMembers</h5><br>
+        {{/each}}
+    </div>
 
-{{#unless isUserRegistered}}
-<form action="/register" method="POST">
-    <input type="text" value={{event._id}} name="eventId" hidden>
-    <label>Register</label>
-    <input type="submit" value="Register" name="Register">
-</form>
-{{/unless}}
+    {{#unless isUserRegistered}}
+    <form action="/register" method="POST">
+        <input type="text" value={{event._id}} name="eventId" hidden>
+        <label>Register</label>
+        <input type="submit" value="Register" name="Register">
+    </form>
+    {{/unless}}
 
-<div id="faq">
-    <h6>Frequently Asked Questions</h6>
-    <ul>
-    {{#each event.faq}}
-    <li>Question- {{this.question}}</li>
-    <li>Answer- {{this.answer}}</li>
-    {{/each}}
-    </ul>
-</div>
+    <div id="faq">
+        <h6>Frequently Asked Questions</h6>
+        <ul>
+            {{#each event.faq}}
+            <li>Question- {{this.question}}</li>
+            <li>Answer- {{this.answer}}</li>
+            {{/each}}
+        </ul>
+    </div>
 
-<div id="reviews">
-    
-</div>
+    <div id="reviews">
+
+    </div>
 </div>

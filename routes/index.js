@@ -4,6 +4,8 @@ const homeRoutes = require("./activities");
 const eventRoutes = require("./events");
 
 const constructorMethod = (app) => {
+  app.use("/report",eventRoutes);
+  app.use("/register", homeRoutes);
   app.use("/users", userRoutes);
   app.use("/private", privateRoutes);
   app.use("/", homeRoutes);
@@ -15,7 +17,8 @@ const constructorMethod = (app) => {
   app.use("/activity", homeRoutes);
   app.use("/events",eventRoutes);
   app.use("/event", homeRoutes);
-  app.use("/register", homeRoutes);
+  
+  
 
   app.use("*", (req, res) => {
     let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
