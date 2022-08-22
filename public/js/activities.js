@@ -1,3 +1,4 @@
+
 //front end functionality for homepage
 const searchForm = document.getElementById("searchForm");
 searchForm.addEventListener('submit', (event) => {
@@ -11,3 +12,4 @@ activityLink.onclick = function () {
     const activityNameinLink = activityLink.value;
     location.href = '/' + activityNameinLink;
 }
+

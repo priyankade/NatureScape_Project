@@ -20,8 +20,14 @@
     <a href="/users/signup">Signup</a>
 </div>
 {{/unless}}
-
-<form class="addActivity" action="/addActivity">
-    <input type="submit" id="addActivity" name="addActivity" value="Add Activity">
-</form>
+<div>
+    <form class="addActivity" action="/addActivity">
+        <input type="submit" id="addActivity" name="addActivity" value="Add Activity">
+    </form>
+</div>
+<div>
+    <form class="deleteActivitybyName" method="GET" action="/deleteActivity">
+        <input type="submit" id="deleteActivity" name="DeleteActivity" value="Delete Activity">
+    </form>
+</div>
 <script src="../../public/js/activities.js"></script>

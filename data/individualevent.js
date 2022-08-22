@@ -13,6 +13,14 @@ async function getEventById(Id) {
     if (eventDetails === null) throw 'No event is present with that Id';
     return eventDetails;
 }
+
+async function register(eventId, username) {
+    validate.checkId(Id);
+    const eventsCollection = await eventsData();
+    //update event with eventid eventId, add username to event.registeredMembers
+    return eventDetails;
+}
+
 module.exports = {
     getEventById
 }
