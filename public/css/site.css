@@ -78,3 +78,10 @@ table, th, td {
     border:1px solid black;
 }
 
+h2.uppercase {
+    text-transform: uppercase;
+}
+
+.table-filter {
+    border-radius: 5px;
+}

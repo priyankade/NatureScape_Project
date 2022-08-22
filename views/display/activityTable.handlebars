@@ -32,7 +32,51 @@
 
 </table>
 
-<br>
+<div class="container m-5">
+  <div class="row mb-4">
+    <div class="col">
+      <a href="/events/addEvent" class="btn btn-primary ">Create a new event</a>
+    </div>
+  </div>
+
+  {{!-- <div class="row">
+    <div class="col col-4">
+      <label for="myInput"></label>
+      <input type="text" class="form-control" id="myInput" onkeyup="fName('myInput',0)"
+        placeholder="Search Event Location">
+    </div>
+    <div class="col col-4">
+      <label for="myInput_2"></label>
+      <input type="text" class="form-control" id="myInput_2" onkeyup="fName('myInput_2',2)"
+        placeholder="Search Event State">
+    </div>
+  </div> --}}
+  {{!-- <div class="row">
+    <div class="col col-4">
+      <div class="rating-slider w-100">
+        <label for="rsb" class="font-weight-bold">Rating above: <span id="rsd" class="ml-2"></span></label>
+        <input value="1" min="1" max="5" step="0.1" type="range" id="rsb" onmouseup="fNum('rsb',3)"
+          onkeyup="fNum('rsb',3)">
+      </div>
+    </div>
+    <div class="col col-4">
+      <div class="price-slider w-100">
+        <label for="psb" class="font-weight-bold">Price below: <span id="psd" class="ml-2"></span></label>
+        <input value="5" min="1" max="5" step="0.1" type="range" id="psb" onmouseup="fNum('psb',4,(a,b)=>a<=b)"
+          onkeyup="fNum('psb',4,(a,b)=>a<=b)">
+      </div>
+    </div> --}}
+    {{!-- <div class="col col-4">
+      <div class="price-slider w-100">
+        <label for="psb" class="font-weight-bold">Price below: <span id="psd" class="ml-2"></span></label>
+        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+      </div> --}}
+      {{!--
+    </div>
+  </div> --}}
+    <br>
+    <br>
+
 
 <form class="addEvent" action="/addEvent">
 	<input type="submit" id="addEvent" name="addEvent" value="Add Event">
@@ -40,3 +84,65 @@
 
 <script src="../../public/js/eventFilter.js"></script>
 </div>
+
+  <table id="eventTable" class="table table-hover">
+    <thead>
+      <th scope="col">Location
+        {{!-- <select class="table-filter" onchange="filter_rows()">
+          <option value="all"></option> --}}
+        </select>
+      </th>
+      <th scope="col">City
+        {{!-- <select class="table-filter" onchange="filter_rows()">
+          <option value="all"></option> --}}
+        </select>
+      </th>
+      <th scope="col">State
+        <select class="table-filter" onchange="filter_rows()">
+          <option value="all"></option>
+        </select>
+      </th>
+      <th scope="col">Date (YYYY-MM-DD)
+        {{!-- <select class="table-filter" onchange="filter_rows()">
+          <option value="all"></option>
+        </select> --}}
+      </th>
+      <th scope="col">Organizer
+        {{!-- <select class="table-filter" onchange="filter_rows()">
+          <option value="all"></option>
+        </select> --}}
+      </th>
+      <th scope="col">Expertise level
+        <select class="table-filter" onchange="filter_rows()">
+           {{!-- <option value="" selected></option> --}}
+           <option value="all"></option>
+            <option value="easy">Easy</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+        </select>
+      </th>
+      <th scope="col">Price($)
+        {{!-- <select class="table-filter" onchange="filter_rows()">
+          <option value="all"></option>
+        </select> --}}
+      </th>
+    </thead>
+    <tbody>
+      {{#each activityTable}}
+      <td><a href="/activities/{{{this.location}}}">{{{this.location}}}</a></td>
+      <td>{{this.city}}</td>
+      <td>{{this.state}}</td>
+      <td>{{this.date}}</td>
+      <td>{{this.organizer}}</td>
+      <td>{{this.expertise}} </td>
+       <td>{{this.price}} </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+</div>
+
+  {{!-- <script src="../../public/js/eventFilter.js"> getUniqueValuesFromColumn() </script> --}}
+
+  <script src="../../public/js/eventFilter.js"></script>

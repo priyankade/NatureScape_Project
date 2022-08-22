@@ -1,6 +1,7 @@
 const userRoutes = require("./users");
 const privateRoutes = require("./private");
 const homeRoutes = require("./activities");
+const eventRoutes = require("./events");
 
 const constructorMethod = (app) => {
   app.use("/users", userRoutes);

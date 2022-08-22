@@ -10,7 +10,7 @@ async function createactivityTable(activityName, location, city, state, date, or
     validation.checkDateforFutureActivities(date, 'date');
     validation.checkStringWithSpaces(organizer, 'organizer');
     validation.checkExpertise(expertise, 'expertise');
-    validation.checkIsProperNumber(price, 'price');
+    //validation.checkIsProperNumber(price, 'price');
 
     const activityTableCollection = await activityTable();
    
@@ -65,8 +65,44 @@ async function getActivityTableByName(activityName) {
   return JSON.parse(JSON.stringify(activityDetails));
 }
 
+async function createEvent(location, city, state, date, organizer, expertise, price) {
+  // let activityName = actName.toLowerCase();
+  // validate.checkActivity(activityName);
+    validation.checkStringWithSpaces(location, 'location');
+    validation.checkString(city, 'city');
+    validation.checkState(state, 'state');
+    validation.checkDateforFutureActivities(date, 'date');
+    validation.checkStringWithSpaces(organizer, 'organizer');
+    validation.checkExpertise(expertise, 'expertise');
+    validation.checkIsProperNumber(price, 'price');
+
+  var checkdup = await validate.checkDuplicateActivity(activityName);
+  if ("hasErrors" in checkdup) {
+      return checkdup;
+  }
+  const activityCollection = await activities();
+  let newActivity = {
+      activityName: activityName,
+      activityDesc: activityDesc
+  };
+  const insertInfo = await activityCollection.insertOne(newActivity);
+  if (insertInfo.insertedCount === 0) {
+      errormessage = {
+          className: "Item not added",
+          message: "Item was not added",
+          hasErrors: "True",
+          title: "Error"
+      }
+      return errormessage;
+  }
+  const newId = insertInfo.insertedId;
+  const activity = await getActivityById(newId.toString());
+  return JSON.parse(JSON.stringify(activity));
+}
+
   module.exports = {
     createactivityTable,
     getAllactivityTable,
-    getActivityTableByName
+    getActivityTableByName,
+    createEvent
   }

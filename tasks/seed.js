@@ -21,17 +21,18 @@ async function main() {
   const skyDiving = await activities.createActivity('skyDiving','Skydiving is parachuting from an airplane for fun. Skydiving can be done individually and with groups of people. Training is required. Unlike most paratroopers, skydivers often wait until they are low, before opening the parachute. The jump can also be made from a helicopter or a balloon that is high enough in the sky. Skydiving can be an exciting sport.Skydiving includes free falling (usually from an airplane) through the air prior to opening a parachute. Typically skydives are carried out from around 4,000m (or 12,500ft) offering 40 to 50 seconds of freefall time. Longer free fall times can be achieved by exiting an aircraft at altitudes much higher than 4,000m, but very high jumps require pressurized oxygen within the aircraft, and bottled oxygen for the diver.')
 
   //===================SEEDING ACTIVITIES START=================================//
-  await hikingActivity.createactivityTable("hiking", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2023-09-02", "Invisible Inc.", "Intermediate", 100)
-  await hikingActivity.createactivityTable("hiking","Centro comercial Moctezuma", "Townsend", "MI", "2023-09-02", "Rachel", "Easy", 200)
+  await hikingActivity.createactivityTable("hiking", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2023-10-24", "Invisible Inc.", "Intermediate", 100)
+  await hikingActivity.createactivityTable("hiking","Centro comercial Moctezuma", "Townsend", "MI", "2023-10-02", "Rachel", "Easy", 200)
 
-  await kayakingActivity.createactivityTable("kayaking", "Sea Quest Expeditions", "San-Juan-Islands", "WA", "2023-09-02", "Invisible Inc.", "Intermediate", 100)
-  await kayakingActivity.createactivityTable("kayaking", "Jennys Eco", "Everglades", "FL", "2023-09-02", "Rachel", "Easy", 200)
+  await kayakingActivity.createactivityTable("kayaking", "Sea Quest Expeditions", "San-Juan-Islands", "WA", "2023-10-02", "Invisible Inc.", "Intermediate", 100)
+  await kayakingActivity.createactivityTable("kayaking", "Jennys Eco", "Everglades", "FL", "2023-10-02", "Rachel", "Easy", 200)
 
-  await scubaActivity.createactivityTable("scuba", "Dutch Springs", "Bethlehem", "PA", "2023-09-02", "Invisible Inc.", "Intermediate", 100)
-  await scubaActivity.createactivityTable("scuba", "Casino Point", "Catalina", "CA", "2023-09-02", "Rachel", "Easy", 200)
+  await scubaActivity.createactivityTable("scuba", "Dutch Springs", "Bethlehem", "PA", "2023-08-02", "Invisible Inc.", "Intermediate", 100)
+  await scubaActivity.createactivityTable("scuba", "Casino Point", "Catalina", "CA", "2023-10-02", "Rachel", "Easy", 200)
 
-  await skydivingActivity.createactivityTable("skydiving", "Skydive Arizona", "Tucson", "AR", "2023-09-02", "Skydiveaz", "Advanced", 2000)
-  await skydivingActivity.createactivityTable("skydiving", "Skydive Chicago", "Chicago", "IL", "2022-09-19", "Skydivechicago", "Advanced", 2000)
+  await skydivingActivity.createactivityTable("skydiving", "Skydive Arizona", "Tucson", "AR", "2023-11-02", "Skydiveaz", "Advanced", 2000)
+  await skydivingActivity.createactivityTable("skydiving", "Skydive Chicago", "Chicago", "IL", "2022-12-19", "Skydivechicago", "Advanced", 2000)
+
   //===================SEEDING ACTIVITIES END=================================//
 
   let user1 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-02", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");

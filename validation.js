@@ -1,6 +1,7 @@
 const { ObjectId } = require('mongodb');
 const mongoCollections = require('./config/mongoCollections');
 const activities = mongoCollections.activities;
+const activityTable = mongoCollections.activityTable;
 
 module.exports = {
 
@@ -68,6 +69,50 @@ module.exports = {
         }
         obj = {
             actName: activityName
+        };
+        return obj;
+    },
+
+    async checkDuplicateEvent(activityName, location, city, state, date, organizer, expertise, price) {
+        activityName = activityName.toLowerCase();
+        location = location.toLowerCase();
+        city = city.toLowerCase();
+        state = state.toLowerCase();
+        organizer = organizer.toLowerCase();
+        expertise = expertise.toLowerCase();
+
+        const activityTableCollection = await activityTable();
+
+        const activityTableList = await activityTableCollection.find({}).toArray();
+        for (let i = 0; i < activityTableList.length; i++) {
+            let arr_activityName = activityTableList[i].activityName.toString();
+            let arr_location = activityTableList[i].location.toString();
+            let arr_city = activityTableList[i].city.toString();
+            let arr_state = activityTableList[i].state.toString();
+            let arr_date = activityTable.date;
+            let arr_organizer = activityTableList[i].organizer.toString();
+            let arr_expertise = activityTableList[i].expertise.toString();
+            let arr_price = activityTable.price;
+
+            if (arr_activityName === activityName && arr_location === location && arr_city === city && arr_state === state && arr_date === date && arr_organizer === organizer && arr_expertise === expertise && arr_price === price) {
+                errormessage = {
+                    className: "Event exists",
+                    message: "This event already exists",
+                    hasErrors: "True",
+                    title: "Error"
+                };
+                return errormessage;
+            }
+        }
+        obj={
+            activityName: activityName,
+            location: location,
+            city: city,
+            state: state,
+            date: date,
+            organizer: organizer,
+            expertise: expertise,
+            price: price
         };
         return obj;
     },
@@ -218,10 +263,10 @@ module.exports = {
                 }
             }
         }
-        return true;
-    },
-
-    checkDateforFutureActivities(date) {
+        return date;
+      },
+      
+      checkDateforFutureActivities(date) {
         this.checkString(date);
         date = date.trim();
 
@@ -282,10 +327,10 @@ module.exports = {
                 }
             }
         }
-        return true;
-    },
-
-    checkState(state) {
+        return date;
+      },
+    
+      checkState (state) {
         this.checkString(state);
         state = state.trim();
         let allStates = [
@@ -343,17 +388,21 @@ module.exports = {
         if (!allStates.includes(state.toUpperCase())) {
             throw "Error: Please enter state in 2 letter format (eg. NJ for New Jersey)";
         }
-    },
+        else
+          return state;
+      },
 
     checkExpertise(expertise) {
+       
         if (["easy", "intermediate", "advanced"].includes(expertise.toLowerCase().trim())) {
-            return true;
-        } else {
-            throw "Please choose expertise level from provided options: easy, intermediate, advanced";
-        }
+            return expertise;
+          } else {
+            throw "Error: Please choose expertise level from provided options : easy, intermediate, advanced";
+          }
     },
 
     checkIsProperNumber(val, variableName) {
+        //console.log(val)
         if (val === undefined) {
             throw `${variableName || 'provided variable'} is undefined`;
         }
@@ -361,11 +410,11 @@ module.exports = {
         if (val === null) {
             throw `${variableName || 'provided variable'} is null`;
         }
-
-        if (typeof val !== 'number') {
-            throw `${variableName || 'provided variable'} is not a number`;
-        }
-
+    
+        // if (typeof val != 'number' || !Number.isInteger(num)) {
+        //     throw `${variableName || 'provided variable'} is not a number`;
+        // }
+    
         if (isNaN(val)) {
             throw `${variableName || 'provided variable'} is NaN`;
         }
@@ -374,6 +423,7 @@ module.exports = {
             throw `${variableName || 'provided variable'} is negative. Please provide positive value`;
         }
 
+        return val;
     }
 
 
