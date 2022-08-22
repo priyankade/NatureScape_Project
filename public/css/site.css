@@ -85,3 +85,8 @@ h2.uppercase {
 .table-filter {
     border-radius: 5px;
 }
+
+.float-right{
+    float:right;
+    margin-bottom: auto;
+  }

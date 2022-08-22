@@ -109,9 +109,19 @@ router.get("/", async (req, res) => {
     let is_user_logged_in = false;
     if (req.session.user)
         is_user_logged_in = true;
+
+    let isAdmin = false;
+    //console.log(req.session.user)
+    if (req.session.user === "admin") {
+        isAdmin = true;
+    }
+    //console.log(isAdmin)
+
+
     res.render("display/homepage", {
         activities: activities,
-        is_user_logged_in: is_user_logged_in
+        is_user_logged_in: is_user_logged_in,
+        isAdmin: isAdmin
     });
 });
 
@@ -203,79 +213,46 @@ router.post('/createActivity', async (req, res) => {
 
 });
 
-router.get('/deleteActivity', async (req, res) => {
+router.get('/:activityName/deleteActivity', async (req, res) => {
     console.log('GET [/deleteActivity]');
-    // if (req.session.user) {
-    //     if (req.session.admin) {
-    res.render('display/deleteActivity');
-    // return;
-    // }
-    //     else {
-    //         errormessage = {
-    //             className: "User not admin",
-    //             message: "User needs admin role to delete activity",
-    //             hasErrors: "Error",
-    //             title: "Error"
-    //         }
-    //         res.status(401).render('display/error', errormessage);
-    //         return;
-    //     }
-    // }
-    // else {
-    //     errormessage = {
-    //         className: "User not logged in",
-    //         message: "User needs to log in to delete activity",
-    //         hasErrors: "Error",
-    //         title: "Error"
-    //     }
-    //     res.status(401).render('display/error', errormessage);
-    //     return;
-    // }
-
+    if (req.session.user != "admin") {
+        res.status(200).send("User needs to be admin to delete activity");
+        return;
+    }
 });
-router.post('/removeActivity/:activityName', async (req, res) => {
-    console.log('removeActivity [/POST]');
-    let activityName = xss(req.body.activityName);
+
+router.post('/:activityName/deleteActivity', async (req, res) => {
+    console.log('POST [/deleteActivity]');
+    if (req.session.user === "admin") {
+        let activityName = xss(req.params.activityName);
     let validatedactivityName = '';
-    try {
-        validatedactivityName = validate.checkActivity(activityName);
-    } catch (error) {
-        errormessage = {
-            className: "Activity name not supplied",
+        try {
+            validatedactivityName = validate.checkActivity(activityName);
+         }
+        catch (error) {
+            errormessage = {
+                className: "Activity name not supplied",
             message: "Invalid activity name",
             hasErrors: "Error",
             title: "Error"
+            }
+            res.status(401).render('display/error', errormessage);
+            return;
         }
-        res.status(401).render('display/error', errormessage);
-        return;
+        checkActivityDeleted = activitiesData.deleteActivity(validatedactivityName);
+        if (checkActivityDeleted === false) {
+            errormessage = {
+                className: "Could not delete activity",
+                message: "could not delete activity",
+                hasErrors: "True",
+                title: "Error"
+            }
+            res.status(400).render('display/error', "could not delete activity");
+            return;
+        }
+        res.status(200).send("Successfully deleted activity");
     }
-    console.log('validated ', validatedactivityName);
-    // if (req.session.user) {
-    //     if (req.session.admin) {
-    activitiesData.deleteActivity(validatedactivityName);
-    //     }
-    //     else {
-    //         errormessage = {
-    //             className: "User not admin",
-    //             message: "User needs to admin role to delete activity",
-    //             hasErrors: "Error",
-    //             title: "Error"
-    //         }
-    //         res.status(401).render('display/error', errormessage);
-    //         return;
-    //     }
-    // }
-    // else {
-    //     errormessage = {
-    //         className: "User not logged in",
-    //         message: "User needs to log in to delete activity",
-    //         hasErrors: "Error",
-    //         title: "Error"
-    //     }
-    //     res.status(401).render('display/error', errormessage);
-    //     return;
-    // }
-    res.status(200).send("Successfully deleted activity");
+
 });
 
 //This route is for going to indivdual activity's page
