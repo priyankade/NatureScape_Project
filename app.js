@@ -67,7 +67,6 @@ app.use(
 );
 
 app.use('/private', (req, res, next) => {
-    //console.log(req.session.id);
     if (!req.session.user) {
         res.status(403).render("display/no-login", { username: req.body.username, password: req.body.password, title: "Not logged in" });
     } else {
@@ -83,7 +82,6 @@ app.use('/users/login', (req, res, next) => {
         next();
     }
 });
-
 
 configRoutes(app);
 
