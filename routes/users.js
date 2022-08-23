@@ -24,9 +24,7 @@ router.get("/login", async (req, res) => {
 
 router.post('/login', async (req, res) => {
     if (!req.session.user) {
-
         try {
-
             if (!req.body.username || !req.body.password)
                 throw "Please supply both the fields";
 
