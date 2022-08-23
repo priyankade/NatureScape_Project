@@ -4,35 +4,53 @@ const { ObjectId } = require('mongodb');
 var validate = require('../validation')
 
 async function createActivity(actName, activityDesc) {
-    let activityName = actName.toLowerCase();
-    validate.checkActivity(activityName);
-    validate.checkDescription(activityDesc);
-    var checkdup = await validate.checkDuplicateActivity(activityName);
-    if ("hasErrors" in checkdup) {
-        return checkdup;
-    }
-    const activityCollection = await activities();
-    let newActivity = {
-        activityName: activityName,
-        activityDesc: activityDesc
-    };
-    const insertInfo = await activityCollection.insertOne(newActivity);
-    if (insertInfo.insertedCount === 0) {
+    let activityName = actName;
+    try {
+        activityName = validate.checkActivity(activityName);
+        validate.checkDescription(activityDesc);
+    } catch (error) {
         errormessage = {
-            className: "Item not added",
-            message: "Item was not added",
-            hasErrors: "True",
+            className: "Cannot add activity",
+            message: error,
+            hasErrors: "Error",
             title: "Error"
         }
-        return errormessage;
+        var checkdup = await validate.checkDuplicateActivity(activityName);
+        if ("hasErrors" in checkdup) {
+            return checkdup;
+        }
+        const activityCollection = await activities();
+        let newActivity = {
+            activityName: activityName,
+            activityDesc: activityDesc
+        };
+        const insertInfo = await activityCollection.insertOne(newActivity);
+        if (insertInfo.insertedCount === 0) {
+            errormessage = {
+                className: "Item not added",
+                message: "Item was not added",
+                hasErrors: "True",
+                title: "Error"
+            }
+            return errormessage;
+        }
+        const newId = insertInfo.insertedId;
+        const activity = await getActivityById(newId.toString());
+        return JSON.parse(JSON.stringify(activity));
     }
-    const newId = insertInfo.insertedId;
-    const activity = await getActivityById(newId.toString());
-    return JSON.parse(JSON.stringify(activity));
 }
 
 async function getActivityByName(activityName) {
-    validate.checkActivity(activityName);
+    try {
+        validate.checkActivity(activityName);
+    } catch (error) {
+        errormessage = {
+            className: "Cannot add activity",
+            message: error,
+            hasErrors: "Error",
+            title: "Error"
+        }
+    }
     searchActivity = activityName.toLowerCase();
     const activityCollection = await activities();
     const activityDetails = await activityCollection.find({ "activityName": activityName }).toArray();
@@ -52,9 +70,19 @@ async function getActivityByName(activityName) {
     }
     return JSON.parse(JSON.stringify(activityDetails));
 }
+
 async function deleteActivity(activityName) {
     console.log('data/activities.js deleteActivity()');
-    validate.checkActivity(activityName);
+    try {
+        validate.checkActivity(activityName);
+    } catch (error) {
+        errormessage = {
+            className: "Cannot add activity",
+            message: error,
+            hasErrors: "Error",
+            title: "Error"
+        }
+    }
     deleteActivity = activityName.toLowerCase();
     const activityCollection = await activities();
     const checkActivity = await activityCollection.findOne({ "activityName": deleteActivity })
@@ -65,12 +93,20 @@ async function deleteActivity(activityName) {
     if (deletionInfo.deletedCount === 0) {
         throw `Could not delete activity ${deleteActivity}`;
     }
-
     return { deleted: true };
 }
 
 async function getActivityById(Id) {
-    validate.checkId(Id);
+    try {
+        validate.checkId(Id);
+    } catch (error) {
+        errormessage = {
+            className: "Cannot add activity",
+            message: error,
+            hasErrors: "Error",
+            title: "Error"
+        }
+    }
     let newObjId = ObjectId();
     if (!ObjectId.isValid(newObjId)) throw 'Object id is not valid'
     let parsedId = ObjectId(Id);
@@ -84,14 +120,22 @@ async function getAllActivities() {
     const activities_data = await activities();
     const list_all_Activities = await activities_data.find({}, { '_id': 0 }).toArray();
     return JSON.parse(JSON.stringify(list_all_Activities));
-
 }
 
 
 async function updateActivity(activityId, updatedActivity) {
-    validate.checkId(activityId);
-    validate.checkActivity(updatedActivty.activityName);
-    validate.checkDescription(updatedActivity.activityDesc);
+    try {
+        validate.checkId(activityId);
+        validate.checkActivity(updatedActivty.activityName);
+        validate.checkDescription(updatedActivity.activityDesc);
+    } catch (error) {
+        errormessage = {
+            className: "Cannot add activity",
+            message: error,
+            hasErrors: "Error",
+            title: "Error"
+        }
+    }
     let { ObjectId } = require('mongodb');
     let parsedId = ObjectId(activityId);
     const activityCollection = await activities();
@@ -99,19 +143,16 @@ async function updateActivity(activityId, updatedActivity) {
     if (checkActivity === null) {
         throw `Could not update Activity with id of ${id}`;
     }
-
     const updateInfo = await activityCollection.updateOne(
         { _id: parsedId },
         { $set: updatedActivity }
     );
-
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
     console.log("Update successful");
     const getid = await this.get(parsedId.toString());
-
     return JSON.parse(JSON.stringify(getid))
-
 }
+
 
 module.exports = {
     createActivity,
