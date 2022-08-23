@@ -10,9 +10,13 @@
 
     <div id="registered_members">
         <h6>Registered Members:</h6><br>
-        {{#each event.registeredMembers}}
-        <h5>event.registeredMembers</h5><br>
-        {{/each}}
+        <ul>
+            {{#each event.registeredMembers}}
+            <h5>
+                <li>{{this}}</li>
+            </h5><br>
+            {{/each}}
+        </ul>
     </div>
 
     {{#unless isUserRegistered}}
@@ -33,7 +37,30 @@
         </ul>
     </div>
 
+    {{#if canReview}}
     <div id="reviews">
-
+        <h4><b>Write a review</b></h4>
+        <table>
+            <tr>
+                <td><label>Title</label></td>
+                <td><input type="text" id="reviewTitle" name="review_title"></td>
+            </tr>
+            <tr>
+                <td><label>Rating</label></td>
+                <td><input type="number" id="reviewRating" name="review_rating" min="1" max="5"></td>
+            </tr>
+            <tr>
+                <td><label>Review Text</label></td>
+                <td><input type="text" id="reviewText" name="review_body"></td>
+                <td><input type="text" id="eventId" name="event_id" hidden value={{event._id}}></td>
+            </tr>
+        </table>
+        <input type="submit" id="reviewSubmitButton" value="add review" name="addReview">
     </div>
+    {{/if}}
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="../public/js/reviews.js"></script>
+
 </div>

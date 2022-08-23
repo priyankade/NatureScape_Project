@@ -40,7 +40,6 @@ p {
 }
 
 .header {
-    height: 40px;
     background-color: #f4f3f3;
     text-align: center;
     font-size: 15px;
@@ -50,13 +49,10 @@ p {
     width: 100%;
 }
 
-
-
 .addActivty button:hover {
     background-color: greenyellow;
 
 }
-
 
 .activity h2 {
     margin-top: 32px;
@@ -73,9 +69,11 @@ a:hover {
     color: greenyellow;
 }
 
-table, th, td {
+table,
+th,
+td {
     text-align: center;
-    border:1px solid black;
+    border: 1px solid black;
 }
 
 h2.uppercase {
@@ -86,7 +84,18 @@ h2.uppercase {
     border-radius: 5px;
 }
 
-.float-right{
-    float:right;
+.float-right {
+    float: right;
     margin-bottom: auto;
-  }
+}
+
+main {
+    padding: 0px 15px 0px 15px;
+}
+
+#addReview table,
+td,
+tr {
+    text-align: left;
+    border: none;
+}
