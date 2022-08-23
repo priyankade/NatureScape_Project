@@ -10,9 +10,13 @@
 
     <div id="registered_members">
         <h6>Registered Members:</h6><br>
-        {{#each event.registeredMembers}}
-        <h5>event.registeredMembers</h5><br>
-        {{/each}}
+        <ul>
+            {{#each event.registeredMembers}}
+            <h5>
+                <li>{{this}}</li>
+            </h5><br>
+            {{/each}}
+        </ul>
     </div>
 
     <span class="Event" id={{event._id}}>{{event.location}}: {{event.location}}</span>
@@ -20,9 +24,8 @@
     {{#unless isUserRegistered}}
     <form action="/register" method="POST">
         <input type="text" value={{event._id}} name="eventId" hidden>
-        {{!-- <label>Register</label> --}}
-        <button type="submit" class="btn btn-primary">Register</button>
-        {{!-- <input type="submit" value="Register" name="Register"> --}}
+        <label>Register</label>
+        <input type="submit" value="Register" name="Register" class="btn btn-primary">
     </form>
     {{/unless}}
 
@@ -36,9 +39,45 @@
         </ul>
     </div>
 
-    <div id="reviews">
-
+    {{#if canReview}}
+    <div id="addReview">
+        <h4><b>Write a review</b></h4>
+        <table>
+            <tr>
+                <td><label>Rating</label></td>
+                <td><input type="number" id="reviewRating" name="review_rating" min="1" max="5"></td>
+            </tr>
+            <tr>
+                <td><label>Review Text</label></td>
+                <td><input type="text" id="reviewText" name="review_body"></td>
+                <td><input type="text" id="eventId" name="event_id" hidden value={{event._id}}></td>
+            </tr>
+        </table>
+        <form>
+            <input type="submit" id="reviewSubmitButton" value="Add Review" name="addReview" class="btn btn-primary">
+        </form>
     </div>
+    {{/if}}
+
+    <label id="addReviewResponse">
+        
+    </label>
+
+    <div id="reviews">
+        <h4>Reviews</h4>
+        <ul>
+            {{#each reviews}}
+            <li>{{this.reviewerName}} {{this.rating}} <br>
+                {{this.reviewText}}
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="../public/js/reviews.js"></script>
 
      <div class="row mb-4">
         <div class="float-right">
@@ -62,6 +101,4 @@
         var url = `http://localhost:3000/reports/form?id=${ID}`;
         $(this).attr('href', url);
     })
-
-
 </script>

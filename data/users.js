@@ -34,19 +34,19 @@ async function createUser(fname, lname, username, gender, dob, email, phone, eme
     throw 'Please provide password';
 
   //=========start validations================
-  await validation.checkString(fname, 'First Name');
-  await validation.checkString(lname, 'Last Name');
-  await validation.alphanumeric(username);
-  await validation.checkGender(gender);
-  await validation.checkDate(dob, 'dob');
-  await validation.checkEmail(email);
-  await validation.checkPhone(phone, 'phone');
-  await validation.checkPhone(emer_phone, 'emergency phone');
+   validation.checkString(fname, 'First Name');
+   validation.checkString(lname, 'Last Name');
+   validation.alphanumeric(username);
+   validation.checkGender(gender);
+   validation.checkDate(dob, 'dob');
+   validation.checkEmail(email);
+   validation.checkPhone(phone, 'phone');
+   validation.checkPhone(emer_phone, 'emergency phone');
   if (phone === emer_phone) {
     throw 'Error: Please provide different phone number for Emergency'
   }
-  await validation.checkPassword(password, 'password');
-  await validation.checkPassword(confirmPassword, 'confirmPassword');
+   validation.checkPassword(password, 'password');
+   validation.checkPassword(confirmPassword, 'confirmPassword');
 
   if (password != confirmPassword) {
     throw "\nPassword did not match: Please try again...";

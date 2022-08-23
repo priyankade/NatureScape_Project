@@ -12,24 +12,25 @@ router.post('/register', async (req, res) => {
     let username = xss(req.session.user);
     let oldEvent = {};
     validate.checkId(eventId);
+    console.log('validate.checkId(eventId);', eventId);
     let { ObjectId } = require('mongodb');
     let parsedId = ObjectId(eventId);
     validate.alphanumeric(username);
-
+    console.log('validate.alphanumeric(username);', username);
     try {
         oldEvent = await eventsData.getEventById(parsedId.toString());
     } catch (error) {
         errormessage = {
             className: "Cannot register User",
             message: error,
-            showLoginLink: "true",
             hasErrors: "Error",
             title: "Error"
         };
         res.status(401).render('display/error', errormessage);
         return;
     }
-
+    console.log('checking for already registered member');
+    
     try {
         for (i = 0; i < oldEvent.registeredMembers.length; i++) {
             if (username == oldEvent.registeredMembers[i]) {
@@ -40,21 +41,19 @@ router.post('/register', async (req, res) => {
         errormessage = {
             className: "Cannot register User",
             message: error,
-            showLoginLink: "true",
             hasErrors: "Error",
             title: "Error"
         };
         res.status(401).render('display/error', errormessage);
         return;
     }
-
+    console.log('updating array of registrered members')
     try {
         eventsData.updateRegisteredMembers(eventId, req.session.user);
     } catch (error) {
         errormessage = {
             className: "Cannot register User",
             message: error,
-            showLoginLink: "true",
             hasErrors: "Error",
             title: "Error"
         };
@@ -62,61 +61,6 @@ router.post('/register', async (req, res) => {
         return;
     }
     res.status(200).send("Successfully registered for event");
-});
-
-router.get("/event/:id", async (req, res) => {
-    let searchid = xss(req.params.id);
-    console.log(`GET [/event/${searchid}]`);
-
-    if (!req.session.user) {
-        errormessage = {
-            className: "User not logged in",
-            message: "User needs to log in to view event details",
-            showLoginLink: "true",
-            hasErrors: "Error",
-            title: "Error"
-        }
-        res.status(401).render('display/error', errormessage);
-        return;
-    }
-
-    let username = req.session.user;
-
-    try {
-        validate.checkId(searchid);
-    } catch (error) {
-        errormessage = {
-            className: "No search item supplied",
-            message: "The event no longer exists",
-            hasErrors: "Error",
-            title: "Error"
-        }
-        res.status(400).render("display/error", errormessage);
-        return;
-    };
-
-    searchResult = await eventsData.getEventById(searchid);
-    try {
-        if (searchResult.length == 0) {
-            throw 'Event does not exist';
-        }
-    } catch (error) {
-        errormessage = {
-            className: "Event not found",
-            message: "Event was not found",
-            hasErrors: "True",
-            title: "Error"
-        }
-        return res.status(400).render("display/error", errormessage);
-    }
-    let isUserRegistered = true;
-    if (!('registeredMembers' in searchResult) || !(username in searchResult.registeredMembers)) {
-        isUserRegistered = false;
-    }
-    res.render('display/eventpage', {
-        event: searchResult,
-        isUserRegistered: isUserRegistered
-    });
 });
 
 router.get("/", async (req, res) => {
@@ -204,6 +148,7 @@ router.get('/addActivity', async (req, res) => {
             className: "User not logged in",
             message: "User needs to log in to create activity",
             hasErrors: "Error",
+            showLoginLink: true,
             title: "Error"
         }
         res.status(401).render('display/error', errormessage);

@@ -19,6 +19,7 @@ module.exports = {
   users: getCollectionFn('users'),
   activities: getCollectionFn('activities'),
   activityTable: getCollectionFn('activityTable'),
+  reviews: getCollectionFn('reviews')
   reports: getCollectionFn('reports'),
   eventRoutes: getCollectionFn('eventRoutes'),
 };
