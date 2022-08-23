@@ -19,7 +19,7 @@ async function main() {
 
     //===================SEEDING EVENTS START=================================//
     let hikingevent1 = await activityTableData.createactivityTable("hiking",
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park. In large part due to the highly varied elevations in the park, there is a wide range of plant and animal species. There are over 800 miles of trails, and a large section of the Appalachian Trail in the park as well as 80 historic structure", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-22", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park. In large part due to the highly varied elevations in the park, there is a wide range of plant and animal species. There are over 800 miles of trails, and a large section of the Appalachian Trail in the park as well as 80 historic structure", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         },
@@ -29,7 +29,7 @@ async function main() {
         }],
         []);
         console.log(hikingevent1);
-    let hikingevent2 = await activityTableData.createactivityTable("hiking", "Discover this 3.0-mile out-and-back trail near Moctezuma, Sonora. Generally considered an easy route, it takes an average of 1 h 13 min to complete. This trail is great for hiking, mountain biking, and running, and it's unlikely you'll encounter many other people while exploring.", "Centro comercial Moctezuma", "Townsend", "MI", "2023-10-02", "Rachel", "Easy", 200, faq = [{
+    let hikingevent2 = await activityTableData.createactivityTable("hiking", "Discover this 3.0-mile out-and-back trail near Moctezuma, Sonora. Generally considered an easy route, it takes an average of 1 h 13 min to complete. This trail is great for hiking, mountain biking, and running, and it's unlikely you'll encounter many other people while exploring.", "Centro comercial Moctezuma", "Townsend", "MI", "2022-10-05", "Rachel", "Easy", 200, faq = [{
         question: "Are trekking boots required?",
         answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
     },
@@ -38,7 +38,7 @@ async function main() {
         answer: "It is fine during the day and during the hike but at night it does get chilly so come with a jacket that can protect you till 15-20 degree celsius."
     }], []);
 
-    let kayakingevent1 = await activityTableData.createactivityTable("kayaking", "Kayak the West-Side of San Juan Island...the federally designated Whale habitat.There is a whole new perspective at sea level. You are really able to just take a breath.The San Juan Islands are known for world-class kayaking, and one local kayak guide, Kelly, has a chance to see it every day.", "San-Juan-Islands", "San-Juan-Islands", "WA", "2023-10-02", "Sea Quest Expeditions", "Intermediate", 100, faq = [{
+    let kayakingevent1 = await activityTableData.createactivityTable("kayaking", "Kayak the West-Side of San Juan Island...the federally designated Whale habitat.There is a whole new perspective at sea level. You are really able to just take a breath.The San Juan Islands are known for world-class kayaking, and one local kayak guide, Kelly, has a chance to see it every day.", "San-Juan-Islands", "San-Juan-Islands", "WA", "2022-03-02", "Sea Quest Expeditions", "Intermediate", 100, faq = [{
         question: "Are swim suits required?",
         answer: "yes"
     },
@@ -48,7 +48,7 @@ async function main() {
     }
     ], []);
 
-    let kayakingevent2 = await activityTableData.createactivityTable("kayaking", "Everglades National Park offers many paddling opportunities to explore the natural beauty of this area through freshwater marsh, mangrove forests, the 10,000 Islands, and the open waters of Florida Bay.There is a whole new perspective at sea level. You are really able to just take a breath.", "Nine Mile Pond", "Everglades", "FL", "2023-10-02", "Cinnamon", "Easy", 200, faq = [{
+    let kayakingevent2 = await activityTableData.createactivityTable("kayaking", "Everglades National Park offers many paddling opportunities to explore the natural beauty of this area through freshwater marsh, mangrove forests, the 10,000 Islands, and the open waters of Florida Bay.There is a whole new perspective at sea level. You are really able to just take a breath.", "Nine Mile Pond", "Everglades", "FL", "2022-06-24", "Cinnamon", "Easy", 200, faq = [{
         question: "Are swim suits required?",
         answer: "yes"
     },
@@ -105,7 +105,7 @@ async function main() {
 
     //===================SEEDING ACTIVITIES END=================================//
 
-    let user1 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-02", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let user1 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
     await users.userActivity("jodoe", "Hiking");
 
     let user2 = await users.createUser("John2", "Doe", "jodoe2", "male", "1990-08-04", "jodo@mail.com", "8888888888", "9888888888", "jodoe1234", "jodoe1234");

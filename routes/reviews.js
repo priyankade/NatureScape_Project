@@ -7,12 +7,31 @@ const xss = require('xss');
 
 router.post('/', async (req, res) => {
     console.log('POST [/addReview]');
-    console.log(req.body.reviewText);
-    console.log(req.body.reviewTitle);
-    console.log(req.body.reviewRating);
-    console.log(req.body.eventId);
+    let validationFailure = false;
+    try {
+        console.log('Username', req.session.user);
+        validate.alphanumeric(req.session.user);
+        validate.checkId(req.body.eventId);
+        validate.checkRating(req.body.reviewRating);
+        validate.checkReviewText(req.body.reviewText);
+    }
+    catch (error) {
+        console.log(error);
+        validationFailure = true;
+    }
 
-    res.status(200).send('you are now in /addReview');
+    if (validationFailure) {
+        res.status(400).send("Error in validating review");
+    }
+    else {
+        let newReview = await reviews.createReview(
+            req.session.user, req.body.eventId, req.body.reviewRating, req.body.reviewText);
+        if (newReview == null) {
+            res.status(400).send("Error in adding review");
+            return;
+        }
+        res.status(200).send('Successfully added review');
+    }
 });
 
 module.exports = router;

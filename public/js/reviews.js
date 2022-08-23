@@ -7,12 +7,10 @@
         console.log('Clicked');
 
         let reviewRating = $('#reviewRating').val();
-        let reviewTitle = $('#reviewTitle').val();
         let reviewText = $('#reviewText').val();
         let eventId = $('#eventId').val();
         let requestData = {
             "reviewRating": reviewRating,
-            "reviewTitle": reviewTitle,
             "reviewText": reviewText,
             "eventId": eventId
         };
@@ -24,7 +22,10 @@
         };
 
         $.ajax(requestConfig).then(function (responseMessage) {
-            console.log("Response", responseMessage);
+            $('#addReviewResponse')[0].innerHTML = responseMessage;
+        }).fail(function(responseMessage) {
+            console.log('Failed');
+            $('#addReviewResponse')[0].innerHTML = responseMessage.responseText;
         });
     }
 })(window.jQuery);

@@ -23,7 +23,7 @@
     <form action="/register" method="POST">
         <input type="text" value={{event._id}} name="eventId" hidden>
         <label>Register</label>
-        <input type="submit" value="Register" name="Register">
+        <input type="submit" value="Register" name="Register" class="btn btn-primary">
     </form>
     {{/unless}}
 
@@ -38,13 +38,9 @@
     </div>
 
     {{#if canReview}}
-    <div id="reviews">
+    <div id="addReview">
         <h4><b>Write a review</b></h4>
         <table>
-            <tr>
-                <td><label>Title</label></td>
-                <td><input type="text" id="reviewTitle" name="review_title"></td>
-            </tr>
             <tr>
                 <td><label>Rating</label></td>
                 <td><input type="number" id="reviewRating" name="review_rating" min="1" max="5"></td>
@@ -55,9 +51,26 @@
                 <td><input type="text" id="eventId" name="event_id" hidden value={{event._id}}></td>
             </tr>
         </table>
-        <input type="submit" id="reviewSubmitButton" value="add review" name="addReview">
+        <form>
+            <input type="submit" id="reviewSubmitButton" value="Add Review" name="addReview" class="btn btn-primary">
+        </form>
     </div>
     {{/if}}
+
+    <label id="addReviewResponse">
+        
+    </label>
+
+    <div id="reviews">
+        <h4>Reviews</h4>
+        <ul>
+            {{#each reviews}}
+            <li>{{this.reviewerName}} {{this.rating}} <br>
+                {{this.reviewText}}
+            </li>
+            {{/each}}
+        </ul>
+    </div>
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"
         integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>

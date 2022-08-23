@@ -3,17 +3,21 @@ const reviews = mongoCollections.reviews;
 const { ObjectId } = require('mongodb');
 var validate = require('../validation');
 
-async function createReview(reviewerId, eventId, rating, reviewText) {
-    validate.checkId(reviewerId);
-    validate.checkId(eventId);
-    validate.checkRating(rating);
-    validate.checkReviewText(reviewText);
-
-    console.log('validation complete');
+async function createReview(reviewerName, eventId, rating, reviewText) {
+    try{
+        validate.alphanumeric(reviewerName);
+        validate.checkId(eventId);
+        validate.checkRating(rating);
+        validate.checkReviewText(reviewText);
+    }
+    catch(error) {
+        console.log(error);
+        return null;
+    }
 
     const reviewsCollection = await reviews();
     let newReview = {
-        reviewerId: reviewerId,
+        reviewerName: reviewerName,
         eventId: eventId,
         rating: rating,
         reviewText: reviewText
@@ -36,12 +40,11 @@ async function createReview(reviewerId, eventId, rating, reviewText) {
 
 async function getAllReviewsForEvent(eventId) {
     const reviewsCollection = await reviews();
-    const ReviewsList = await reviewsCollection.find({'eventId': eventId}, { '_id': 0 }).toArray();
-    return JSON.parse(JSON.stringify(ReviewsList));
+    const reviewsList = await reviewsCollection.find({ 'eventId': eventId }, { '_id': 0 }).toArray();
+    return JSON.parse(JSON.stringify(reviewsList));
 }
 
-async function getReviewById(Id){
-
+async function getReviewById(Id) {
     validate.checkId(Id);
     let newObjId = ObjectId();
     if (!ObjectId.isValid(newObjId)) throw 'Object id is not valid'
@@ -51,7 +54,7 @@ async function getReviewById(Id){
     if (reviewDetails === null) throw 'No review is present with that Id'
     return reviewDetails
 }
-module.exports={
+module.exports = {
     createReview,
     getAllReviewsForEvent,
     getReviewById
