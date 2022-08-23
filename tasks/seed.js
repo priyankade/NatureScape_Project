@@ -118,6 +118,9 @@ async function main() {
 
   let user2 = await users.createUser("John2", "Doe", "jodoe2", "male", "1990-08-04", "jodo@mail.com", "8888888888", "9888888888", "jodoe1234", "jodoe1234");
   await users.userActivity("jodoe", "Hiking");
+  await users.updateUserWithReports("jodoe", "Nine Mile Pond");
+  await users.updateUserWithReports("jodoe", "Smoky Mountains-Gatlinburg");
+
 
   let admin = await users.createUser("Admin", "User", "admin", "female", "1900-06-04", "admin@gmail.com", "8888888888", "9888888888", "admin1234", "admin1234");
   await users.setAdmin(admin._id.toString())

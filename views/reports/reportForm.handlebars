@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="row">
+        <p class="aaa" id={{eventId}}>You are reporting this event: <a href='/event/{{eventId}}'
+                class="reported">{{reported-event}}</a> </p>
+
+        <div class="all-checkbox reportCheckbox col-sm-4">
+            <br />
+            <h4 id="reason">Why do you want to report this event?</h4>
+            <br />
+            <form action="/reports/form" method="POST" id="reason">
+                <p>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="reason1" name="reason" value="Not Safe">
+                        <label class="reportTips" for="reason1">Not safe</label><br>
+                    </label>
+                </p>
+                <p>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="reason2" name="reason" value="Bad experience">
+                        <label class="reportTips" for="reason2">Bad experience</label><br>
+                    </label>
+                </p>
+                <p>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="reason2" name="reason" value="Staff unprofessional">
+                        <label class="reportTips" for="reason2">Staff unprofessional</label><br>
+                    </label>
+                </p>
+                <p>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="reason4" name="reason" value="Site closed">
+                        <label class="reportTips" for="reason4">Site closed</label><br>
+                    </label>
+                    <input hidden="hidden" name="eventId" value={{eventId}}>
+                </p>
+                {{#unless status}}
+                <p class="wrongMsg">{{message}}</p>
+                {{/unless}}
+                {{#unless status}}
+                <p class="rightMsg">{{success}}</p>
+                {{/unless}}
+
+                <input id="reportSubmit" class="btn btn-primary" type="submit" value="Submit Report">
+                   
+            </form>
+
+
+        </div>
+    </div>
+</div>

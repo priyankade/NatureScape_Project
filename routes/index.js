@@ -2,6 +2,7 @@ const userRoutes = require("./users");
 const privateRoutes = require("./private");
 const homeRoutes = require("./activities");
 const eventRoutes = require("./events");
+const reportRoutes = require("./reports");
 
 const constructorMethod = (app) => {
   app.use("/report",eventRoutes);
@@ -17,6 +18,7 @@ const constructorMethod = (app) => {
   app.use("/activity", homeRoutes);
   app.use("/events",eventRoutes);
   app.use("/event", homeRoutes);
+  app.use("/reports", reportRoutes);
   
   
 
