@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const validate = require('../validation')
 const activitiesTableData = require('../data/activityTable');
-const eventData = require('../data/individualevent');
+const eventsData = require('../data/individualevent');
+const reviewsData = require('../data/reviews');
 const xss = require('xss');
 
 router.get('/addEvent', async (req, res) => {
@@ -140,5 +141,88 @@ router.post('/createEvent', async (req, res) => {
     }
 
 });
+
+router.get("/:id", async (req, res) => {
+    let searchid = xss(req.params.id);
+    console.log(`GET [/event/${searchid}]`);
+
+    if (!req.session.user) {
+        errormessage = {
+            className: "User not logged in",
+            message: "User needs to log in to view event details",
+            showLoginLink: "true",
+            hasErrors: "Error",
+            title: "Error"
+        }
+        res.status(401).render('display/error', errormessage);
+        return;
+    }
+
+    let username = req.session.user;
+
+    try {
+        validate.checkId(searchid);
+    } catch (error) {
+        errormessage = {
+            className: "No search item supplied",
+            message: "The event no longer exists",
+            hasErrors: "Error",
+            title: "Error"
+        }
+        res.status(400).render("display/error", errormessage);
+        return;
+    };
+
+    searchResult = await eventsData.getEventById(searchid);
+    try {
+        if (searchResult.length == 0) {
+            throw 'Event does not exist';
+        }
+    } catch (error) {
+        errormessage = {
+            className: "Event not found",
+            message: "Event was not found",
+            hasErrors: "True",
+            title: "Error"
+        }
+        return res.status(400).render("display/error", errormessage);
+    }
+    let isUserRegistered = true;
+    if (!('registeredMembers' in searchResult) || !(username in searchResult.registeredMembers)) {
+        isUserRegistered = false;
+    }
+    console.log(searchResult.registeredMembers);
+    console.log(searchid);
+    //query all reviews for this event
+    let eventReviews = await reviewsData.getAllReviewsForEvent(searchid);
+
+    let eventDetails = await activitiesTableData.getActivityTableById(searchid);
+    
+    let today = new Date();
+    console.log('eventDetails.date', eventDetails.date, ' date today', today);
+    let eventDate = new Date(eventDetails.date);
+    
+    /* A user can review only if 
+        1. Event date has passed
+        2. User had registered for the event
+    */
+    let canReview = false;
+    if (eventDate < today)
+        for (i = 0; i < eventDetails.registeredMembers.length; i++) {
+            if (eventDetails.registeredMembers[i] == username) {
+                canReview = true;
+            }
+        }
+    console.log('review', eventReviews[0]);
+
+
+    res.render('display/eventpage', {
+        event: searchResult,
+        isUserRegistered: isUserRegistered,
+        canReview: canReview,
+        reviews: eventReviews
+    });
+});
+
 
 module.exports = router;

@@ -14,6 +14,12 @@ module.exports = {
         if (!ObjectId.isValid(id)) throw 'Error: invalid object ID';
         return id;
     },
+    checkRating(rating) {
+        if (!rating) throw 'Error: you must provide rating';
+        if (isNaN(rating)) throw 'Error: rating should be a number';
+        if (rating < 1 || rating > 5) throw 'Error: rating should be between 1 and 5';
+        return rating;
+    },
 
     checkActivity(strVal) {
         strVal = strVal.toLowerCase();
@@ -50,6 +56,22 @@ module.exports = {
         return strdesc;
     },
 
+    checkReviewText(strreview) {
+        if (!strreview) {
+            throw 'Review Text is required'
+        }
+
+        strreview = strreview.trim();
+
+        if (strreview.length === 0) {
+            throw 'Review Text cannot consist of only spaces'
+        }
+        strreviewLength = strreview.length;
+        if (strreviewLength < 30) {
+            throw 'Review Text should have atleast 30 characters'
+        }
+        return strreview;
+    },
     async checkDuplicateActivity(activityNamedup) {
         let activityName = activityNamedup.toLowerCase();
         const activityCollection = await activities();
@@ -106,7 +128,7 @@ module.exports = {
                 return errormessage;
             }
         }
-        obj={
+        obj = {
             activityName: activityName,
             location: location,
             city: city,
@@ -153,13 +175,12 @@ module.exports = {
     },
 
     alphanumeric(input) {
-        this.checkString(input)
+        this.checkString(input);
         var letterNumber = /^[0-9a-zA-Z]+$/i;
         if ((input.match(letterNumber)))
             return true;
         else {
             throw "Only alphanumeric input allowed in username";
-
         }
     },
 
@@ -267,9 +288,9 @@ module.exports = {
             }
         }
         return date;
-      },
-      
-      checkDateforFutureActivities(date) {
+    },
+
+    checkDateforFutureActivities(date) {
         this.checkString(date);
         date = date.trim();
 
@@ -331,9 +352,9 @@ module.exports = {
             }
         }
         return date;
-      },
-    
-      checkState (state) {
+    },
+
+    checkState(state) {
         this.checkString(state);
         state = state.trim();
         let allStates = [
@@ -392,16 +413,16 @@ module.exports = {
             throw "Error: Please enter state in 2 letter format (eg. NJ for New Jersey)";
         }
         else
-          return state;
-      },
+            return state;
+    },
 
     checkExpertise(expertise) {
-       
+
         if (["easy", "intermediate", "advanced"].includes(expertise.toLowerCase().trim())) {
             return expertise;
-          } else {
+        } else {
             throw "Error: Please choose expertise level from provided options : easy, intermediate, advanced";
-          }
+        }
     },
 
     checkIsProperNumber(val, variableName) {
@@ -413,11 +434,11 @@ module.exports = {
         if (val === null) {
             throw `${variableName || 'provided variable'} is null`;
         }
-    
+
         // if (typeof val != 'number' || !Number.isInteger(num)) {
         //     throw `${variableName || 'provided variable'} is not a number`;
         // }
-    
+
         if (isNaN(val)) {
             throw `${variableName || 'provided variable'} is NaN`;
         }
@@ -428,6 +449,4 @@ module.exports = {
 
         return val;
     }
-
-
 };
