@@ -30,7 +30,7 @@ router.post('/register', async (req, res) => {
         return;
     }
     console.log('checking for already registered member');
-    
+
     try {
         for (i = 0; i < oldEvent.registeredMembers.length; i++) {
             if (username == oldEvent.registeredMembers[i]) {
@@ -60,7 +60,7 @@ router.post('/register', async (req, res) => {
         res.status(401).render('display/error', errormessage);
         return;
     }
-    res.status(200).send("Successfully registered for event");
+    res.status(200).render('display/success', { "message": "Successfully registered for event" });
 });
 
 router.get("/", async (req, res) => {
@@ -190,14 +190,14 @@ router.post('/createActivity', async (req, res) => {
             res.status(400).render('display/error', "could not add activity");
             return;
         }
-        res.status(200).send("Successfully inserted activity");
+        res.status(200).render('display/success', { "message": "Successfully inserted activity" });
     }
 });
 
 router.get('/:activityName/deleteActivity', async (req, res) => {
     console.log('GET [/deleteActivity]');
     if (req.session.user != "admin") {
-        res.status(200).send("User needs to be admin to delete activity");
+        res.status(200).render('display/success', { "message": "User needs to be admin to delete activity" });
         return;
     }
 });
@@ -231,7 +231,7 @@ router.post('/:activityName/deleteActivity', async (req, res) => {
             res.status(400).render('display/error', "could not delete activity");
             return;
         }
-        res.status(200).send("Successfully deleted activity");
+        res.status(200).render('display/success', { "message": "Successfully deleted activity" });
     }
 
 });
