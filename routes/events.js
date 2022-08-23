@@ -8,9 +8,9 @@ const xss = require('xss');
 const { activityTable } = require("../data");
 
 router.get('/addEvent', async (req, res) => {
-    console.log('[addEvent]');
+    console.log('GET [addEvent]');
     if (req.session.user) {
-        res.render('display/addEvent', {activityName: req.params.activityName});
+        res.render('display/addEvent', { activityName: req.params.activityName });
         return;
     }
     else {
@@ -27,7 +27,7 @@ router.get('/addEvent', async (req, res) => {
 });
 
 router.post('/createEvent', async (req, res) => {
-    console.log('[createEvent]');
+    console.log('POST [createEvent]');
     if (req.session.user) {
         try {
             let activityName = xss(req.body.activityName);
@@ -96,14 +96,16 @@ router.post('/createEvent', async (req, res) => {
         const faq2 = {};
         let arr = [];
 
-        faq1[validatedQuestion1] = validatedAnswer1;
-        faq2[validatedQuestion2] = validatedAnswer2;
+        faq1['question'] = validatedQuestion1;
+        faq1['answer'] = validatedAnswer1;
+        faq2['question'] = validatedQuestion2;
+        faq2['answer'] = validatedAnswer2;
 
         arr.push(faq1, faq2);
 
-        checkEventCreated = await activitiesTableData.createactivityTable(validatedActivity, validatedOverview, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, validatedExpertise, validatedPrice, arr );
+        checkEventCreated = await activitiesTableData.createactivityTable(validatedActivity, validatedOverview, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, validatedExpertise, validatedPrice, arr);
         console.log(checkEventCreated)
-        
+
         if ("hasErrors" in checkEventCreated) {
             errormessage = {
                 className: "Could not add Event",
@@ -127,16 +129,10 @@ router.post('/createEvent', async (req, res) => {
                 title: "Create Event",
                 error: error,
             });
-
-            // res.status(400).render('display/error', "could not add Event");
             return;
         }
-        res.status(200).send("Successfully inserted Event");
-        //res.status(200).redirect(`/activityName`);
-        //res.status(200).render("display/activityTable");
-
+        res.status(200).render("display/success", {"message": "Successfully inserted Event"});
     }
-
 });
 
 router.get("/:id", async (req, res) => {
@@ -184,38 +180,44 @@ router.get("/:id", async (req, res) => {
         }
         return res.status(400).render("display/error", errormessage);
     }
-    let isUserRegistered = true;
-    if (!('registeredMembers' in searchResult) || !(username in searchResult.registeredMembers)) {
-        isUserRegistered = false;
+    let isUserRegistered = false;
+    if (searchResult.registeredMembers != null) {
+        for (let i in searchResult.registeredMembers) {
+            if (username ===  searchResult.registeredMembers[i]) {
+                isUserRegistered = true;
+                break;
+            }
+        }
     }
-    console.log(searchResult.registeredMembers);
-    console.log(searchid);
+
     //query all reviews for this event
     let eventReviews = await reviewsData.getAllReviewsForEvent(searchid);
 
-    let eventDetails = await activitiesTableData.getActivityTableById(searchid);
-    
     let today = new Date();
-    console.log('eventDetails.date', eventDetails.date, ' date today', today);
-    let eventDate = new Date(eventDetails.date);
-    
+    let eventDate = new Date(searchResult.date);
+
     /* A user can review only if 
         1. Event date has passed
         2. User had registered for the event
     */
     let canReview = false;
-    if (eventDate < today)
-        for (i = 0; i < eventDetails.registeredMembers.length; i++) {
-            if (eventDetails.registeredMembers[i] == username) {
-                canReview = true;
-            }
-        }
-    console.log('review', eventReviews[0]);
+    if (eventDate < today && isUserRegistered) {
+        canReview = true;
+    }
 
+    /* A user can register for an event if
+        1. User has not registered for the event
+        2. Event is in the future
+     */
+    console.log('isUserRegistered', isUserRegistered);
+    console.log('eventDate', eventDate);
+    console.log('today', today);
+    let showRegisterButton = !isUserRegistered && eventDate >= today;
+    console.log('showRegisterButton', showRegisterButton);
 
     res.render('display/eventpage', {
         event: searchResult,
-        isUserRegistered: isUserRegistered,
+        showRegisterButton: showRegisterButton,
         canReview: canReview,
         reviews: eventReviews
     });

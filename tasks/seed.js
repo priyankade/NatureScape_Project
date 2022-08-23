@@ -13,9 +13,21 @@ async function main() {
 
     const kayaking = await activities.createActivity('Kayaking', 'Kayaking is a watersport that involves paddling using a double-bladed oar and a small boat known as a kayak. The boats come in a variety of sizes and types, depending on their intended use, but most kayaks feature an enclosed deck that covers the legs. The boat sits low in the water and usually only accommodates a single paddler, but tandem kayaks hold two people and some boats hold three people.');
 
-    const scubaDiving = await activities.createActivity('Scuba Diving', 'Scuba diving is mainly done for the attraction of the unattainable undersea world.  It is one area of nature that mankind has not been able to fully control, we simply are not able to breathe underwater.  Hence, scuba diving gives us an opportunity to be in that underwater world, even if it is just for a limited amount of time.')
+    const scubaDiving = await activities.createActivity('Scuba Diving', 'Scuba diving is mainly done for the attraction of the unattainable undersea world.  It is one area of nature that mankind has not been able to fully control, we simply are not able to breathe underwater.  Hence, scuba diving gives us an opportunity to be in that underwater world, even if it is just for a limited amount of time.');
 
-    const skyDiving = await activities.createActivity('skyDiving', 'Skydiving is parachuting from an airplane for fun. Skydiving can be done individually and with groups of people. Training is required. Unlike most paratroopers, skydivers often wait until they are low, before opening the parachute. The jump can also be made from a helicopter or a balloon that is high enough in the sky. Skydiving can be an exciting sport.Skydiving includes free falling (usually from an airplane) through the air prior to opening a parachute. Typically skydives are carried out from around 4,000m (or 12,500ft) offering 40 to 50 seconds of freefall time. Longer free fall times can be achieved by exiting an aircraft at altitudes much higher than 4,000m, but very high jumps require pressurized oxygen within the aircraft, and bottled oxygen for the diver.')
+    const skyDiving = await activities.createActivity('skyDiving', 'Skydiving is parachuting from an airplane for fun. Skydiving can be done individually and with groups of people. Training is required. Unlike most paratroopers, skydivers often wait until they are low, before opening the parachute. The jump can also be made from a helicopter or a balloon that is high enough in the sky. Skydiving can be an exciting sport.Skydiving includes free falling (usually from an airplane) through the air prior to opening a parachute. Typically skydives are carried out from around 4,000m (or 12,500ft) offering 40 to 50 seconds of freefall time. Longer free fall times can be achieved by exiting an aircraft at altitudes much higher than 4,000m, but very high jumps require pressurized oxygen within the aircraft, and bottled oxygen for the diver.');
+
+    //seeding incorrect activities
+    console.log('now seeding invalid data in activities table');
+
+    const invalidHiking1 = await activities.createActivity('       ', 'Hiking is an activity of moderate difficulty, which involves walking across long distances generally on trails or paths. The duration of the activity varies between short half-day programs and longer itineraries of over 20 days. It is usually an activity that allows groups of different sizes.');
+    const invalidHiking2 = await activities.createActivity(12345, 'Hiking is an activity of moderate difficulty, which involves walking across long distances generally on trails or paths. The duration of the activity varies between short half-day programs and longer itineraries of over 20 days. It is usually an activity that allows groups of different sizes.');
+
+    const invalidHiking3 = await activities.createActivity('Hiking', '');
+
+    const invalidHiking4 = await activities.createActivity('Hiking', '              ');
+
+    const invalidHiking5 = await activities.createActivity('Hiking', 1234);
 
     //===================SEEDING EVENTS START=================================//
     let hikingevent1 = await activityTableData.createactivityTable("hiking",
@@ -28,7 +40,6 @@ async function main() {
             answer: "You definitely need a strong mosquito repellent. We do not recommend mosquito nets as they are a fire hazard"
         }],
         [], true);
-    console.log(hikingevent1);
     let hikingevent2 = await activityTableData.createactivityTable("hiking", "Discover this 3.0-mile out-and-back trail near Moctezuma, Sonora. Generally considered an easy route, it takes an average of 1 h 13 min to complete. This trail is great for hiking, mountain biking, and running, and it's unlikely you'll encounter many other people while exploring.", "Centro comercial Moctezuma", "Townsend", "MI", "2022-10-05", "Rachel", "Easy", 200, faq = [{
         question: "Are trekking boots required?",
         answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
@@ -121,11 +132,26 @@ async function main() {
     let user3 = await users.createUser("shubhangi", "dutt", "sdutt", "female", "1998-04-05", "shubhangidutt99@gmail.com", "4859585894", "8383838383", "sdutt1234", "sdutt1234");
 
     //===================SEEDING USERS END=================================//
-    //reviewerId, eventId, rating, reviewText
+    //===================SEEDING REVIEWS START=================================//
     let review1 = await reviews.createReview(user1.username, hikingevent1._id, 4, 'This was the most amazing hike ever!!! created a new group of friends and the entire hike was very well organized. Vitnessed beautiful sunset');
 
     let review2 = await reviews.createReview(user2.username, kayakingevent2._id, 1, 'Would not recommend. The kayak was really unstable and proper training was not provided');
 
+    //invalid seed
+    let invalidreview1 = await reviews.createReview('', hikingevent1._id, 4, 'This was the most amazing hike ever!!! created a new group of friends and the entire hike was very well organized. Vitnessed beautiful sunset');
+    let invalidreview2 = await reviews.createReview('        ', hikingevent1._id, 4, 'This was the most amazing hike ever!!! created a new group of friends and the entire hike was very well organized. Vitnessed beautiful sunset');
+    let invalidreview3 = await reviews.createReview('$#%^$@$CHH', hikingevent1._id, 4, 'This was the most amazing hike ever!!! created a new group of friends and the entire hike was very well organized. Vitnessed beautiful sunset');
+
+    let invalidreview4 = await reviews.createReview(user2.username, '', 1, 'Would not recommend. The kayak was really unstable and proper training was not provided');
+    let invalidreview5 = await reviews.createReview(user2.username, '             ', 1, 'Would not recommend. The kayak was really unstable and proper training was not provided');
+
+    let invalidreview6 = await reviews.createReview(user2.username, 'kayakingevent2._id', 20, 'Would not recommend. The kayak was really unstable and proper training was not provided');
+
+    let invalidreview7 = await reviews.createReview(user2.username, 'kayakingevent2._id', 0, 'Would not recommend. The kayak was really unstable and proper training was not provided');
+
+    let invalidreview8 = await reviews.createReview(user2.username, 'kayakingevent2._id', '0', 'Would not recommend. The kayak was really unstable and proper training was not provided');
+
+    //===================SEEDING REVIEWS END=================================//
     console.log('Done seeding database');
 
     await dbConnection.closeConnection();

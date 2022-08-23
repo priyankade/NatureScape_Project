@@ -25,13 +25,13 @@
 
     <span class="Event" id={{event._id}}>{{event.location}}: {{event.location}}</span>
 
-    {{#unless isUserRegistered}}
+    {{#if showRegisterButton}}
     <form action="/register" method="POST">
         <input type="text" value={{event._id}} name="eventId" hidden>
         <label>Register</label>
         <input type="submit" value="Register" name="Register" class="btn btn-primary">
     </form>
-    {{/unless}}
+    {{/if}}
 
     <div id="faq">
         <h6>Frequently Asked Questions</h6>
@@ -49,7 +49,7 @@
         <table>
             <tr>
                 <td><label>Rating</label></td>
-                <td><input type="number" id="reviewRating" name="review_rating" min="1" max="5"></td>
+                <td><input type="number" id="reviewRating" name="review_rating" min="1" max="5" required></td>
             </tr>
             <tr>
                 <td><label>Review Text</label></td>
@@ -71,7 +71,7 @@
         <h4>Reviews</h4>
         <ul>
             {{#each reviews}}
-            <li>{{this.reviewerName}} {{this.rating}} <br>
+            <li>{{this.reviewerName}} rated this {{this.rating}} out of 5 <br>
                 {{this.reviewText}}
             </li>
             {{/each}}
@@ -85,13 +85,7 @@
 
     <div class="row mb-4">
         <div class="float-right">
-            {{!-- <form class="report" method="GET" action="/reports/form">
-                <button type="submit" class="btn btn-danger btn-sm">Report Unsafe!</button>
-            </form> --}}
-
             <a id="report" class="btn btn-danger" href="">Report Unsafe!</a>
-
-            {{!-- <a href="/reports/form" class="btn btn-primary ">Report Unsafe!</a> --}}
         </div>
     </div>
 </div>
