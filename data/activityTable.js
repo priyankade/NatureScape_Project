@@ -86,6 +86,7 @@ async function getActivityTableByName(activityName) {
 }
 
 async function createEvent(overview, location, city, state, date, organizer, expertise, price, faq, registeredMembers) {
+
     validation.checkStringWithSpaces(location, 'location');
     validation.checkString(city, 'city');
     validation.checkState(state, 'state');
@@ -93,6 +94,7 @@ async function createEvent(overview, location, city, state, date, organizer, exp
     validation.checkStringWithSpaces(organizer, 'organizer');
     validation.checkExpertise(expertise, 'expertise');
     validation.checkIsProperNumber(price, 'price');
+
 
     var checkdup = await validate.checkDuplicateActivity(activityName);
     if ("hasErrors" in checkdup) {

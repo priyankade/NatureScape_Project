@@ -28,7 +28,8 @@ router.post('/login', async (req, res) => {
             if (!req.body.username || !req.body.password)
                 throw "Please supply both the fields";
 
-            let { username, password } = req.body;
+            let username = xss(req.body.username);
+            let password = xss(req.body.password);
 
             validation.checkString(username, 'username');
             validation.checkPassword(password, 'password');
@@ -106,6 +107,20 @@ router.post('/signup', async (req, res) => {
                 throw "Please supply all the required fields";
 
             let { fname, lname, username, gender, dob, email, phone, emer_phone, password, confirmPassword } = req.body;
+
+            fname = xss(req.body.fname);
+            lname = xss(req.body.lname);
+            username = xss(req.body.username);
+            gender = xss(req.body.gender);
+            dob = xss(req.body.dob);
+            email = xss(req.body.email);
+            phone = xss(req.body.phone);
+            emer_phone = xss(req.body.emer_phone);
+            username = xss(req.body.username);
+            gender = xss(req.body.gender);
+            dob = xss(req.body.dob);
+            password = xss(req.body.password);
+            confirmPassword = xss(req.body.confirmPassword);
 
             //=========start validations================
             await validation.checkString(fname, 'First Name');

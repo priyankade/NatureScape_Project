@@ -31,7 +31,8 @@ const handlebarsInstance = exphbs.create({
         urlEncode: (val) => {
             return encodeURIComponent(val);
         }
-    }
+    },
+    partialsDir: ['views/partials/']
 });
 
 const rewriteUnsupportedBrowserMethods = (req, res, next) => {

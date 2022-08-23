@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>Add a New {{activityName}} Event Here!</h1>
+    <h1>Add a new {{activityName}} event here!</h1>
     <div class="row">
         <div class="col-sm-4">
             <form method="POST" id="addEvent" class="server-form" action="/events/createEvent">
@@ -7,6 +7,12 @@
                     <label>Activity
                         <input type="text" id="activityName" placeholder="activityName" name="activityName"
                             value="{{activityName}}">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Overview
+                        <input type="text" id="overview" placeholder="overview" name="overview"
+                            value="{{overview}}" required>
                     </label>
                 </div>
                 <div class="form-group">
@@ -37,12 +43,6 @@
                             required>
                     </label>
                 </div>
-
-                {{!-- <label>Enter Expertise level
-                    <input type="text" id="expertise" placeholder="expertise" name="expertise" value="{{expertise}}"
-                        required>
-                </label>
-                <br> --}}
                 <div class="form-group">
                     <label for="expertise">Enter Expertise level</label>
                     <select name="expertise" id="expertise" class="form-control">
@@ -59,6 +59,41 @@
                     <label>Enter Price ($)
                         <input type="number" id="price" placeholder="price" name="price" value="{{price}}" required>
                     </label>
+                </div>
+
+                <h4 style="color:green"> FAQ </h4>
+                <div class="layout">
+                    <div class="accordion">
+                        <div class="accordion__question">
+                            <label>Question 1
+                                <input type="text" id="question1" placeholder="question1" name="question1"
+                                    value="{{question1}}" required>
+                            </label>
+
+                        </div>
+                        <div class="accordion__answer">
+                            <label>Answer 1
+                                <input type="text" id="answer1" placeholder="answer1" name="answer1"
+                                    value="{{answer1}}" required>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="accordion">
+                        <div class="accordion__question">
+                            <label>Question 2
+                                <input type="text" id="question2" placeholder="question2" name="question2"
+                                    value="{{question2}}" required>
+                            </label>
+                        </div>
+
+                        <div class="accordion__answer">
+                            <label>Answer 2
+                                <input type="text" id="answer2" placeholder="answer2" name="answer2"
+                                    value="{{answer2}}" required>
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
                 <input type="submit" value="Add Event" id="createEventbtn" name="createEventButton"><br>

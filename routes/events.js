@@ -9,7 +9,7 @@ const xss = require('xss');
 router.get('/addEvent', async (req, res) => {
     console.log('[addEvent]');
     if (req.session.user) {
-        res.render('display/addEvent');
+        res.render('display/addEvent', {activityName: req.params.activityName});
         return;
     }
     else {
@@ -31,6 +31,8 @@ router.post('/createEvent', async (req, res) => {
         try {
             let activityName = xss(req.body.activityName);
             var validatedActivity = validate.checkActivity(activityName);
+            let overview = xss(req.body.overview);
+            var validatedOverview = validate.checkDescription(overview);
             let EventLocation = xss(req.body.location);
             var validatedLocation = validate.checkStringWithSpaces(EventLocation, "location");
             let EventCity = xss(req.body.city);
@@ -46,12 +48,27 @@ router.post('/createEvent', async (req, res) => {
             let EventPrice = xss(req.body.price);
             var validatedPrice = validate.checkIsProperNumber(EventPrice, "price");
 
-            let checkdup = await validate.checkDuplicateEvent(validatedActivity, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, validatedExpertise, validatedPrice);
+            //FAQ
+            let question1 = xss(req.body.question1);
+            var validatedQuestion1 = validate.checkDescription(question1, "question1");
+            let answer1 = xss(req.body.answer1);
+            var validatedAnswer1 = validate.checkDescription(answer1, "answer1");
+            let question2 = xss(req.body.question2);
+            var validatedQuestion2 = validate.checkDescription(question2, "question2");
+            let answer2 = xss(req.body.answer2);
+            var validatedAnswer2 = validate.checkDescription(answer2, "answer2");
+
+
+            
+
+
+            let checkdup = await validate.checkDuplicateEvent(validatedActivity, validatedOverview, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, validatedExpertise, validatedPrice);
             if ("hasErrors" in checkdup) {
                 throw 'Event already exists';
             }
         }
         catch (error) {
+            console.log("catch block")
             errormessage = {
                 className: "Cannot add Event",
                 message: error,
@@ -67,12 +84,29 @@ router.post('/createEvent', async (req, res) => {
                 organizer: req.body.organizer,
                 expertise: req.body.expertise,
                 price: req.body.price,
+                question1: req.body.question1,
+                question2: req.body.question2,
+                answer1: req.body.answer1,
+                answer2: req.body.answer2,
                 title: "Create Event",
                 error: error,
             });
             return;
         }
-        checkEventCreated = activitiesTableData.createactivityTable(validatedActivity, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, validatedExpertise, validatedPrice);
+
+        console.log("faq start")
+        const faq1 = {};
+        const faq2 = {};
+        let arr = [];
+
+        faq1[validatedQuestion1] = validatedAnswer1;
+        faq2[validatedQuestion2] = validatedAnswer2;
+
+        arr.push(faq1, faq2);
+
+        checkEventCreated = await activitiesTableData.createactivityTable(validatedActivity, validatedOverview, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, validatedExpertise, validatedPrice, arr );
+        console.log(checkEventCreated)
+        
         if ("hasErrors" in checkEventCreated) {
             errormessage = {
                 className: "Could not add Event",
@@ -81,6 +115,7 @@ router.post('/createEvent', async (req, res) => {
                 title: "Error"
             }
             res.status(400).render("display/addEvent", {
+                activityName: req.body.activityName,
                 location: req.body.location,
                 city: req.body.city,
                 state: req.body.state,
@@ -88,8 +123,12 @@ router.post('/createEvent', async (req, res) => {
                 organizer: req.body.organizer,
                 expertise: req.body.expertise,
                 price: req.body.price,
+                question1: req.body.question1,
+                question2: req.body.question2,
+                answer1: req.body.answer1,
+                answer2: req.body.answer2,
                 title: "Create Event",
-                error: errormessage,
+                error: error,
             });
 
             // res.status(400).render('display/error', "could not add Event");
