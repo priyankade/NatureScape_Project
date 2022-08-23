@@ -83,6 +83,7 @@ async function createUser(fname, lname, username, gender, dob, email, phone, eme
       password: hash,
       reviews: [],
       activities: [],
+      reports: [],
       Admin: false
     };
 
@@ -193,6 +194,22 @@ async function userActivity(username, activity) {
 
 }
 
+async function updateUserWithReports(username, reportLocation) {
+  await validation.alphanumeric(username);
+  await validation.checkStringWithSpaces(reportLocation);
+  const usersCollection = await users();
+  // const found_user = await usersCollection.findOne({ username: username });
+
+  // if (!found_user) throw 'User not found';
+
+  found_user = await getUserByUsername(username);
+  found_user.reports.push(reportLocation);
+  let updatedInfo = await usersCollection.updateOne({ username: username }, { $set: { reports: found_user.reports } });
+  //console.log(updatedInfo);
+  return true;
+
+}
+
 async function setAdmin(id) {
   if (!id) throw 'You must provide an id';
   if (typeof id !== 'string') throw 'user Id must be a string';
@@ -220,6 +237,7 @@ module.exports = {
   getUserByUsername,
   calculateAge,
   userActivity,
-  setAdmin
+  setAdmin,
+  updateUserWithReports
   //seedUser
 }

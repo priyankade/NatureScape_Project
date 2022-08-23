@@ -3,6 +3,7 @@ const privateRoutes = require("./private");
 const homeRoutes = require("./activities");
 const eventRoutes = require("./events");
 const reviewRoutes = require("./reviews");
+const reportRoutes = require("./reports");
 
 const constructorMethod = (app) => {
     app.use("/report", eventRoutes);
@@ -18,6 +19,7 @@ const constructorMethod = (app) => {
     app.use("/activity", homeRoutes);
     app.use("/events", eventRoutes);
     app.use("/event", eventRoutes);
+    app.use("/reports", reportRoutes);
     app.use("/addReview", reviewRoutes);
 
     app.use("*", (req, res) => {

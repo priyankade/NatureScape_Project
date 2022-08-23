@@ -1,8 +1,17 @@
-<div class="container-fluid">
+<div class="container">
     <h2>My Profile</h2>
+
+    <div class="float-right">
+        <div id="profile">
+            <a class="btn btn-primary" href="/">All Activities</a>
+
+            <a class="btn btn-primary" href="/users/logout">Logout</a>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-sm-5">
-            <br/>
+            <br />
             <form action="/users/get" method="get">
                 <div class="form-group">
                     <label class="firstname" for="firstname">First Name:
@@ -34,7 +43,8 @@
                 </div>
                 <div class="form-group">
                     <label class="email" for="email">Email address:
-                        <input type="email" class="form-control" id="email" name="email" readonly value={{email}}></label>
+                        <input type="email" class="form-control" id="email" name="email" readonly
+                            value={{email}}></label>
                 </div>
 
                 <div class="form-group">
@@ -52,9 +62,21 @@
             </form>
         </div>
 
-        <div class="col-sm-6"> My Activities
+        <div class="col-sm-6"> 
+            <h2> My Activities </h2>
             <br>
             {{#each activities}}
+            <div class="row">
+                <div class="column">{{this}}</div>
+            </div>
+            {{/each}}
+        </div>
+
+
+        <div class="col-sm-6"> 
+            <h2> Events Reported by me </h2>
+            <br>
+            {{#each reports}}
             <div class="row">
                 <div class="column">{{this}}</div>
             </div>

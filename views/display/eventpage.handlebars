@@ -19,6 +19,8 @@
         </ul>
     </div>
 
+    <span class="Event" id={{event._id}}>{{event.location}}: {{event.location}}</span>
+
     {{#unless isUserRegistered}}
     <form action="/register" method="POST">
         <input type="text" value={{event._id}} name="eventId" hidden>
@@ -72,8 +74,31 @@
         </ul>
     </div>
 
+
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"
         integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="../public/js/reviews.js"></script>
 
+     <div class="row mb-4">
+        <div class="float-right">
+            {{!-- <form class="report" method="GET" action="/reports/form">
+                <button type="submit" class="btn btn-danger btn-sm">Report Unsafe!</button>
+            </form> --}}
+
+            <a id="report" class="btn btn-danger" href="">Report Unsafe!</a>
+
+            {{!-- <a href="/reports/form" class="btn btn-primary ">Report Unsafe!</a> --}}
+        </div>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script type="text/javascript">
+
+    var ID = $('.Event').attr('id');
+
+    $('#report').click(function () {
+        var url = `http://localhost:3000/reports/form?id=${ID}`;
+        $(this).attr('href', url);
+    })
+</script>
