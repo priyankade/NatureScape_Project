@@ -5,6 +5,7 @@ const activitiesTableData = require('../data/activityTable');
 const eventsData = require('../data/individualevent');
 const reviewsData = require('../data/reviews');
 const xss = require('xss');
+const { activityTable } = require("../data");
 
 router.get('/addEvent', async (req, res) => {
     console.log('[addEvent]');
@@ -50,17 +51,13 @@ router.post('/createEvent', async (req, res) => {
 
             //FAQ
             let question1 = xss(req.body.question1);
-            var validatedQuestion1 = validate.checkDescription(question1, "question1");
+            var validatedQuestion1 = validate.checkStringWithSpaces(question1, "question1");
             let answer1 = xss(req.body.answer1);
-            var validatedAnswer1 = validate.checkDescription(answer1, "answer1");
+            var validatedAnswer1 = validate.checkStringWithSpaces(answer1, "answer1");
             let question2 = xss(req.body.question2);
-            var validatedQuestion2 = validate.checkDescription(question2, "question2");
+            var validatedQuestion2 = validate.checkStringWithSpaces(question2, "question2");
             let answer2 = xss(req.body.answer2);
-            var validatedAnswer2 = validate.checkDescription(answer2, "answer2");
-
-
-            
-
+            var validatedAnswer2 = validate.checkStringWithSpaces(answer2, "answer2");
 
             let checkdup = await validate.checkDuplicateEvent(validatedActivity, validatedOverview, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, validatedExpertise, validatedPrice);
             if ("hasErrors" in checkdup) {

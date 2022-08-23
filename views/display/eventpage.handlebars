@@ -1,5 +1,9 @@
 <div class="container">
-    <br>
+
+    <div class="topright">
+        <div class="heart"></div>
+    </div>
+
     <h1>{{event.location}}</h1>
     <h6>{{event.overview}}</h6>
     <h6>Address: {{event.city}},{{event.state}}</h6>
@@ -60,7 +64,7 @@
     {{/if}}
 
     <label id="addReviewResponse">
-        
+
     </label>
 
     <div id="reviews">
@@ -79,7 +83,7 @@
         integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="../public/js/reviews.js"></script>
 
-     <div class="row mb-4">
+    <div class="row mb-4">
         <div class="float-right">
             {{!-- <form class="report" method="GET" action="/reports/form">
                 <button type="submit" class="btn btn-danger btn-sm">Report Unsafe!</button>
@@ -102,3 +106,7 @@
         $(this).attr('href', url);
     })
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+<script src = "../../public/js/wishlist.js"></script>
