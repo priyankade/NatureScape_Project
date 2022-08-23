@@ -3,45 +3,65 @@ const activityTable = mongoCollections.activityTable;
 var validation = require('../validation')
 
 async function createactivityTable(activityName, overview, location, city, state, date, organizer, expertise, price, faq) {
-  validation.checkActivity(activityName);
-  validation.checkDescription(overview);
-  validation.checkStringWithSpaces(location, 'location');
-  validation.checkString(city, 'city');
-  validation.checkState(state, 'state');
-  validation.checkDateforFutureActivities(date, 'date');
-  validation.checkStringWithSpaces(organizer, 'organizer');
-  validation.checkExpertise(expertise, 'expertise');
-  //validation.checkIsProperNumber(price, 'price');
 
-  const activityTableCollection = await activityTable();
+  try {
+    validation.checkActivity(activityName);
+    validation.checkDescription(overview);
+    validation.checkStringWithSpaces(location, 'location');
+    validation.checkString(city, 'city');
+    validation.checkState(state, 'state');
+    validation.checkDateforFutureActivities(date, 'date');
+    validation.checkStringWithSpaces(organizer, 'organizer');
+    validation.checkExpertise(expertise, 'expertise');
+    //validation.checkIsProperNumber(price, 'price');
+    const activityTableCollection = await activityTable();
 
-  let newactivityTable = {
-    activityName: activityName,
-    overview: overview,
-    location: location,
-    city: city,
-    state: state,
-    date: date,
-    organizer: organizer,
-    expertise: expertise,
-    price: price,
-    faq: faq
-  };
+    let newactivityTable = {
+      activityName: activityName,
+      overview: overview,
+      location: location,
+      city: city,
+      state: state,
+      date: date,
+      organizer: organizer,
+      expertise: expertise,
+      price: price,
+      faq: faq
+    };
 
-  //Create/Insert new activityTable activity in db
-  const insertInfo = await activityTableCollection.insertOne(newactivityTable);
-  if (!insertInfo.acknowledged || !insertInfo.insertedId)
-    throw 'Could not add new activityTable activity';
-  else if (insertInfo.acknowledged)
-    //return userInserted;
-    return { authenticated: true };
+    //Create/Insert new activityTable activity in db
+    const insertInfo = await activityTableCollection.insertOne(newactivityTable);
+    if (!insertInfo.acknowledged || !insertInfo.insertedId)
+      throw 'Could not add new activityTable activity';
+    else if (insertInfo.acknowledged)
+      //return userInserted;
+      return { authenticated: true };
+  } catch (e) {
+    errormessage = {
+      className: "Item not found",
+      message: "Item was not found",
+      hasErrors: "True",
+      title: "Error"
+    }
+    return errormessage;
+  }
+
 }
 
 async function getAllactivityTable() {
-  const activityTable_data = await activityTable();
-  const list_all_activityTable = await activityTable_data.find({}, { '_id': 0 }).toArray();
-  return JSON.parse(JSON.stringify(list_all_activityTable));
-
+  try {
+    const activityTable_data = await activityTable();
+    const list_all_activityTable = await activityTable_data.find({}, { '_id': 0 }).toArray();
+    return JSON.parse(JSON.stringify(list_all_activityTable));
+  } catch (e) {
+    errormessage = {
+      className: "Item not found",
+      message: "Item was not found",
+      hasErrors: "True",
+      title: "Error"
+    }
+    return errormessage;
+  }
 }
 
 async function getActivityTableByName(activityName) {
@@ -68,7 +88,7 @@ async function getActivityTableByName(activityName) {
   return JSON.parse(JSON.stringify(activityDetails));
 }
 
-async function createEvent(overview, location, city, state, date, organizer, expertise, price, faq,registeredMembers) {
+async function createEvent(overview, location, city, state, date, organizer, expertise, price, faq, registeredMembers) {
   // let activityName = actName.toLowerCase();
   // validate.checkActivity(activityName);
   validation.checkStringWithSpaces(location, 'location');

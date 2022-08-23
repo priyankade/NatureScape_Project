@@ -30,20 +30,15 @@ router.get("/form", async (req, res) => {
 
 router.post("/form", async (req, res) => {
   const username = req.session.user;
-  const eventId=req.body.eventId;
+  const eventId= xss(req.body.eventId);
   const event = await eventData.getEventById(eventId);
     try
     {
-        let reason = req.body.reason;
+        let reason = xss(req.body.reason);
         if(typeof reason == "string")
         {
           reason=[reason];
         }
-
-        console.log("username is", username)
-        console.log("eventId is", eventId)
-        console.log("reason is", reason)
-
         let report_added = await reportData.addReport(username, eventId, reason);
         res.render('reports/reportForm',{success:"Report successfully submitted!", username: username,'reported-event':event.location, 'eventId': eventId});
         return;
@@ -55,8 +50,9 @@ router.post("/form", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
+  let id = xss(req.params.id);
     try {
-      const report = await reportData.getReport(req.params.id);
+      const report = await reportData.getReport(id);
       res.status(200).json(report);
     } catch (e) {
       res.status(404).json({ message: "Report not found" });
