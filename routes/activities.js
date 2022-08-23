@@ -11,12 +11,16 @@ router.post('/register', async (req, res) => {
     let eventId = xss(req.body.eventId);
     let username = xss(req.session.user);
     let oldEvent = {};
-    validate.checkId(eventId);
-    console.log('validate.checkId(eventId);', eventId);
+    try {
+        validate.checkId(eventId);
+        validate.alphanumeric(username);
+    } catch (error) {
+        res.status(401).render('display/error', error);
+        return;
+    }
     let { ObjectId } = require('mongodb');
     let parsedId = ObjectId(eventId);
-    validate.alphanumeric(username);
-    console.log('validate.alphanumeric(username);', username);
+
     try {
         oldEvent = await eventsData.getEventById(parsedId.toString());
     } catch (error) {
@@ -29,7 +33,6 @@ router.post('/register', async (req, res) => {
         res.status(401).render('display/error', errormessage);
         return;
     }
-    console.log('checking for already registered member');
 
     try {
         for (i = 0; i < oldEvent.registeredMembers.length; i++) {
@@ -47,7 +50,6 @@ router.post('/register', async (req, res) => {
         res.status(401).render('display/error', errormessage);
         return;
     }
-    console.log('updating array of registrered members')
     try {
         eventsData.updateRegisteredMembers(eventId, req.session.user);
     } catch (error) {

@@ -181,8 +181,11 @@ router.get("/:id", async (req, res) => {
     }
     let isUserRegistered = false;
     if (searchResult.registeredMembers != null) {
-        if (username in searchResult.registeredMembers) {
-            isUserRegistered = true;
+        for (let i in searchResult.registeredMembers) {
+            if (username ===  searchResult.registeredMembers[i]) {
+                isUserRegistered = true;
+                break;
+            }
         }
     }
 
@@ -201,9 +204,19 @@ router.get("/:id", async (req, res) => {
         canReview = true;
     }
 
+    /* A user can register for an event if
+        1. User has not registered for the event
+        2. Event is in the future
+     */
+    console.log('isUserRegistered', isUserRegistered);
+    console.log('eventDate', eventDate);
+    console.log('today', today);
+    let showRegisterButton = !isUserRegistered && eventDate >= today;
+    console.log('showRegisterButton', showRegisterButton);
+
     res.render('display/eventpage', {
         event: searchResult,
-        isUserRegistered: isUserRegistered,
+        showRegisterButton: showRegisterButton,
         canReview: canReview,
         reviews: eventReviews
     });
