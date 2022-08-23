@@ -95,7 +95,6 @@ async function createEvent(overview, location, city, state, date, organizer, exp
     validation.checkExpertise(expertise, 'expertise');
     validation.checkIsProperNumber(price, 'price');
 
-
     var checkdup = await validate.checkDuplicateActivity(activityName);
     if ("hasErrors" in checkdup) {
         return checkdup;
@@ -119,7 +118,6 @@ async function createEvent(overview, location, city, state, date, organizer, exp
     const activity = await getActivityById(newId.toString());
     return JSON.parse(JSON.stringify(activity));
 }
-
 
 module.exports = {
     createactivityTable,

@@ -43,9 +43,7 @@ module.exports = {
         if (!strdesc) {
             throw 'Description is required for users to understand the activity'
         }
-
         strdesc = strdesc.trim();
-
         if (strdesc.length === 0) {
             throw 'Description cannot consist of only spaces'
         }
@@ -72,8 +70,21 @@ module.exports = {
         }
         return strreview;
     },
-    async checkDuplicateActivity(activityNamedup) {
-        let activityName = activityNamedup.toLowerCase();
+    async checkDuplicateActivity(activityNameDup) {
+        let activityName = activityNameDup;
+        try{
+            activityName = this.checkActivity(activityName);
+        }
+        catch(error) {
+            errormessage = {
+                className: "Invalid Activity Name",
+                message: "Invalid Activity Name",
+                hasErrors: "True",
+                title: "Error"
+            };
+            return errormessage;
+        }
+
         const activityCollection = await activities();
 
         const activityList = await activityCollection.find({}).toArray();
@@ -165,13 +176,10 @@ module.exports = {
         strVal = strVal.trim();
         if (strVal.length === 0)
             throw `Error: ${varName} cannot be an empty string or string with just spaces`;
-        // if (strVal.length < 4)
-        //   throw `Error: ${varName} should be at least 4 characters long`;
         if (!isNaN(strVal))
             throw `Error: ${strVal} is not a valid value for ${varName} as it only contains digits`;
 
         return strVal;
-
     },
 
     alphanumeric(input) {
