@@ -181,8 +181,10 @@ router.get("/:id", async (req, res) => {
     }
     let isUserRegistered = false;
     if (searchResult.registeredMembers != null) {
-        if (username in searchResult.registeredMembers) {
-            isUserRegistered = true;
+        for (let i in searchResult.registeredMembers) {
+            if (username ===  searchResult.registeredMembers[i]) {
+                isUserRegistered = true;
+            }
         }
     }
 
