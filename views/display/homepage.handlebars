@@ -1,59 +1,69 @@
-<h1>Activities we offer</h1>
-<form id="searchForm">
-    <label for="search_term">Search Activity</label>
-    <input type="text" id="search_term" placeholder="Search with activity's name" name="searchActivity" required />
-    <input type="submit" name="submitSearch">
-</form>
-<ul id="activityList" hidden></ul>
-
-{{#unless is_user_logged_in}}
-<div class="float-right">
-<div id="login">
-    <a class="btn btn-primary" href="/users/login">Login</a>
-
-    <a class="btn btn-primary" href="/users/signup">Signup</a>
-</div>
-</div>
-{{/unless}}
-
-{{#if is_user_logged_in}}
-<div class="float-right">
-<div id="profile">
-    <a class="btn btn-primary" href="/private/profile">Profile</a>
-
-    <a class="btn btn-primary" href="/users/logout">Logout</a>
-</div>
-</div>
-{{/if}}
-
-<div>
-    <form class="addActivity" action="/addActivity">
-        <input type="submit" class="btn btn-primary" id="addActivity" name="addActivity" value="Add Activity">
+<div class="container">
+    <h1>Activities we offer</h1>
+    <form id="searchForm">
+        <label for="search_term">Search Activity</label>
+        <input type="text" id="search_term" placeholder="Search with activity's name" name="searchActivity" required />
+        <input type="submit" name="submitSearch">
     </form>
-</div>
+    <ul id="activityList" hidden></ul>
 
-{{#each activities}}
-<div class='activity'>
-    <h2 id="individualActivityName"><a href="/activity/{{urlEncode this.activityName}}">{{this.activityName}}</a></h2>
+    {{#unless is_user_logged_in}}
+    <div class="float-right">
+        <div id="login">
+            <a class="btn btn-primary" href="/users/login">Sign in</a>
 
-    {{#if ../isAdmin}}
-    <form class="deleteActivitybyName" method="GET" action="/activity/{{urlEncode this.activityName}}/deleteActivity">
-            <button type="submit" formmethod="post" formmethod="post" action="/activity/{{urlEncode this.activityName}}/deleteActivity" class="btn btn-danger btn-sm">Delete</button>
-    </form>
+            <a class="btn btn-primary" href="/users/signup">Sign up</a>
+        </div>
+    </div>
+    {{/unless}}
 
-    {{else}}
-    <form hidden class="deleteActivitybyName" method="GET" action="/activity/{{urlEncode this.activityName}}/deleteActivity">
-            <button type="submit" formmethod="post" formmethod="post" action="/activity/{{urlEncode this.activityName}}/deleteActivity" class="btn btn-danger btn-sm">Delete</button>
-    </form>
+    {{#if is_user_logged_in}}
+    <div class="float-right">
+        <div id="profile">
+            <a class="btn btn-primary" href="/private/profile">Profile</a>
 
-
+            <a class="btn btn-primary" href="/users/logout">Logout</a>
+        </div>
+    </div>
     {{/if}}
 
+    <div>
+        <form class="addActivity" action="/addActivity">
+            <input type="submit" class="btn btn-primary" id="addActivity" name="addActivity" value="Add Activity">
+        </form>
+    </div>
+
+    {{#each activities}}
+    <div class='activity'>
+        <h2 id="individualActivityName"><a href="/activity/{{urlEncode this.activityName}}">{{this.activityName}}</a>
+        </h2>
+
+        {{#if ../isAdmin}}
+        <form class="deleteActivitybyName" method="GET"
+            action="/activity/{{urlEncode this.activityName}}/deleteActivity">
+            <button type="submit" formmethod="post" formmethod="post"
+                action="/activity/{{urlEncode this.activityName}}/deleteActivity"
+                class="btn btn-danger btn-sm">Delete</button>
+        </form>
+
+        {{else}}
+        <form hidden class="deleteActivitybyName" method="GET"
+            action="/activity/{{urlEncode this.activityName}}/deleteActivity">
+            <button type="submit" formmethod="post" formmethod="post"
+                action="/activity/{{urlEncode this.activityName}}/deleteActivity"
+                class="btn btn-danger btn-sm">Delete</button>
+        </form>
+
+
+        {{/if}}
 
 
 
-    <p class="description">{{this.activityDesc}}</p>
+
+        <p class="description">{{this.activityDesc}}</p>
+    </div>
+    {{/each}}
+
 </div>
-{{/each}}
 
 <script src="../../public/js/activities.js"></script>

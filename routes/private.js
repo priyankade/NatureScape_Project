@@ -27,6 +27,7 @@ router.get('/profile', async (req, res) => {
 				contact: userFound.phone,
 				emergency: userFound.emer_phone,
 				activities: userFound.activities,
+				reports: userFound.reports,
 				title: "Private"
 			});
 	}

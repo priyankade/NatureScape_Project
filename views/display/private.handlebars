@@ -1,12 +1,27 @@
-<div class="row">
+<div class="container">
 
-    <h2>Welcome, {{this.firstname}} {{this.lastname}} to NatureScape!</h2>
+    <div class="row">
 
-    <ul style="margin-top: 20px;">
-        <li><a href="/private/profile">Click here to go to your profile!</a></li>
-        <li><a href="/users/logout">Click here to logout!</a></li>
-        <li><a href="/">Click here to view all activities!</a></li>
-    </ul>
+        <br>
+        <br>
+        <br>
+
+        <h2>Welcome, {{this.firstname}} {{this.lastname}} to NatureScape!</h2>
+
+        <div class="float-right">
+            <div id="profile">
+                <a class="btn btn-primary" href="/private/profile">Profile</a>
+
+                <a class="btn btn-primary" href="/users/logout">Logout</a>
+            </div>
+        </div>
+
+        <ul style="margin-top: 20px;">
+            {{!-- <li><a href="/private/profile">Click here to go to your profile!</a></li>
+            <li><a href="/users/logout">Click here to logout!</a></li> --}}
+            <li><a href="/">Click here to view all activities!</a></li>
+        </ul>
 
 
+    </div>
 </div>
