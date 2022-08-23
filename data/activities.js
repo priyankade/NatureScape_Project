@@ -15,29 +15,30 @@ async function createActivity(actName, activityDesc) {
             hasErrors: "Error",
             title: "Error"
         }
-        var checkdup = await validate.checkDuplicateActivity(activityName);
-        if ("hasErrors" in checkdup) {
-            return checkdup;
-        }
-        const activityCollection = await activities();
-        let newActivity = {
-            activityName: activityName,
-            activityDesc: activityDesc
-        };
-        const insertInfo = await activityCollection.insertOne(newActivity);
-        if (insertInfo.insertedCount === 0) {
-            errormessage = {
-                className: "Item not added",
-                message: "Item was not added",
-                hasErrors: "True",
-                title: "Error"
-            }
-            return errormessage;
-        }
-        const newId = insertInfo.insertedId;
-        const activity = await getActivityById(newId.toString());
-        return JSON.parse(JSON.stringify(activity));
+        return errormessage;
     }
+    var checkdup = await validate.checkDuplicateActivity(activityName);
+    if ("hasErrors" in checkdup) {
+        return checkdup;
+    }
+    const activityCollection = await activities();
+    let newActivity = {
+        activityName: activityName,
+        activityDesc: activityDesc
+    };
+    const insertInfo = await activityCollection.insertOne(newActivity);
+    if (insertInfo.insertedCount === 0) {
+        errormessage = {
+            className: "Item not added",
+            message: "Item was not added",
+            hasErrors: "True",
+            title: "Error"
+        }
+        return errormessage;
+    }
+    const newId = insertInfo.insertedId;
+    const activity = await getActivityById(newId.toString());
+    return JSON.parse(JSON.stringify(activity));
 }
 
 async function getActivityByName(activityName) {

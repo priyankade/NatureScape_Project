@@ -7,9 +7,9 @@ const reviewsData = require('../data/reviews');
 const xss = require('xss');
 
 router.get('/addEvent', async (req, res) => {
-    console.log('[addEvent]');
+    console.log('GET [addEvent]');
     if (req.session.user) {
-        res.render('display/addEvent', {activityName: req.params.activityName});
+        res.render('display/addEvent', { activityName: req.params.activityName });
         return;
     }
     else {
@@ -26,7 +26,7 @@ router.get('/addEvent', async (req, res) => {
 });
 
 router.post('/createEvent', async (req, res) => {
-    console.log('[createEvent]');
+    console.log('POST [createEvent]');
     if (req.session.user) {
         try {
             let activityName = xss(req.body.activityName);
@@ -50,17 +50,13 @@ router.post('/createEvent', async (req, res) => {
 
             //FAQ
             let question1 = xss(req.body.question1);
-            var validatedQuestion1 = validate.checkDescription(question1, "question1");
+            var validatedQuestion1 = validate.checkStringWithSpaces(question1, "question1");
             let answer1 = xss(req.body.answer1);
-            var validatedAnswer1 = validate.checkDescription(answer1, "answer1");
+            var validatedAnswer1 = validate.checkStringWithSpaces(answer1, "answer1");
             let question2 = xss(req.body.question2);
-            var validatedQuestion2 = validate.checkDescription(question2, "question2");
+            var validatedQuestion2 = validate.checkStringWithSpaces(question2, "question2");
             let answer2 = xss(req.body.answer2);
-            var validatedAnswer2 = validate.checkDescription(answer2, "answer2");
-
-
-            
-
+            var validatedAnswer2 = validate.checkStringWithSpaces(answer2, "answer2");
 
             let checkdup = await validate.checkDuplicateEvent(validatedActivity, validatedOverview, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, validatedExpertise, validatedPrice);
             if ("hasErrors" in checkdup) {
@@ -99,14 +95,16 @@ router.post('/createEvent', async (req, res) => {
         const faq2 = {};
         let arr = [];
 
-        faq1[validatedQuestion1] = validatedAnswer1;
-        faq2[validatedQuestion2] = validatedAnswer2;
+        faq1['question'] = validatedQuestion1;
+        faq1['answer'] = validatedAnswer1;
+        faq2['question'] = validatedQuestion2;
+        faq2['answer'] = validatedAnswer2;
 
         arr.push(faq1, faq2);
 
-        checkEventCreated = await activitiesTableData.createactivityTable(validatedActivity, validatedOverview, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, validatedExpertise, validatedPrice, arr );
+        checkEventCreated = await activitiesTableData.createactivityTable(validatedActivity, validatedOverview, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, validatedExpertise, validatedPrice, arr);
         console.log(checkEventCreated)
-        
+
         if ("hasErrors" in checkEventCreated) {
             errormessage = {
                 className: "Could not add Event",
@@ -187,34 +185,27 @@ router.get("/:id", async (req, res) => {
         }
         return res.status(400).render("display/error", errormessage);
     }
-    let isUserRegistered = true;
-    if (!('registeredMembers' in searchResult) || !(username in searchResult.registeredMembers)) {
-        isUserRegistered = false;
+    let isUserRegistered = false;
+    if (searchResult.registeredMembers != null) {
+        if (username in searchResult.registeredMembers) {
+            isUserRegistered = true;
+        }
     }
-    console.log(searchResult.registeredMembers);
-    console.log(searchid);
+
     //query all reviews for this event
     let eventReviews = await reviewsData.getAllReviewsForEvent(searchid);
 
-    let eventDetails = await activitiesTableData.getActivityTableById(searchid);
-    
     let today = new Date();
-    console.log('eventDetails.date', eventDetails.date, ' date today', today);
-    let eventDate = new Date(eventDetails.date);
-    
+    let eventDate = new Date(searchResult.date);
+
     /* A user can review only if 
         1. Event date has passed
         2. User had registered for the event
     */
     let canReview = false;
-    if (eventDate < today)
-        for (i = 0; i < eventDetails.registeredMembers.length; i++) {
-            if (eventDetails.registeredMembers[i] == username) {
-                canReview = true;
-            }
-        }
-    console.log('review', eventReviews[0]);
-
+    if (eventDate < today && isUserRegistered) {
+        canReview = true;
+    }
 
     res.render('display/eventpage', {
         event: searchResult,
