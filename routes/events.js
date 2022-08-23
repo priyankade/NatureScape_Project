@@ -184,6 +184,7 @@ router.get("/:id", async (req, res) => {
         for (let i in searchResult.registeredMembers) {
             if (username ===  searchResult.registeredMembers[i]) {
                 isUserRegistered = true;
+                break;
             }
         }
     }
