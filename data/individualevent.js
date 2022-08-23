@@ -15,32 +15,28 @@ async function getEventById(Id) {
     return eventDetails
 }
 
-async function updateRegisteredMembers(eventId,username) {
-    console.log('data/individualevents username is ', username);
+async function updateRegisteredMembers(eventId, username) {
     validate.checkId(eventId);
-    console.log('Validation complete');
     let { ObjectId } = require('mongodb');
     let parsedId = ObjectId(eventId);
-    const eventCollection= await eventsCollection();
+    const eventCollection = await eventsCollection();
     const checkEvent = await eventCollection.find({ _id: parsedId });
-    if(checkEvent===null){
-      throw 'Event not found';
+    if (checkEvent === null) {
+        throw 'Event not found';
     }
     const updateInfo = await eventCollection.updateOne(
-      { _id: parsedId },
-      { $push: { registeredMembers: username } }
-  );
-  
-  if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
-  console.log("Update successful");
-  const getUpdatedDetails = await this.getEventById(parsedId.toString());
-  console.log("getUpdatedDetails",getUpdatedDetails);
-  return;
-  }
-  
+        { _id: parsedId },
+        { $push: { registeredMembers: username } }
+    );
+
+    if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
+    console.log("Update successful");
+    const getUpdatedDetails = await this.getEventById(parsedId.toString());
+    return true;
+}
+
 
 module.exports = {
     getEventById,
-    updateRegisteredMembers,
-    getEventById
+    updateRegisteredMembers
 }
