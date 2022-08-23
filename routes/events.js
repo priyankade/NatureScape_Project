@@ -128,16 +128,10 @@ router.post('/createEvent', async (req, res) => {
                 title: "Create Event",
                 error: error,
             });
-
-            // res.status(400).render('display/error', "could not add Event");
             return;
         }
-        res.status(200).send("Successfully inserted Event");
-        //res.status(200).redirect(`/activityName`);
-        //res.status(200).render("display/activityTable");
-
+        res.status(200).render("display/success", {"message": "Successfully inserted Event"});
     }
-
 });
 
 router.get("/:id", async (req, res) => {
