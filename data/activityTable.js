@@ -4,13 +4,15 @@ var validation = require('../validation');
 const { ObjectId } = require('mongodb');
 const { getEventById } = require('./individualevent');
 
-async function createactivityTable(activityName, overview, location, city, state, date, organizer, expertise, price, faq, registeredMembers) {
+async function createactivityTable(activityName, overview, location, city, state, date, organizer, expertise, price, faq, registeredMembers, skipFutureCheck=false) {
     validation.checkActivity(activityName);
     validation.checkDescription(overview);
     validation.checkStringWithSpaces(location, 'location');
     validation.checkString(city, 'city');
     validation.checkState(state, 'state');
-    validation.checkDateforFutureActivities(date, 'date');
+    if (!skipFutureCheck) {
+        validation.checkDateforFutureActivities(date, 'date');
+    }
     validation.checkStringWithSpaces(organizer, 'organizer');
     validation.checkExpertise(expertise, 'expertise');
     //validation.checkIsProperNumber(price, 'price');
@@ -40,8 +42,6 @@ async function createactivityTable(activityName, overview, location, city, state
         const activityTable = await getActivityTableById(newId.toString());
         return JSON.parse(JSON.stringify(activityTable));
     }
-
-
 }
 
 async function getActivityTableById(Id) {
@@ -53,14 +53,12 @@ async function getActivityTableById(Id) {
     const activityTableDetails = await activityTableCollection.findOne({ _id: parsedId });
     if (activityTableDetails === null) throw 'No Event is present with that Id'
     return activityTableDetails
-
 }
 
 async function getAllactivityTable() {
     const activityTable_data = await activityTable();
     const list_all_activityTable = await activityTable_data.find({}, { '_id': 0 }).toArray();
     return JSON.parse(JSON.stringify(list_all_activityTable));
-
 }
 
 async function getActivityTableByName(activityName) {
@@ -88,8 +86,6 @@ async function getActivityTableByName(activityName) {
 }
 
 async function createEvent(overview, location, city, state, date, organizer, expertise, price, faq, registeredMembers) {
-    // let activityName = actName.toLowerCase();
-    // validate.checkActivity(activityName);
     validation.checkStringWithSpaces(location, 'location');
     validation.checkString(city, 'city');
     validation.checkState(state, 'state');
