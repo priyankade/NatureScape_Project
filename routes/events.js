@@ -81,6 +81,7 @@ router.post('/createEvent', async (req, res) => {
                 state: req.body.state,
                 date: req.body.date,
                 organizer: req.body.organizer,
+                organizerEmail: organizerEmail,
                 expertise: req.body.expertise,
                 price: req.body.price,
                 question1: req.body.question1,
