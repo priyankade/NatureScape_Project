@@ -4,6 +4,7 @@ const validate = require('../validation')
 const activitiesData = require('../data/activities');
 const activitiesTableData = require('../data/activityTable');
 const eventsData = require('../data/individualevent');
+const userData = require('../data/users');
 const xss = require('xss');
 
 router.post('/register', async (req, res) => {
@@ -11,7 +12,7 @@ router.post('/register', async (req, res) => {
     let eventId = xss(req.body.eventId);
     let username = xss(req.session.user);
     let oldEvent = {};
- 
+
     try {
         validate.checkId(eventId);
         validate.alphanumeric(username);
@@ -286,7 +287,23 @@ router.get("/activity/:activityName", async (req, res) => {
         isAdmin = true;
     }
 
-    res.render("display/activityTable", { activityTable: activityTable, activity: "activityTable", activityName: activityName, isAdmin: isAdmin });
+    let username = req.session.user;
+    let userDetails = {};
+    let organizerEmail = '';
+    if (username) {
+        try {
+            userDetails = await userData.getUserByUsername(username);
+        } catch (error) {
+            console.log('Error in fetching organizer email:', error);
+        }
+        organizerEmail = userDetails.email;
+        try {
+            validatedOrganizerEmail = validate.checkEmail(organizerEmail);
+        } catch (error) {
+            console.log('Error in validating organizer email:', error);
+        }
+    }
+    res.render("display/activityTable", { activityTable: activityTable, activity: "activityTable", activityName: activityName, isAdmin: isAdmin, organizerEmail: organizerEmail });
 });
 
 module.exports = router;

@@ -2,12 +2,16 @@
   <br>
   <div class="row mb-5">
     <div class="float-right">
-      <a href="/events/addEvent" class="btn btn-primary">Create a new event</a>
+      <form action="/events/addEvent" method="POST">
+        <input type="hidden" id="activityName" value={{activityName}} name="activityName">
+        <input type="hidden" id="organizerEmail" value={{organizerEmail}} name="organizerEmail">
+        <input type="submit" class="btn btn-primary" id="createNewEventLink"
+          value="Create a new event">
+      </form>
     </div>
   </div>
 
   <h1>{{activityName}} events</h1>
-
   <br>
   <br>
 
