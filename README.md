@@ -20,15 +20,19 @@ Login information below
 
 7. Open `http://localhost:3000/`
 
+Admin credentials: `admin`
+Password: `admin1234`
+
+User credentials: `jodoe`
+Password: `jodoe1234`
+
 You will arrive on the landing page which is the homepage of the website
 - The homepage and the event’s list page is accessible to all our users. The users can search for activities on the homepage
 - In order to access the individual event’s page, create a new activity or event, check user profile, add a review, report an activity or register for an activity; the user needs to login.
 - In addition, to delete an activity a user needs admin role.
 - Registration for an event in the past is not allowed. Only a user who had registered for an event that is now completed can write a review.
 
-Admin credentials to login:
-Username: `admin`
-Password: `admin1234`
+
 
 
 ## Extra Features
