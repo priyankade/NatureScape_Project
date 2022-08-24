@@ -4,19 +4,28 @@ var validation = require('../validation');
 const { ObjectId } = require('mongodb');
 const { getEventById } = require('./individualevent');
 
-async function createactivityTable(activityName, overview, location, city, state, date, organizer, expertise, price, faq, registeredMembers, skipFutureCheck=false) {
-    validation.checkActivity(activityName);
-    validation.checkDescription(overview);
-    validation.checkStringWithSpaces(location, 'location');
-    validation.checkString(city, 'city');
-    validation.checkState(state, 'state');
-    if (!skipFutureCheck) {
-        validation.checkDateforFutureActivities(date, 'date');
+async function createactivityTable(activityName, overview, location, city, state, date, organizer, expertise, price, faq, registeredMembers, skipFutureCheck = false) {
+    try {
+        validation.checkActivity(activityName);
+        validation.checkDescription(overview);
+        validation.checkStringWithSpaces(location, 'location');
+        validation.checkString(city, 'city');
+        validation.checkState(state, 'state');
+        if (!skipFutureCheck) {
+            validation.checkDateforFutureActivities(date, 'date');
+        }
+        validation.checkStringWithSpaces(organizer, 'organizer');
+        validation.checkExpertise(expertise, 'expertise');
+        //validation.checkIsProperNumber(price, 'price');
+    } catch (error) {
+        errormessage = {
+            className: "Cannot add event",
+            message: error,
+            hasErrors: "Error",
+            title: "Error"
+        }
+        return errormessage;
     }
-    validation.checkStringWithSpaces(organizer, 'organizer');
-    validation.checkExpertise(expertise, 'expertise');
-    //validation.checkIsProperNumber(price, 'price');
-
     const activityTableCollection = await activityTable();
 
     let newactivityTable = {
@@ -45,7 +54,16 @@ async function createactivityTable(activityName, overview, location, city, state
 }
 
 async function getActivityTableById(Id) {
-    validation.checkId(Id);
+    try {
+        validation.checkId(Id);
+    } catch (error) {
+        errormessage = {
+            className: "Cannot get events for given id",
+            message: error,
+            hasErrors: "Error",
+            title: "Error"
+        }
+    }
     let newObjId = ObjectId();
     if (!ObjectId.isValid(newObjId)) throw 'Object id is not valid'
     let parsedId = ObjectId(Id);
@@ -62,7 +80,16 @@ async function getAllactivityTable() {
 }
 
 async function getActivityTableByName(activityName) {
-    validation.checkActivity(activityName);
+    try {
+        validation.checkActivity(activityName);
+    } catch (error) {
+        errormessage = {
+            className: "Cannot get events for given activity",
+            message: error,
+            hasErrors: "Error",
+            title: "Error"
+        }
+    }
     activityName = activityName.toLowerCase();
     const activityTableCollection = await activityTable();
 
@@ -86,15 +113,22 @@ async function getActivityTableByName(activityName) {
 }
 
 async function createEvent(overview, location, city, state, date, organizer, expertise, price, faq, registeredMembers) {
-
-    validation.checkStringWithSpaces(location, 'location');
-    validation.checkString(city, 'city');
-    validation.checkState(state, 'state');
-    validation.checkDateforFutureActivities(date, 'date');
-    validation.checkStringWithSpaces(organizer, 'organizer');
-    validation.checkExpertise(expertise, 'expertise');
-    validation.checkIsProperNumber(price, 'price');
-
+    try {
+        validation.checkStringWithSpaces(location, 'location');
+        validation.checkString(city, 'city');
+        validation.checkState(state, 'state');
+        validation.checkDateforFutureActivities(date, 'date');
+        validation.checkStringWithSpaces(organizer, 'organizer');
+        validation.checkExpertise(expertise, 'expertise');
+        validation.checkIsProperNumber(price, 'price');
+    } catch (error) {
+        errormessage = {
+            className: "Item not created",
+            message: error,
+            hasErrors: "True",
+            title: "Error"
+        }
+    }
     var checkdup = await validate.checkDuplicateActivity(activityName);
     if ("hasErrors" in checkdup) {
         return checkdup;

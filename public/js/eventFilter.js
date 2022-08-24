@@ -1,134 +1,57 @@
-// function myFunction() {
-//   var input, filter, table, tr, td, cell, i, j;
-//   filter = document.getElementById("searchEvent").value.toLowerCase();
-//   table = document.getElementById("eventTable");
-//   tr = table.getElementsByTagName("tr");
-//   for (i = 1; i < tr.length; i++) {
-//     tr[i].style.display = "none";
-//     const tdArray = tr[i].getElementsByTagName("td");
-//     for (var j = 0; j < tdArray.length; j++) {
-//       const cellValue = tdArray[j];
-//       if (cellValue && cellValue.innerHTML.toLowerCase().indexOf(filter) > -1) {
-//         tr[i].style.display = "";
-//         break;
-//       }
-//     }
-//   }
-// }
+$(document).ready(function () {
+    $("#locationFilter").on("keyup", function () {
+        let value = $(this).val().toLowerCase();
+        $("#eventTable tbody tr").filter(function () {
+            let show = $($(this).children()[0]).text().toLowerCase().indexOf(value) > -1;
+            $(this).toggle(show);
+        });
+    });
 
+    $("#cityFilter").on("keyup", function () {
+        let value = $(this).val().toLowerCase();
+        $("#eventTable tbody tr").filter(function () {
+            let show = $($(this).children()[1]).text().toLowerCase().indexOf(value) > -1;
+            $(this).toggle(show);
+        });
+    });
 
-// Get unique values for the desired columns
+    $("#stateFilter").on("keyup", function () {
+        let value = $(this).val().toLowerCase();
+        $("#eventTable tbody tr").filter(function () {
+            let show = $($(this).children()[2]).text().toLowerCase().indexOf(value) > -1;
+            $(this).toggle(show);
+        });
+    });
 
-function getUniqueValuesFromColumn() {
+    $("#dateFilter").on("keyup", function () {
+        let value = $(this).val().toLowerCase();
+        $("#eventTable tbody tr").filter(function () {
+            let show = $($(this).children()[3]).text().toLowerCase().indexOf(value) > -1;
+            $(this).toggle(show);
+        });
+    });
 
-  var unique_col_values_dict = {}
+    $("#organizerFilter").on("keyup", function () {
+        let value = $(this).val().toLowerCase();
+        $("#eventTable tbody tr").filter(function () {
+            let show = $($(this).children()[4]).text().toLowerCase().indexOf(value) > -1;
+            $(this).toggle(show);
+        });
+    });
 
-  allFilters = document.querySelectorAll(".table-filter")
-  allFilters.forEach((filter_i) => {
-      col_index = filter_i.parentElement.getAttribute("col-index");
-      alert(col_index);
-      const rows = document.querySelectorAll("#eventTable > tbody > tr")
+    $("#expertiseFilter").on("keyup", function () {
+        let value = $(this).val().toLowerCase();
+        $("#eventTable tbody tr").filter(function () {
+            let show = $($(this).children()[5]).text().toLowerCase().indexOf(value) > -1;
+            $(this).toggle(show);
+        });
+    });
 
-      rows.forEach((row) => {
-          cell_value = row.querySelector("td:nth-child("+col_index+")").innerHTML;
-          // if the col index is already present in the dict
-          if (col_index in unique_col_values_dict) {
-
-              // if the cell value is already present in the array
-              if (unique_col_values_dict[col_index].includes(cell_value)) {
-                  // alert(cell_value + " is already present in the array : " + unique_col_values_dict[col_index])
-
-              } else {
-                  unique_col_values_dict[col_index].push(cell_value)
-                  // alert("Array after adding the cell value : " + unique_col_values_dict[col_index])
-
-              }
-
-
-          } else {
-              unique_col_values_dict[col_index] = new Array(cell_value)
-          }
-      });
-
-      
-  });
-
-  for(i in unique_col_values_dict) {
-      alert("Column index : " + i + " has Unique values : \n" + unique_col_values_dict[i]);
-  }
-
-  updateSelectOptions(unique_col_values_dict)
-
-};
-
-// Add <option> tags to the desired columns based on the unique values
-
-function updateSelectOptions(unique_col_values_dict) {
-  allFilters = document.querySelectorAll(".table-filter")
-
-  allFilters.forEach((filter_i) => {
-      col_index = filter_i.parentElement.getAttribute('col-index')
-
-      unique_col_values_dict[col_index].forEach((i) => {
-          filter_i.innerHTML = filter_i.innerHTML + `\n<option value="${i}">${i}</option>`
-      });
-
-  });
-};
-
-
-// Create filter_rows() function
-
-// filter_value_dict {2 : Value selected, 4:value, 5: value}
-
-function filter_rows() {
-  allFilters = document.querySelectorAll(".table-filter")
-  var filter_value_dict = {}
-
-  allFilters.forEach((filter_i) => {
-      col_index = filter_i.parentElement.getAttribute('col-index')
-
-      value = filter_i.value
-      if (value != "all") {
-          filter_value_dict[col_index] = value;
-      }
-  });
-
-  var col_cell_value_dict = {};
-
-  const rows = document.querySelectorAll("#emp-table tbody tr");
-  rows.forEach((row) => {
-      var display_row = true;
-
-      allFilters.forEach((filter_i) => {
-          col_index = filter_i.parentElement.getAttribute('col-index')
-          col_cell_value_dict[col_index] = row.querySelector("td:nth-child(" + col_index+ ")").innerHTML
-      })
-
-      for (var col_i in filter_value_dict) {
-          filter_value = filter_value_dict[col_i]
-          row_cell_value = col_cell_value_dict[col_i]
-          
-          if (row_cell_value.indexOf(filter_value) == -1 && filter_value != "all") {
-              display_row = false;
-              break;
-          }
-
-
-      }
-
-      if (display_row == true) {
-          row.style.display = "table-row"
-
-      } else {
-          row.style.display = "none"
-
-      }
-
-
-
-
-
-  })
-
-}
+    $("#priceFilter").on("keyup", function () {
+        let value = $(this).val().toLowerCase();
+        $("#eventTable tbody tr").filter(function () {
+            let show = $($(this).children()[6]).text().toLowerCase().indexOf(value) > -1;
+            $(this).toggle(show);
+        });
+    });
+});
