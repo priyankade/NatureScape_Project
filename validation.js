@@ -419,7 +419,6 @@ module.exports = {
     },
 
     checkExpertise(expertise) {
-
         if (["easy", "intermediate", "advanced"].includes(expertise.toLowerCase().trim())) {
             return expertise;
         } else {

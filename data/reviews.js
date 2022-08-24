@@ -17,6 +17,7 @@ async function createReview(reviewerName, eventId, rating, reviewText) {
             hasErrors: "True",
             title: "Error"
         }
+        console.log(error);
         return null;
     }
 
