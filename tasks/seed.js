@@ -46,7 +46,7 @@ async function main() {
             question: "How bad is the mosquito situation there?",
             answer: "You definitely need a strong mosquito repellent. We do not recommend mosquito nets as they are a fire hazard"
         }],
-        ['sdutt','jodoe','jodoe2'], true);
+        [], true);
     let hikingevent2 = await activityTableData.createactivityTable("hiking", "Discover this 3.0-mile out-and-back trail near Moctezuma, Sonora. Generally considered an easy route, it takes an average of 1 h 13 min to complete. This trail is great for hiking, mountain biking, and running, and it's unlikely you'll encounter many other people while exploring.", "Centro comercial Moctezuma", "Townsend", "MI", "2022-10-05", "Rachel", "Easy", 200, faq = [{
         question: "Are trekking boots required?",
         answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
@@ -54,7 +54,7 @@ async function main() {
     {
         question: "How chilly does it get? Do I need a winter jacket?",
         answer: "It is fine during the day and during the hike but at night it does get chilly so come with a jacket that can protect you till 15-20 degree celsius."
-    }], ['sdutt','jodoe','jodoe2'], true);
+    }], [], true);
 
     let kayakingevent1 = await activityTableData.createactivityTable("kayaking", "Kayak the West-Side of San Juan Island...the federally designated Whale habitat.There is a whole new perspective at sea level. You are really able to just take a breath.The San Juan Islands are known for world-class kayaking, and one local kayak guide, Kelly, has a chance to see it every day.", "San-Juan-Islands", "San-Juan-Islands", "WA", "2022-03-02", "Sea Quest Expeditions", "Intermediate", 100, faq = [{
         question: "Are swim suits required?",
