@@ -16,7 +16,6 @@ async function createactivityTable(activityName, overview, location, city, state
         }
         validation.checkStringWithSpaces(organizer, 'organizer');
         validation.checkExpertise(expertise, 'expertise');
-        //validation.checkIsProperNumber(price, 'price');
     } catch (error) {
         errormessage = {
             className: "Cannot add event",
@@ -123,11 +122,12 @@ async function createEvent(overview, location, city, state, date, organizer, exp
         validation.checkIsProperNumber(price, 'price');
     } catch (error) {
         errormessage = {
-            className: "Item not created",
+            className: "Error in creating event",
             message: error,
-            hasErrors: "True",
+            hasErrors: true,
             title: "Error"
         }
+        return errormessage;
     }
     var checkdup = await validate.checkDuplicateActivity(activityName);
     if ("hasErrors" in checkdup) {
@@ -141,9 +141,9 @@ async function createEvent(overview, location, city, state, date, organizer, exp
     const insertInfo = await activityCollection.insertOne(newActivity);
     if (insertInfo.insertedCount === 0) {
         errormessage = {
-            className: "Item not added",
+            className: "Error in creating event",
             message: "Item was not added",
-            hasErrors: "True",
+            hasErrors: true,
             title: "Error"
         }
         return errormessage;
