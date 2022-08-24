@@ -41,16 +41,17 @@ async function createactivityTable(activityName, overview, location, city, state
         registeredMembers: registeredMembers
     };
 
-    //Create/Insert new activityTable activity in db
-    const insertInfo = await activityTableCollection.insertOne(newactivityTable);
-    if (!insertInfo.acknowledged || !insertInfo.insertedId)
-        throw 'Could not add new activityTable activity';
-    else if (insertInfo.acknowledged) {
-        const newId = insertInfo.insertedId;
-        const activityTable = await getActivityTableById(newId.toString());
-        return JSON.parse(JSON.stringify(activityTable));
-    }
+  //Create/Insert new activityTable activity in db
+  const insertInfo = await activityTableCollection.insertOne(newactivityTable);
+  if (!insertInfo.acknowledged || !insertInfo.insertedId)
+    throw 'Could not add new activityTable activity';
+  else if (insertInfo.acknowledged) {
+    const newId = insertInfo.insertedId;
+    const activityTable = await getActivityTableById(newId.toString());
+    return JSON.parse(JSON.stringify(activityTable));
+  }
 }
+
 async function getActivityTableById(Id) {
     try {
         validation.checkId(Id);

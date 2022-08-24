@@ -129,6 +129,7 @@ router.post('/createEvent', async (req, res) => {
             }
         }
         checkEventCreated = await activitiesTableData.createactivityTable(validatedActivity, validatedOverview, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, organizerEmail, validatedExpertise, validatedPrice, arr);
+
         console.log(checkEventCreated)
 
         if ("hasErrors" in checkEventCreated) {
@@ -145,7 +146,6 @@ router.post('/createEvent', async (req, res) => {
                 state: req.body.state,
                 date: req.body.date,
                 organizer: req.body.organizer,
-                organizerEmail: organizerEmail,
                 expertise: req.body.expertise,
                 price: req.body.price,
                 question1: req.body.question1,
@@ -157,7 +157,7 @@ router.post('/createEvent', async (req, res) => {
             });
             return;
         }
-        res.status(200).render("display/success", { "message": "Successfully inserted Event" });
+        res.status(200).render("display/success", {"message": "Successfully inserted Event"});
     }
 });
 
@@ -209,7 +209,7 @@ router.get("/:id", async (req, res) => {
     let isUserRegistered = false;
     if (searchResult.registeredMembers != null) {
         for (let i in searchResult.registeredMembers) {
-            if (username === searchResult.registeredMembers[i]) {
+            if (username ===  searchResult.registeredMembers[i]) {
                 isUserRegistered = true;
                 break;
             }
