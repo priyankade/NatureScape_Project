@@ -4,7 +4,7 @@ var validation = require('../validation');
 const { ObjectId } = require('mongodb');
 const { getEventById } = require('./individualevent');
 
-async function createactivityTable(activityName, overview, location, city, state, date, organizer, expertise, price, faq, registeredMembers, skipFutureCheck = false) {
+async function createactivityTable(activityName, overview, location, city, state, date, organizer, orgEmail,expertise, price, faq, registeredMembers, skipFutureCheck = false) {
     try {
         validation.checkActivity(activityName);
         validation.checkDescription(overview);
@@ -15,6 +15,7 @@ async function createactivityTable(activityName, overview, location, city, state
             validation.checkDateforFutureActivities(date, 'date');
         }
         validation.checkStringWithSpaces(organizer, 'organizer');
+        validation.checkEmail(orgEmail);
         validation.checkExpertise(expertise, 'expertise');
     } catch (error) {
         errormessage = {
@@ -35,6 +36,7 @@ async function createactivityTable(activityName, overview, location, city, state
         state: state,
         date: date,
         organizer: organizer,
+        organizerEmail: orgEmail,
         expertise: expertise,
         price: price,
         faq: faq,
@@ -111,13 +113,14 @@ async function getActivityTableByName(activityName) {
     return JSON.parse(JSON.stringify(activityDetails));
 }
 
-async function createEvent(overview, location, city, state, date, organizer, expertise, price, faq, registeredMembers) {
+async function createEvent(overview, location, city, state, date, organizer,orgEmail, expertise, price, faq, registeredMembers) {
     try {
         validation.checkStringWithSpaces(location, 'location');
         validation.checkString(city, 'city');
         validation.checkState(state, 'state');
         validation.checkDateforFutureActivities(date, 'date');
         validation.checkStringWithSpaces(organizer, 'organizer');
+        validation.checkEmail(orgEmail);
         validation.checkExpertise(expertise, 'expertise');
         validation.checkIsProperNumber(price, 'price');
     } catch (error) {
