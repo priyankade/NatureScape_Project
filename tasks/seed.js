@@ -79,7 +79,7 @@ async function main() {
         answer: "It's Florida!"
     }
     ], ['sdutt','jodoe','jodoe2'], true);
-    let scubaevent1 = await activityTableData.createactivityTable("scuba", "Located two hours north of Philadelphia, along the border of Lower Nazareth and Bethlehem townships, in Northampton County, Dutch Springs emerged from the remains of the National Portland Cement Quarry at Brodhead. The former limestone mine and cement plant flourished for decades until the operation folded in the mid-1970s, prompting the creation of a unique diving campground, aqua park and adventure course on a portion of the property.", "Dutch Springs", "Bethlehem", "PA", "2023-08-02", "gshankar26","gshankar26@yahoo.com", "Intermediate", 100, faq = [{
+    let scubaevent1 = await activityTableData.createactivityTable("scuba diving", "Located two hours north of Philadelphia, along the border of Lower Nazareth and Bethlehem townships, in Northampton County, Dutch Springs emerged from the remains of the National Portland Cement Quarry at Brodhead. The former limestone mine and cement plant flourished for decades until the operation folded in the mid-1970s, prompting the creation of a unique diving campground, aqua park and adventure course on a portion of the property.", "Dutch Springs", "Bethlehem", "PA", "2023-08-02", "gshankar26","gshankar26@yahoo.com", "Intermediate", 100, faq = [{
         question: "Are swim suits required?",
         answer: "No, but diving suits are required."
     },
@@ -89,7 +89,7 @@ async function main() {
     }
     ], ['sdutt','jodoe','jodoe2'], true);
 
-    let scubaevent2 = await activityTableData.createactivityTable("scuba", "The Casino Point Underwater Park is located next to the world-famous Casino Building. First established in 1962, this park is the first nonprofit underwater park in the country (and maybe the world), and offers the best shore diving in California! To make entry and exit in and out of the water as easy as possible, there are cement stairs with handrails.", "Casino Point", "Catalina", "CA", "2023-10-02", "rbon","rbon2339@redditmail.com", "Easy", 200, faq = [{
+    let scubaevent2 = await activityTableData.createactivityTable("scuba diving", "The Casino Point Underwater Park is located next to the world-famous Casino Building. First established in 1962, this park is the first nonprofit underwater park in the country (and maybe the world), and offers the best shore diving in California! To make entry and exit in and out of the water as easy as possible, there are cement stairs with handrails.", "Casino Point", "Catalina", "CA", "2023-10-02", "rbon","rbon2339@redditmail.com", "Easy", 200, faq = [{
         question: "Are swim suits required?",
         answer: "No, but diving suits are required."
     },
