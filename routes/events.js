@@ -6,6 +6,7 @@ const eventsData = require('../data/individualevent');
 const reviewsData = require('../data/reviews');
 const xss = require('xss');
 const { activityTable } = require("../data");
+const userData = require('../data/users');
 
 router.get('/addEvent', async (req, res) => {
     console.log('GET [addEvent]');
@@ -103,8 +104,31 @@ router.post('/createEvent', async (req, res) => {
         faq2['answer'] = validatedAnswer2;
 
         arr.push(faq1, faq2);
-
-        checkEventCreated = await activitiesTableData.createactivityTable(validatedActivity, validatedOverview, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, validatedExpertise, validatedPrice, arr);
+        //adding organizer email to event
+        let username = req.session.user;
+        try {
+            userDetails = await userData.getUserByUsername(username);
+            console.log('userDetails', userDetails);
+        } catch (error) {
+            errormessage = {
+                className: "Could not add Event",
+                message: "could not add Event because invalid organizer",
+                hasErrors: "True",
+                title: "Error"
+            }
+        }
+        let organizerEmail = userDetails.email;
+        try {
+            validatedOrganizerEmail = validate.checkEmail(organizerEmail);
+        } catch (error) {
+            errormessage = {
+                className: "Could not add Event",
+                message: "invalid email of organizer",
+                hasErrors: "True",
+                title: "Error"
+            }
+        }
+        checkEventCreated = await activitiesTableData.createactivityTable(validatedActivity, validatedOverview, validatedLocation, validatedCity, validatedState, validatedDate, validatedOrganizer, organizerEmail, validatedExpertise, validatedPrice, arr);
         console.log(checkEventCreated)
 
         if ("hasErrors" in checkEventCreated) {
@@ -121,6 +145,7 @@ router.post('/createEvent', async (req, res) => {
                 state: req.body.state,
                 date: req.body.date,
                 organizer: req.body.organizer,
+                organizerEmail: organizerEmail,
                 expertise: req.body.expertise,
                 price: req.body.price,
                 question1: req.body.question1,
@@ -132,7 +157,7 @@ router.post('/createEvent', async (req, res) => {
             });
             return;
         }
-        res.status(200).render("display/success", {"message": "Successfully inserted Event"});
+        res.status(200).render("display/success", { "message": "Successfully inserted Event" });
     }
 });
 
@@ -184,7 +209,7 @@ router.get("/:id", async (req, res) => {
     let isUserRegistered = false;
     if (searchResult.registeredMembers != null) {
         for (let i in searchResult.registeredMembers) {
-            if (username ===  searchResult.registeredMembers[i]) {
+            if (username === searchResult.registeredMembers[i]) {
                 isUserRegistered = true;
                 break;
             }
@@ -247,7 +272,7 @@ router.post('/:eventId/deleteEvent', async (req, res) => {
             return;
         }
         checkEventDeleted = await activitiesTableData.deleteEvent(eventId);
-        
+
         if (checkEventDeleted === false) {
             errormessage = {
                 className: "Could not delete activity",

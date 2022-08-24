@@ -38,7 +38,7 @@ async function main() {
     console.log("done seeding activities");
     //===================SEEDING EVENTS START=================================//
     let hikingevent1 = await activityTableData.createactivityTable("hiking",
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park. In large part due to the highly varied elevations in the park, there is a wide range of plant and animal species. There are over 800 miles of trails, and a large section of the Appalachian Trail in the park as well as 80 historic structure", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park. In large part due to the highly varied elevations in the park, there is a wide range of plant and animal species. There are over 800 miles of trails, and a large section of the Appalachian Trail in the park as well as 80 historic structure", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "sdutt","shubhangidutt99@gmail.com" ,"Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         },
@@ -46,17 +46,17 @@ async function main() {
             question: "How bad is the mosquito situation there?",
             answer: "You definitely need a strong mosquito repellent. We do not recommend mosquito nets as they are a fire hazard"
         }],
-        [], true);
-    let hikingevent2 = await activityTableData.createactivityTable("hiking", "Discover this 3.0-mile out-and-back trail near Moctezuma, Sonora. Generally considered an easy route, it takes an average of 1 h 13 min to complete. This trail is great for hiking, mountain biking, and running, and it's unlikely you'll encounter many other people while exploring.", "Centro comercial Moctezuma", "Townsend", "MI", "2022-10-05", "Rachel", "Easy", 200, faq = [{
+        ['sdutt','jodoe','jodoe2'], true);
+    let hikingevent2 = await activityTableData.createactivityTable("hiking", "Discover this 3.0-mile out-and-back trail near Moctezuma, Sonora. Generally considered an easy route, it takes an average of 1 h 13 min to complete. This trail is great for hiking, mountain biking, and running, and it's unlikely you'll encounter many other people while exploring.", "Centro comercial Moctezuma", "Townsend", "MI", "2022-10-05","rbon","rbon2339@redditmail.com", "Easy", 200, faq = [{
         question: "Are trekking boots required?",
         answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
     },
     {
         question: "How chilly does it get? Do I need a winter jacket?",
         answer: "It is fine during the day and during the hike but at night it does get chilly so come with a jacket that can protect you till 15-20 degree celsius."
-    }], [], true);
+    }], ['sdutt','jodoe','jodoe2'], true);
 
-    let kayakingevent1 = await activityTableData.createactivityTable("kayaking", "Kayak the West-Side of San Juan Island...the federally designated Whale habitat.There is a whole new perspective at sea level. You are really able to just take a breath.The San Juan Islands are known for world-class kayaking, and one local kayak guide, Kelly, has a chance to see it every day.", "San-Juan-Islands", "San-Juan-Islands", "WA", "2022-03-02", "Sea Quest Expeditions", "Intermediate", 100, faq = [{
+    let kayakingevent1 = await activityTableData.createactivityTable("kayaking", "Kayak the West-Side of San Juan Island...the federally designated Whale habitat.There is a whole new perspective at sea level. You are really able to just take a breath.The San Juan Islands are known for world-class kayaking, and one local kayak guide, Kelly, has a chance to see it every day.", "San-Juan-Islands", "San-Juan-Islands", "WA", "2022-03-02", "admin","admin@gmail.com" ,"Intermediate", 100, faq = [{
         question: "Are swim suits required?",
         answer: "yes"
     },
@@ -64,9 +64,9 @@ async function main() {
         question: "Are children under 18 allowed?",
         answer: "They are allowed if accompanied by an adult. They will get a seaparate two person kayak"
     }
-    ], [], true);
+    ], ['sdutt','jodoe','jodoe2'], true);
 
-    let kayakingevent2 = await activityTableData.createactivityTable("kayaking", "Everglades National Park offers many paddling opportunities to explore the natural beauty of this area through freshwater marsh, mangrove forests, the 10,000 Islands, and the open waters of Florida Bay.There is a whole new perspective at sea level. You are really able to just take a breath.", "Nine Mile Pond", "Everglades", "FL", "2022-06-24", "Cinnamon", "Easy", 200, faq = [{
+    let kayakingevent2 = await activityTableData.createactivityTable("kayaking", "Everglades National Park offers many paddling opportunities to explore the natural beauty of this area through freshwater marsh, mangrove forests, the 10,000 Islands, and the open waters of Florida Bay.There is a whole new perspective at sea level. You are really able to just take a breath.", "Nine Mile Pond", "Everglades", "FL", "2022-06-24", "cjohnson95", "cjohnson95@gmail.com","Easy", 200, faq = [{
         question: "Are swim suits required?",
         answer: "yes"
     },
@@ -78,8 +78,18 @@ async function main() {
         question: "Are the waters crocodile infested?",
         answer: "It's Florida!"
     }
-    ], [], true);
-    let scubaevent1 = await activityTableData.createactivityTable("scuba", "Located two hours north of Philadelphia, along the border of Lower Nazareth and Bethlehem townships, in Northampton County, Dutch Springs emerged from the remains of the National Portland Cement Quarry at Brodhead. The former limestone mine and cement plant flourished for decades until the operation folded in the mid-1970s, prompting the creation of a unique diving campground, aqua park and adventure course on a portion of the property.", "Dutch Springs", "Bethlehem", "PA", "2023-08-02", "Gauri", "Intermediate", 100, faq = [{
+    ], ['sdutt','jodoe','jodoe2'], true);
+    let scubaevent1 = await activityTableData.createactivityTable("scuba", "Located two hours north of Philadelphia, along the border of Lower Nazareth and Bethlehem townships, in Northampton County, Dutch Springs emerged from the remains of the National Portland Cement Quarry at Brodhead. The former limestone mine and cement plant flourished for decades until the operation folded in the mid-1970s, prompting the creation of a unique diving campground, aqua park and adventure course on a portion of the property.", "Dutch Springs", "Bethlehem", "PA", "2023-08-02", "gshankar26","gshankar26@yahoo.com", "Intermediate", 100, faq = [{
+        question: "Are swim suits required?",
+        answer: "No, but diving suits are required."
+    },
+    {
+        question: "Are children under 18 allowed?",
+        answer: "They are allowed if accompanied by an adult."
+    }
+    ], ['sdutt','jodoe','jodoe2'], true);
+
+    let scubaevent2 = await activityTableData.createactivityTable("scuba", "The Casino Point Underwater Park is located next to the world-famous Casino Building. First established in 1962, this park is the first nonprofit underwater park in the country (and maybe the world), and offers the best shore diving in California! To make entry and exit in and out of the water as easy as possible, there are cement stairs with handrails.", "Casino Point", "Catalina", "CA", "2023-10-02", "rbon","rbon2339@redditmail.com", "Easy", 200, faq = [{
         question: "Are swim suits required?",
         answer: "No, but diving suits are required."
     },
@@ -89,17 +99,7 @@ async function main() {
     }
     ], [], true);
 
-    let scubaevent2 = await activityTableData.createactivityTable("scuba", "The Casino Point Underwater Park is located next to the world-famous Casino Building. First established in 1962, this park is the first nonprofit underwater park in the country (and maybe the world), and offers the best shore diving in California! To make entry and exit in and out of the water as easy as possible, there are cement stairs with handrails.", "Casino Point", "Catalina", "CA", "2023-10-02", "Bhargav", "Easy", 200, faq = [{
-        question: "Are swim suits required?",
-        answer: "No, but diving suits are required."
-    },
-    {
-        question: "Are children under 18 allowed?",
-        answer: "They are allowed if accompanied by an adult."
-    }
-    ], [], true);
-
-    let skydivingevent1 = await activityTableData.createactivityTable("skydiving", "Arizona is a popular stomping ground for the parachuting enthusiast with a diversity of landscape throughout Arizona where the beauty of scenes below are breathtaking.You feel temperature change and pressure on your skin. Even on a hot day, it will be noticeably cooler at jump altitude. It's like opening the refrigerator door on a hot day, and having that wave of cool rush over you. The wind resistance from your freefall speed feels like pressure.", "Skydive Arizona", "Tucson", "AR", "2023-11-02", "Skydiveaz", "Advanced", 2000,
+    let skydivingevent1 = await activityTableData.createactivityTable("skydiving", "Arizona is a popular stomping ground for the parachuting enthusiast with a diversity of landscape throughout Arizona where the beauty of scenes below are breathtaking.You feel temperature change and pressure on your skin. Even on a hot day, it will be noticeably cooler at jump altitude. It's like opening the refrigerator door on a hot day, and having that wave of cool rush over you. The wind resistance from your freefall speed feels like pressure.", "Skydive Arizona", "Tucson", "AR", "2023-11-02", "gshankar26","gshankar26@yahoo.com", "Advanced", 2000,
         faq = [{
             question: "Are flight suits required?",
             answer: "Yes! they are provided at the site after registration and they are additionaly chargeable."
@@ -108,9 +108,9 @@ async function main() {
             question: "Are children under 18 allowed?",
             answer: "They are allowed if accompanied by an adult."
         }
-        ], [], true);
+        ], [], false);
 
-    let skydivingevent2 = await activityTableData.createactivityTable("skydiving", "Chicago is a popular stomping ground for the parachuting enthusiast with a diversity of landscape throughout Chicage where the beauty of scenes below are breathtaking.You feel temperature change and pressure on your skin. Even on a hot day, it will be noticeably cooler at jump altitude. It's like opening the refrigerator door on a hot day, and having that wave of cool rush over you. The wind resistance from your freefall speed feels like pressure.", "Skydive Chicago", "Chicago", "IL", "2022-12-19", "Skydivechicago", "Advanced", 2000,
+    let skydivingevent2 = await activityTableData.createactivityTable("skydiving", "Chicago is a popular stomping ground for the parachuting enthusiast with a diversity of landscape throughout Chicage where the beauty of scenes below are breathtaking.You feel temperature change and pressure on your skin. Even on a hot day, it will be noticeably cooler at jump altitude. It's like opening the refrigerator door on a hot day, and having that wave of cool rush over you. The wind resistance from your freefall speed feels like pressure.", "Skydive Chicago", "Chicago", "IL", "2022-12-19", "cjohnson","cjohnson95@gmail.com", "Advanced", 2000,
         faq = [{
             question: "Are flight suits required?",
             answer: "Yes! they are provided at the site after registration and they are additionaly chargeable."
@@ -127,21 +127,21 @@ async function main() {
 
     ///invalid activity names
     let invalidhikingevent1 = await activityTableData.createactivityTable("      ",
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], true);
     console.log(invalidhikingevent1);
 
     let invalidhikingevent2 = await activityTableData.createactivityTable(1234,
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], true);
     console.log(invalidhikingevent2);
 
     let invalidhikingevent3 = await activityTableData.createactivityTable('',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], true);
@@ -149,77 +149,77 @@ async function main() {
 
     //invalid description
     let invalidhikingevent4 = await activityTableData.createactivityTable('hiking',
-        "", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], true);
     console.log(invalidhikingevent4);
 
     let invalidhikingevent5 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], true);
     console.log(invalidhikingevent5);
     let invalidhikingevent6 = await activityTableData.createactivityTable('hiking',
-        "          ", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "          ", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], true);
     console.log(invalidhikingevent6);
     // invalid location
     let invalidhikingevent7 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "", "Gatlinburg", "TN", "2022-08-01", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], true);
     console.log(invalidhikingevent7);
     let invalidhikingevent8 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "          ", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "          ", "Gatlinburg", "TN", "2022-08-01", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], true);
     console.log(invalidhikingevent8);
     //invalid state and city
     let invalidhikingevent9 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "", "Gatlinburg", "TN", "2022-08-01", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], true);
     console.log(invalidhikingevent9);
     let invalidhikingevent10 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", 1234, "Gatlinburg", "   ", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", 1234, "Gatlinburg", "   ", "2022-08-01", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], true);
     console.log(invalidhikingevent10);
     let invalidhikingevent11 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", 1234, "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", 1234, "2022-08-01", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], true);
     console.log(invalidhikingevent11);
     let invalidhikingevent16 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "", "TN", "2022-08-01", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], true);
     console.log(invalidhikingevent16);
     //invalid dates 
     let invalidhikingevent12 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-07-24", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-07-24", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], false);
     console.log(invalidhikingevent12);
     let invalidhikingevent13 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2020-09-10", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2020-09-10", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], false);
     console.log(invalidhikingevent13);
     let invalidhikingevent14 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-22", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-22", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], false);
@@ -250,34 +250,34 @@ async function main() {
         }], [], false);
     console.log(invalidhikingevent18);
     let invalidhikingevent19 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "Invisible Inc.", "Intermediate", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "cjohnson","cjohnson95@gmail.com", "Intermediate", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], false);
     console.log(invalidhikingevent19);
     //INVALID EXPERTISE
     let invalidhikingevent20 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "Invisible Inc.", "very easy", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "cjohnson","cjohnson95@gmail.com", "very easy", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], false);
     console.log(invalidhikingevent20);
     let invalidhikingevent22 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "Invisible Inc.", "", 100, faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "cjohnson","cjohnson95@gmail.com", "", 100, faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], false);
     console.log(invalidhikingevent22);
     //invalid price
     let invalidhikingevent21 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "Invisible Inc.", "easy", '90', faq = [{
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "cjohnson","cjohnson95@gmail.com", "easy", '90', faq = [{
             question: "Are trekking boots required?",
             answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
         }], [], false);
     console.log(invalidhikingevent21);
     //invalid faq
     let invalidhikingevent23 = await activityTableData.createactivityTable('hiking',
-        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "Invisible Inc.", "easy", 90, faq = [], [], false);
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "cjohnson","cjohnson95@gmail.com", "easy", 90, faq = [], [], false);
     console.log(invalidhikingevent23);
     console.log("done seeding events");
     //===================SEEDING ACTIVITIES END=================================//
@@ -296,6 +296,13 @@ async function main() {
     await users.userActivity("admin", "Hiking", "09/04/2024");
 
     let user3 = await users.createUser("shubhangi", "dutt", "sdutt", "female", "1998-04-05", "shubhangidutt99@gmail.com", "4859585894", "8383838383", "sdutt1234", "sdutt1234");
+
+    let user4= await users.createUser("Gauri","Shankar","gshankar26","Male","2001-04-29","gshankar26@yahoo.com","0504562024","0504562021","gshankar26","gshankar26");
+
+    let user5= await users.createUser("Rachel","Bon","rbon","transgender","1994-12-31","rbon2339@redditmail.com","2344852609","2344852505","rbon1234","rbon1234");
+
+    let user6= await users.createUser("Cinnamon","Johnson","Cjohnson95","female","1995-01-21","cjohnson95@gmail.com","2344852610","2344852546","cjohnshon1234",'2344852609');
+
 
     //creating invalid users
     //invalid fname
