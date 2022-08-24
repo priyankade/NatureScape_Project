@@ -11,6 +11,7 @@ router.post('/register', async (req, res) => {
     let eventId = xss(req.body.eventId);
     let username = xss(req.session.user);
     let oldEvent = {};
+ 
     try {
         validate.checkId(eventId);
         validate.alphanumeric(username);
