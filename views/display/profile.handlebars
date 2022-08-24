@@ -68,11 +68,14 @@
             <br>
             <table id="activityTable" class="table table-hover">
                 <thead>
-                    <th scope="col">Registered activities</th>
-                    <th scope="col">Date</th>
+                    <tr>
+                    <th>Registered activities</th>
+                    <th>Date</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {{#each activities}}
+                    <tr>
                     <td>{{this.activityName}}</td>
                     <td>{{this.date}}</td>
                     </tr>

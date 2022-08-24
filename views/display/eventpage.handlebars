@@ -14,9 +14,7 @@
         <h4>Registered Members:</h4><br>
         <ul>
             {{#each event.registeredMembers}}
-            <h5>
-                <li>{{this}}</li>
-            </h5><br>
+            <li>{{this}}</li>
             {{/each}}
         </ul>
     </div>
@@ -44,17 +42,16 @@
     {{#if canReview}}
     <div id="addReview">
         <h4><b>Write a review</b></h4>
-        <table>
-            <tr>
-                <td><label>Rating</label></td>
-                <td><input type="number" id="reviewRating" name="review_rating" min="1" max="5" required></td>
-            </tr>
-            <tr>
-                <td><label>Review Text</label></td>
-                <td><input type="text" id="reviewText" name="review_body"></td>
-                <td><input type="text" id="eventId" name="event_id" hidden value={{event._id}}></td>
-            </tr>
-        </table>
+        <label>Rating 
+        <input type="number" id="reviewRating" name="review_rating" min="1" max="5" required>
+        </label>
+        <br>
+
+        <label>Review Text
+        <input type="text" id="reviewText" name="review_body">
+        </label>
+        <input type="text" id="eventId" name="event_id" hidden value={{event._id}}>
+
         <form>
             <input type="submit" id="reviewSubmitButton" value="Add Review" name="addReview" class="btn btn-primary">
         </form>
