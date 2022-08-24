@@ -6,7 +6,7 @@ body {
 p {
     display: block;
     border-bottom: 1px solid #e1c2f7;
-    padding: 0 0 20px 0;
+    padding: 0 0 10px 0;
 }
 
 .column {
@@ -30,7 +30,7 @@ p {
 .footer {
     position: relative;
     height: 200px;
-    background-color: #f4f3f3;
+    background-color: #77c1c5;
     text-align: center;
     font-size: 12px;
     line-height: 18px;
@@ -40,7 +40,8 @@ p {
 }
 
 .header {
-    background-color: #f4f3f3;
+    font-weight: bold;
+    background-color: #b0f1f5;
     text-align: center;
     font-size: 15px;
     line-height: 18px;
@@ -127,4 +128,15 @@ tr {
     height: 70px;
     content: url('heart-full.png');
     cursor: pointer;
+}
+
+.homepage {
+    font-weight: bold;
+    background-image: url('../images/black-mountain.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 1800px;
+    color: rgb(208, 225, 236);
+    font-size: 120%;
+
 }
