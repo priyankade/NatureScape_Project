@@ -17,7 +17,7 @@ async function createactivityTable(activityName, overview, location, city, state
         validation.checkEmail(orgEmail);
         validation.checkExpertise(expertise, 'expertise');
 
-        let checkdup = await validation.checkDuplicateEvent(activityName, overview, location, city, state, date, organizer, expertise, price);
+        let checkdup = await validation.checkDuplicateEvent(activityName, overview, location, city, state, date, organizer, orgEmail, expertise, price);
         if ("hasErrors" in checkdup) {
             throw 'Event already exists';
         }
