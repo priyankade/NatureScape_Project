@@ -39,21 +39,14 @@
         </h2>
 
         {{#if ../isAdmin}}
-        <form class="deleteActivitybyName" method="GET"
-            action="/activity/{{urlEncode this.activityName}}/deleteActivity">
-            <button type="submit" formmethod="post" formmethod="post"
-                action="/activity/{{urlEncode this.activityName}}/deleteActivity"
-                class="btn btn-danger btn-sm">Delete</button>
+        <form class="deleteActivitybyName" method="POST" action="/activity/{{urlEncode this.activityName}}/deleteActivity">
+            <button type="submit" formmethod="post" class="btn btn-danger btn-sm">Delete</button>
         </form>
 
         {{else}}
-        <form hidden class="deleteActivitybyName" method="GET"
-            action="/activity/{{urlEncode this.activityName}}/deleteActivity">
-            <button type="submit" formmethod="post" formmethod="post"
-                action="/activity/{{urlEncode this.activityName}}/deleteActivity"
-                class="btn btn-danger btn-sm">Delete</button>
+        <form hidden class="deleteActivitybyName" method="POST" action="/activity/{{urlEncode this.activityName}}/deleteActivity">
+            <button type="submit" formmethod="post" class="btn btn-danger btn-sm">Delete</button>
         </form>
-
 
         {{/if}}
 

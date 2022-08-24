@@ -239,8 +239,8 @@ async function updateUserWithReports(username, reportLocation) {
     found_user.reports.push(reportLocation);
     let updatedInfo = await usersCollection.updateOne({ username: username }, { $set: { reports: found_user.reports } });
     return true;
-
 }
+
 
 async function setAdmin(id) {
     if (!id) throw 'You must provide an id';

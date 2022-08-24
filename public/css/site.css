@@ -99,3 +99,32 @@ tr {
     text-align: left;
     border: none;
 }
+
+
+.wrapper {
+    padding: 50px;
+    margin: 0 auto;
+    display: block;
+    width: 100px;
+}
+
+.topright {
+    position: absolute;
+    top: 180px;
+    right: 300px;
+}
+
+
+.heart {
+    width: 80px;
+    height: 80px;
+    content: url('heart-outline.png');
+    cursor: pointer;
+}
+
+.active_heart {
+    width: 70px;
+    height: 70px;
+    content: url('heart-full.png');
+    cursor: pointer;
+}

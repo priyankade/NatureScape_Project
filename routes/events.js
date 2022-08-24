@@ -5,6 +5,7 @@ const activitiesTableData = require('../data/activityTable');
 const eventsData = require('../data/individualevent');
 const reviewsData = require('../data/reviews');
 const xss = require('xss');
+const { activityTable } = require("../data");
 
 router.get('/addEvent', async (req, res) => {
     console.log('GET [addEvent]');
