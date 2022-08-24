@@ -242,7 +242,7 @@ router.post('/:activityName/deleteActivity', async (req, res) => {
 
 //This route is for going to indivdual activity's page
 router.get("/activity/:activityName", async (req, res) => {
-    let activityName = req.params.activityName;
+    let activityName = xss(req.params.activityName);
     console.log(`GET [/activity/${activityName}]`);
 
     let activityTable = {};
@@ -278,7 +278,14 @@ router.get("/activity/:activityName", async (req, res) => {
         res.status(404).render('display/error', errormessage);
         return;
     }
-    res.render("display/activityTable", { activityTable: activityTable, activity: "activityTable", activityName: activityName });
+
+    let isAdmin = false;
+    //console.log(req.session.user)
+    if (req.session.user === "admin") {
+        isAdmin = true;
+    }
+
+    res.render("display/activityTable", { activityTable: activityTable, activity: "activityTable", activityName: activityName, isAdmin: isAdmin });
 });
 
 module.exports = router;
