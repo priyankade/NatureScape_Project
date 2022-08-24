@@ -25,6 +25,7 @@ router.post('/', async (req, res) => {
 
     if (validationFailure) {
         res.status(400).send("Error in validating review");
+        return;
     }
     else {
         let newReview = await reviews.createReview(
