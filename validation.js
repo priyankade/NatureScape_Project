@@ -207,7 +207,6 @@ module.exports = {
     },
 
     checkEmail(email) {
-        if(!email) throw 'email is empty';
         if (!this.checkString(email)) return false;
         email = email.toLowerCase().trim();
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -417,6 +416,7 @@ module.exports = {
     },
 
     checkExpertise(expertise) {
+
         if (["easy", "intermediate", "advanced"].includes(expertise.toLowerCase().trim())) {
             return expertise;
         } else {
