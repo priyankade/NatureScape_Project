@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
     }
     let { ObjectId } = require('mongodb');
     let parsedId = ObjectId(eventId);
-
+    
     try {
         oldEvent = await eventsData.getEventById(parsedId.toString());
     } catch (error) {
@@ -59,6 +59,24 @@ router.post('/register', async (req, res) => {
     } catch (error) {
         errormessage = {
             className: "Cannot register User",
+            message: error,
+            hasErrors: "Error",
+            title: "Error"
+        };
+        res.status(401).render('display/error', errormessage);
+        return;
+    }
+
+    //find activityName from events table
+    eventActivityName= oldEvent.activityName;
+    eventDate= oldEvent.date;
+    //find eventDate from events table
+
+    try {
+        userData.userActivity(req.session.user, eventActivityName, eventDate);
+    } catch (error) {
+        errormessage = {
+            className: "Cannot insert details in UserActivity Table",
             message: error,
             hasErrors: "Error",
             title: "Error"
