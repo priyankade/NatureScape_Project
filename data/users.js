@@ -201,10 +201,11 @@ function calculateAge(dob) {
     return age;
 }
 
-async function userActivity(username, activity) {
+async function userActivity(username, activityName, date) {
     try {
         validation.alphanumeric(username);
-        validation.checkActivity(activity);
+        validation.checkActivity(activityName);
+        validation.checkDateforFutureActivities(date)
     } catch (error) {
         errormessage = {
             className: "Invalid Input",
@@ -216,7 +217,15 @@ async function userActivity(username, activity) {
     const usersCollection = await users();
 
     found_user = await getUserByUsername(username);
-    found_user.activities.push(activity);
+
+    //Pushing the activityName and date in the activities [] for displaying in Profile
+
+    const activities_obj = {};
+   
+    activities_obj["activityName"] = activityName;
+    activities_obj["date"] = date;
+      
+    found_user.activities.push(activities_obj);
     let updatedInfo = await usersCollection.updateOne({ username: username }, { $set: { activities: found_user.activities } });
     return true;
 }

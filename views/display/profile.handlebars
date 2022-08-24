@@ -62,18 +62,27 @@
             </form>
         </div>
 
-        <div class="col-sm-6"> 
+
+        <div class="col-sm-6">
             <h2> My Activities </h2>
             <br>
-            {{#each activities}}
-            <div class="row">
-                <div class="column">{{this}}</div>
-            </div>
-            {{/each}}
+            <table id="activityTable" class="table table-hover">
+                <thead>
+                    <th scope="col">Registered activities</th>
+                    <th scope="col">Date</th>
+                </thead>
+                <tbody>
+                    {{#each activities}}
+                    <td>{{this.activityName}}</td>
+                    <td>{{this.date}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
         </div>
 
 
-        <div class="col-sm-6"> 
+        <div class="col-sm-6">
             <h2> Events Reported by me </h2>
             <br>
             {{#each reports}}

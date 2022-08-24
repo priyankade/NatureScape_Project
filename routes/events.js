@@ -245,4 +245,47 @@ router.get("/:id", async (req, res) => {
 });
 
 
+router.get('/:eventId/deleteEvent', async (req, res) => {
+    console.log('GET [/deleteEvent]');
+    if (req.session.user != "admin") {
+        res.status(200).render('display/success', { "message": "User needs to be admin to delete event" });
+        return;
+    }
+});
+
+router.post('/:eventId/deleteEvent', async (req, res) => {
+    console.log('POST [/deleteEvent]');
+    if (req.session.user === "admin") {
+        let eventId = xss(req.params.eventId);
+        try {
+            eventId = validate.checkId(eventId);
+        }
+        catch (error) {
+            errormessage = {
+                className: "eventId not supplied",
+                message: "Invalid eventId",
+                hasErrors: "Error",
+                title: "Error"
+            }
+            res.status(401).render('display/error', errormessage);
+            return;
+        }
+        checkEventDeleted = await activitiesTableData.deleteEvent(eventId);
+        
+        if (checkEventDeleted === false) {
+            errormessage = {
+                className: "Could not delete activity",
+                message: "could not delete activity",
+                hasErrors: "True",
+                title: "Error"
+            }
+            res.status(400).render('display/error', "could not delete activity");
+            return;
+        }
+        res.status(200).render('display/success', { "message": "Successfully deleted activity" });
+    }
+
+});
+
+
 module.exports = router;

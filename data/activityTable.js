@@ -4,6 +4,7 @@ var validation = require('../validation');
 const { ObjectId } = require('mongodb');
 const { getEventById } = require('./individualevent');
 
+
 async function createactivityTable(activityName, overview, location, city, state, date, organizer, orgEmail,expertise, price, faq, registeredMembers, skipFutureCheck = false) {
     try {
         validation.checkActivity(activityName);
@@ -25,7 +26,6 @@ async function createactivityTable(activityName, overview, location, city, state
             title: "Error"
         }
         return errormessage;
-    }
     const activityTableCollection = await activityTable();
 
     let newactivityTable = {
@@ -51,67 +51,67 @@ async function createactivityTable(activityName, overview, location, city, state
         const newId = insertInfo.insertedId;
         const activityTable = await getActivityTableById(newId.toString());
         return JSON.parse(JSON.stringify(activityTable));
-    }
-}
+
 
 async function getActivityTableById(Id) {
-    try {
-        validation.checkId(Id);
-    } catch (error) {
-        errormessage = {
-            className: "Cannot get events for given id",
-            message: error,
-            hasErrors: "Error",
-            title: "Error"
-        }
+  try {
+    validation.checkId(Id);
+  } catch (error) {
+    errormessage = {
+      className: "Cannot get events for given id",
+      message: error,
+      hasErrors: "Error",
+      title: "Error"
     }
-    let newObjId = ObjectId();
-    if (!ObjectId.isValid(newObjId)) throw 'Object id is not valid'
-    let parsedId = ObjectId(Id);
-    const activityTableCollection = await activityTable();
-    const activityTableDetails = await activityTableCollection.findOne({ _id: parsedId });
-    if (activityTableDetails === null) throw 'No Event is present with that Id'
-    return activityTableDetails
+  }
+  let newObjId = ObjectId();
+  if (!ObjectId.isValid(newObjId)) throw 'Object id is not valid'
+  let parsedId = ObjectId(Id);
+  const activityTableCollection = await activityTable();
+  const activityTableDetails = await activityTableCollection.findOne({ _id: parsedId });
+  if (activityTableDetails === null) throw 'No Event is present with that Id'
+  return activityTableDetails
 }
 
 async function getAllactivityTable() {
-    const activityTable_data = await activityTable();
-    const list_all_activityTable = await activityTable_data.find({}, { '_id': 0 }).toArray();
-    return JSON.parse(JSON.stringify(list_all_activityTable));
+  const activityTable_data = await activityTable();
+  const list_all_activityTable = await activityTable_data.find({}, { '_id': 0 }).toArray();
+  return JSON.parse(JSON.stringify(list_all_activityTable));
 }
 
 async function getActivityTableByName(activityName) {
-    try {
-        validation.checkActivity(activityName);
-    } catch (error) {
-        errormessage = {
-            className: "Cannot get events for given activity",
-            message: error,
-            hasErrors: "Error",
-            title: "Error"
-        }
+  try {
+    validation.checkActivity(activityName);
+  } catch (error) {
+    errormessage = {
+      className: "Cannot get events for given activity",
+      message: error,
+      hasErrors: "Error",
+      title: "Error"
     }
-    activityName = activityName.toLowerCase();
-    const activityTableCollection = await activityTable();
+  }
+  activityName = activityName.toLowerCase();
+  const activityTableCollection = await activityTable();
 
-    const activityDetails = await (await activityTableCollection.find({ activityName: activityName })).toArray();
+  const activityDetails = await (await activityTableCollection.find({ activityName: activityName })).toArray();
 
-    try {
-        if (activityDetails.length == 0) {
-            console.log(activityName, ': No activity found by that name.');
-            throw 'No activity is present with that name';
-        }
-    } catch (e) {
-        errormessage = {
-            className: "Item not found",
-            message: "Item was not found",
-            hasErrors: "True",
-            title: "Error"
-        }
-        return errormessage;
+  try {
+    if (activityDetails.length == 0) {
+      console.log(activityName, ': No activity found by that name.');
+      throw 'No activity is present with that name';
     }
-    return JSON.parse(JSON.stringify(activityDetails));
+  } catch (e) {
+    errormessage = {
+      className: "Item not found",
+      message: "Item was not found",
+      hasErrors: "True",
+      title: "Error"
+    }
+    return errormessage;
+  }
+  return JSON.parse(JSON.stringify(activityDetails));
 }
+
 
 async function createEvent(overview, location, city, state, date, organizer,orgEmail, expertise, price, faq, registeredMembers) {
     try {
@@ -131,35 +131,63 @@ async function createEvent(overview, location, city, state, date, organizer,orgE
             title: "Error"
         }
         return errormessage;
+  }
+  var checkdup = await validate.checkDuplicateActivity(activityName);
+  if ("hasErrors" in checkdup) {
+    return checkdup;
+  }
+  const activityCollection = await activities();
+  let newActivity = {
+    activityName: activityName,
+    activityDesc: activityDesc
+  };
+  const insertInfo = await activityCollection.insertOne(newActivity);
+  if (insertInfo.insertedCount === 0) {
+    errormessage = {
+      className: "Error in creating event",
+      message: "Item was not added",
+      hasErrors: true,
+      title: "Error"
     }
-    var checkdup = await validate.checkDuplicateActivity(activityName);
-    if ("hasErrors" in checkdup) {
-        return checkdup;
-    }
-    const activityCollection = await activities();
-    let newActivity = {
-        activityName: activityName,
-        activityDesc: activityDesc
-    };
-    const insertInfo = await activityCollection.insertOne(newActivity);
-    if (insertInfo.insertedCount === 0) {
-        errormessage = {
-            className: "Error in creating event",
-            message: "Item was not added",
-            hasErrors: true,
-            title: "Error"
-        }
-        return errormessage;
-    }
-    const newId = insertInfo.insertedId;
-    const activity = await getActivityById(newId.toString());
-    return JSON.parse(JSON.stringify(activity));
+    return errormessage;
+  }
+  const newId = insertInfo.insertedId;
+  const activity = await getActivityById(newId.toString());
+  return JSON.parse(JSON.stringify(activity));
+}
+
+
+async function deleteEvent(eventId) {
+  console.log('data/activityTable.js deleteEvent()');
+  try {
+      validate.checkId(eventId);
+  } catch (error) {
+      errormessage = {
+          className: "Cannot delete event",
+          message: error,
+          hasErrors: "Error",
+          title: "Error"
+      }
+  }
+  let parsedId = ObjectId(eventId);
+  const activityTableCollection = await activityTable();
+  const deleteEvent = await activityTableCollection.find({ _id: parsedId });
+  if (deleteEvent === null) {
+      throw 'Event not found, not deleted';
+  }
+
+  const deletionInfo = await activityTableCollection.deleteOne( { _id: parsedId});
+  if (deletionInfo.deletedCount === 0) {
+      throw `Could not delete event`;
+  }
+  return { deleted: true };
 }
 
 module.exports = {
-    createactivityTable,
-    getAllactivityTable,
-    getActivityTableByName,
-    createEvent,
-    getActivityTableById
+  createactivityTable,
+  getAllactivityTable,
+  getActivityTableByName,
+  createEvent,
+  getActivityTableById,
+  deleteEvent
 }

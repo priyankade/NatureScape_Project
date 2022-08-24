@@ -283,17 +283,17 @@ async function main() {
     //===================SEEDING ACTIVITIES END=================================//
 
     let user1 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
-    await users.userActivity("jodoe", "Hiking");
+    await users.userActivity("jodoe", "Hiking", "09/04/2024");
 
     let user2 = await users.createUser("John2", "Doe", "jodoe2", "male", "1990-08-04", "jodo@mail.com", "8888888888", "9888888888", "jodoe1234", "jodoe1234");
-    await users.userActivity("jodoe", "Skydiving");
+    await users.userActivity("jodoe", "Skydiving", "09/04/2024");
 
     await users.updateUserWithReports("jodoe", "Nine Mile Pond");
     await users.updateUserWithReports("jodoe", "Smoky Mountains-Gatlinburg");
 
     let admin = await users.createUser("Admin", "User", "admin", "female", "1900-06-04", "admin@gmail.com", "8888888888", "9888888888", "admin1234", "admin1234");
     await users.setAdmin(admin._id.toString())
-    await users.userActivity("admin", "Hiking");
+    await users.userActivity("admin", "Hiking", "09/04/2024");
 
     let user3 = await users.createUser("shubhangi", "dutt", "sdutt", "female", "1998-04-05", "shubhangidutt99@gmail.com", "4859585894", "8383838383", "sdutt1234", "sdutt1234");
 

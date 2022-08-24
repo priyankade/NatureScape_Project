@@ -78,7 +78,7 @@ async function deleteActivity(activityName) {
         validate.checkActivity(activityName);
     } catch (error) {
         errormessage = {
-            className: "Cannot add activity",
+            className: "Cannot delete activity",
             message: error,
             hasErrors: "Error",
             title: "Error"

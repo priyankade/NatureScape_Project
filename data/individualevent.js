@@ -55,7 +55,6 @@ async function updateRegisteredMembers(eventId, username) {
     return true;
 }
 
-
 module.exports = {
     getEventById,
     updateRegisteredMembers
