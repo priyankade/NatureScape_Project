@@ -16,6 +16,12 @@ async function createactivityTable(activityName, overview, location, city, state
         validation.checkStringWithSpaces(organizer, 'organizer');
         validation.checkEmail(orgEmail);
         validation.checkExpertise(expertise, 'expertise');
+
+        let checkdup = await validation.checkDuplicateEvent(activityName, overview, location, city, state, date, organizer, expertise, price);
+        if ("hasErrors" in checkdup) {
+            throw 'Event already exists';
+        }
+
     } catch (error) {
         errormessage = {
             className: "Cannot add event",
@@ -41,15 +47,15 @@ async function createactivityTable(activityName, overview, location, city, state
         registeredMembers: registeredMembers
     };
 
-  //Create/Insert new activityTable activity in db
-  const insertInfo = await activityTableCollection.insertOne(newactivityTable);
-  if (!insertInfo.acknowledged || !insertInfo.insertedId)
-    throw 'Could not add new activityTable activity';
-  else if (insertInfo.acknowledged) {
-    const newId = insertInfo.insertedId;
-    const activityTable = await getActivityTableById(newId.toString());
-    return JSON.parse(JSON.stringify(activityTable));
-  }
+    //Create/Insert new activityTable activity in db
+    const insertInfo = await activityTableCollection.insertOne(newactivityTable);
+    if (!insertInfo.acknowledged || !insertInfo.insertedId)
+        throw 'Could not add new activityTable activity';
+    else if (insertInfo.acknowledged) {
+        const newId = insertInfo.insertedId;
+        const activityTable = await getActivityTableById(newId.toString());
+        return JSON.parse(JSON.stringify(activityTable));
+    }
 }
 
 async function getActivityTableById(Id) {
