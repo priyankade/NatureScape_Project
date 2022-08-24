@@ -70,6 +70,7 @@ module.exports = {
         }
         return strreview;
     },
+
     async checkDuplicateActivity(activityNameDup) {
         let activityName = activityNameDup;
         try{
@@ -120,23 +121,13 @@ module.exports = {
         const activityTableList = await activityTableCollection.find({}).toArray();
         for (let i = 0; i < activityTableList.length; i++) {
             let arr_activityName = activityTableList[i].activityName.toString();
-            //let arr_overview = activityTable[i].overview.toString();
             let arr_location = activityTableList[i].location.toString();
             let arr_city = activityTableList[i].city.toString();
             let arr_state = activityTableList[i].state.toString();
-            let arr_date = activityTable.date;
             let arr_organizer = activityTableList[i].organizer.toString();
-            let arr_expertise = activityTableList[i].expertise.toString();
-            let arr_price = activityTable.price;
 
             if (arr_activityName === activityName && arr_location === location && arr_city === city && arr_state === state && arr_organizer === organizer) {
-                errormessage = {
-                    className: "Event exists",
-                    message: "This event already exists",
-                    hasErrors: "True",
-                    title: "Error"
-                };
-                return errormessage;
+                throw "Event already exists";
             }
         }
         obj = {

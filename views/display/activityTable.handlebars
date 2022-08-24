@@ -1,57 +1,73 @@
 <div class="container m-5">
-    <br>
-    <div class="row mb-5">
-        <div class="float-right">
-            <a href="/events/addEvent" class="btn btn-primary">Create a new event</a>
-        </div>
+  <br>
+  <div class="row mb-5">
+    <div class="float-right">
+      <a href="/events/addEvent" class="btn btn-primary">Create a new event</a>
     </div>
+  </div>
 
-    <h1>{{activityName}} events</h1>
+  <h1>{{activityName}} events</h1>
 
-    <br>
-    <br>
+  <br>
+  <br>
 
-    <table id="eventTable" class="table table-hover">
-        <thead>
-            <th scope="col">Location
-                <input id="locationFilter" type="text" placeholder="Filter..">
-            </th>
-            <th scope="col">City
-                <input id="cityFilter" type="text" placeholder="Filter.." size="10">
-                </select>
-            </th>
-            <th scope="col">State
-                <input id="stateFilter" type="text" placeholder="Filter.." size="2">
-            </th>
-            <th scope="col">Date (YYYY-MM-DD)
-                <input id="dateFilter" type="text" placeholder="Filter.." size="10">
-            </th>
-            <th scope="col">Organizer
-                <input id="organizerFilter" type="text" placeholder="Filter.." size="10">
-            </th>
-            <th scope="col">Expertise level
-                <input id="expertiseFilter" type="text" placeholder="Filter.." size="10">
-            </th>
-            <th scope="col">Price($)
-                <input id="priceFilter" type="text" placeholder="Filter.." size="10">
-            </th>
-        </thead>
-        <tbody>
-            {{#each activityTable}}
-            <td><a href="/event/{{urlEncode this.id}}">{{this.location}}</a></td>
-            <td>{{this.city}}</td>
-            <td>{{this.state}}</td>
-            <td>{{this.date}}</td>
-            <td>{{this.organizer}}</td>
-            <td>{{this.expertise}} </td>
-            <td>{{this.price}} </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
+  <table id="eventTable" class="table table-hover">
+    <thead>
+      <th scope="col">Location
+        <input id="locationFilter" type="text" placeholder="Filter..">
+      </th>
+      <th scope="col">City
+        <input id="cityFilter" type="text" placeholder="Filter.." size="10">
+        </select>
+      </th>
+      <th scope="col">State
+        <input id="stateFilter" type="text" placeholder="Filter.." size="2">
+      </th>
+      <th scope="col">Date (YYYY-MM-DD)
+        <input id="dateFilter" type="text" placeholder="Filter.." size="10">
+      </th>
+      <th scope="col">Organizer
+        <input id="organizerFilter" type="text" placeholder="Filter.." size="10">
+      </th>
+      <th scope="col">Expertise level
+        <input id="expertiseFilter" type="text" placeholder="Filter.." size="10">
+      </th>
+      <th scope="col">Price($)
+        <input id="priceFilter" type="text" placeholder="Filter.." size="10">
+      </th>
+    </thead>
+    <tbody>
+      {{#each activityTable}}
+      <td><a href="/event/{{urlEncode this.id}}">{{this.location}}</a>
+
+        {{#if ../isAdmin}}
+        <form class="deleteEventId" method="POST"
+          action="/events/{{urlEncode this.id}}/deleteEvent">
+          <button type="submit" formmethod="post" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+
+        {{else}}
+        <form hidden class="deleteEventId" method="POST"
+          action="/eventId/{{urlEncode this.id}}/deleteEvent">
+          <button type="submit" formmethod="post" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+
+        {{/if}}
+
+      </td>
+      <td>{{this.city}}</td>
+      <td>{{this.state}}</td>
+      <td>{{this.date}}</td>
+      <td>{{this.organizer}}</td>
+      <td>{{this.expertise}} </td>
+      <td>{{this.price}} </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 
 </div>
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"
-    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="../../public/js/eventFilter.js"></script>
