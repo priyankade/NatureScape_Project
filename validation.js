@@ -113,7 +113,7 @@ module.exports = {
         city = city.toLowerCase();
         state = state.toLowerCase();
         organizer = organizer.toLowerCase();
-        expertise = expertise.toLowerCase();
+    
 
         const activityTableCollection = await activityTable();
 

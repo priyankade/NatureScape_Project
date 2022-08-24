@@ -303,6 +303,8 @@ async function main() {
 
     let user6 = await users.createUser("Cinnamon", "Johnson", "Cjohnson95", "female", "1995-01-21", "cjohnson95@gmail.com", "2344852610", "2344852546", "cjohnshon1234", '2344852609');
 
+    let user7 = await users.createUser("Priyanka", "De", "priyade", "female", "1998-04-05", "priyade@gmail.com", "4859585894", "8383838383", "priyade1234", "priyade1234");
+
 
     //creating invalid users
     //invalid fname
