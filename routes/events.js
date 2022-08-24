@@ -5,13 +5,20 @@ const activitiesTableData = require('../data/activityTable');
 const eventsData = require('../data/individualevent');
 const reviewsData = require('../data/reviews');
 const xss = require('xss');
-const { activityTable } = require("../data");
 const userData = require('../data/users');
 
-router.get('/addEvent', async (req, res) => {
-    console.log('GET [addEvent]');
+router.post('/addEvent', async (req, res) => {
+    console.log('POST [addEvent]');
     if (req.session.user) {
-        res.render('display/addEvent', { activityName: req.params.activityName });
+        console.log(req.params);
+        console.log('req.params.activityName', req.params.activityName);
+        console.log('req.body', req.body);
+
+        res.render('display/addEvent', {
+            activityName: req.body.activityName,
+            organizerEmail: req.body.organizerEmail,
+            organizerUsername: req.session.user
+        });
         return;
     }
     else {
@@ -107,6 +114,7 @@ router.post('/createEvent', async (req, res) => {
         arr.push(faq1, faq2);
         //adding organizer email to event
         let username = req.session.user;
+        let userDetails = {};
         try {
             userDetails = await userData.getUserByUsername(username);
             console.log('userDetails', userDetails);
@@ -158,7 +166,7 @@ router.post('/createEvent', async (req, res) => {
             });
             return;
         }
-        res.status(200).render("display/success", {"message": "Successfully inserted Event"});
+        res.status(200).render("display/success", { "message": "Successfully inserted Event" });
     }
 });
 
@@ -210,7 +218,7 @@ router.get("/:id", async (req, res) => {
     let isUserRegistered = false;
     if (searchResult.registeredMembers != null) {
         for (let i in searchResult.registeredMembers) {
-            if (username ===  searchResult.registeredMembers[i]) {
+            if (username === searchResult.registeredMembers[i]) {
                 isUserRegistered = true;
                 break;
             }
