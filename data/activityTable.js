@@ -8,7 +8,7 @@ async function createactivityTable(activityName, overview, location, city, state
         validation.checkActivity(activityName);
         validation.checkDescription(overview);
         validation.checkStringWithSpaces(location, 'location');
-        validation.checkString(city, 'city');
+        validation.checkStringWithSpaces(city, 'city');
         validation.checkState(state, 'state');
         if (!skipFutureCheck) {
             validation.checkDateforFutureActivities(date, 'date');
@@ -120,7 +120,7 @@ async function getActivityTableByName(activityName) {
 async function createEvent(overview, location, city, state, date, organizer, orgEmail, expertise, price, faq, registeredMembers) {
     try {
         validation.checkStringWithSpaces(location, 'location');
-        validation.checkString(city, 'city');
+        validation.checkStringWithSpaces(city, 'city');
         validation.checkState(state, 'state');
         validation.checkDateforFutureActivities(date, 'date');
         validation.checkStringWithSpaces(organizer, 'organizer');
