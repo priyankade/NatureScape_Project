@@ -35,9 +35,11 @@ router.post('/register', async (req, res) => {
     }
 
     try {
-        for (i = 0; i < oldEvent.registeredMembers.length; i++) {
-            if (username == oldEvent.registeredMembers[i]) {
-                throw ' Member already registered'
+        if (oldEvent.registeredMembers) {
+            for (i = 0; i < oldEvent.registeredMembers.length; i++) {
+                if (username == oldEvent.registeredMembers[i]) {
+                    throw 'Member already registered'
+                }
             }
         }
     } catch (error) {
