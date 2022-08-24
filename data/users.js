@@ -33,73 +33,77 @@ async function createUser(fname, lname, username, gender, dob, email, phone, eme
   if (!password || !confirmPassword)
     throw 'Please provide password';
 
-  //=========start validations================
-   validation.checkString(fname, 'First Name');
-   validation.checkString(lname, 'Last Name');
-   validation.alphanumeric(username);
-   validation.checkGender(gender);
-   validation.checkDate(dob, 'dob');
-   validation.checkEmail(email);
-   validation.checkPhone(phone, 'phone');
-   validation.checkPhone(emer_phone, 'emergency phone');
-  if (phone === emer_phone) {
-    throw 'Error: Please provide different phone number for Emergency'
-  }
-   validation.checkPassword(password, 'password');
-   validation.checkPassword(confirmPassword, 'confirmPassword');
-
-  if (password != confirmPassword) {
-    throw "\nPassword did not match: Please try again...";
-  }
-
-  //=========end validations================
-
-  const hash = await bcrypt.hash(password, saltRounds);
-  //console.log(hash);
-
-  username = username.trim();
-  username = username.toLowerCase();  //preventing duplicate usernames in the system
-
-  const usersCollection = await users();
-
-  //Create user when username does not exist
-  let usernamePresent = await usersCollection.findOne({ username: username });
-
-  //console.log(usernamePresent)
-  if (usernamePresent != null) {
-    throw 'Username already exists';
-  }
-  else {
-    //Create new user object
-    let newUser = {
-      fname: fname,
-      lname: lname,
-      username: username,
-      gender: gender,
-      dob: dob,
-      email: email,
-      phone: phone,
-      emer_phone: emer_phone,
-      password: hash,
-      reviews: [],
-      activities: [],
-      reports: [],
-      Admin: false
-    };
-
-    //Create/Insert new user in db
-    const userInserted = await usersCollection.insertOne(newUser);
-    if (!userInserted.acknowledged || !userInserted.insertedId)
-      throw 'Could not add user';
-    else if (userInserted.acknowledged) {
-      const newId = userInserted.insertedId;
-      const user = await getUserById(newId.toString());
-      return JSON.parse(JSON.stringify(user));
+  try {
+    //=========start validations================
+    validation.checkString(fname, 'First Name');
+    validation.checkString(lname, 'Last Name');
+    validation.alphanumeric(username);
+    validation.checkGender(gender);
+    validation.checkDate(dob, 'dob');
+    validation.checkEmail(email);
+    validation.checkPhone(phone, 'phone');
+    validation.checkPhone(emer_phone, 'emergency phone');
+    if (phone === emer_phone) {
+      throw 'Error: Please provide different phone number for Emergency'
     }
-    //return userInserted;
-    //return { authenticated: true };
-  }
+    validation.checkPassword(password, 'password');
+    validation.checkPassword(confirmPassword, 'confirmPassword');
 
+    if (password != confirmPassword) {
+      throw "\nPassword did not match: Please try again...";
+    }
+
+    //=========end validations================
+
+    const hash = await bcrypt.hash(password, saltRounds);
+    //console.log(hash);
+
+    username = username.trim();
+    username = username.toLowerCase();  //preventing duplicate usernames in the system
+
+    const usersCollection = await users();
+
+    //Create user when username does not exist
+    let usernamePresent = await usersCollection.findOne({ username: username });
+
+    //console.log(usernamePresent)
+    if (usernamePresent != null) {
+      throw 'Username already exists';
+    }
+    else {
+      //Create new user object
+      let newUser = {
+        fname: fname,
+        lname: lname,
+        username: username,
+        gender: gender,
+        dob: dob,
+        email: email,
+        phone: phone,
+        emer_phone: emer_phone,
+        password: hash,
+        reviews: [],
+        activities: [],
+        reports: [],
+        Admin: false
+      };
+
+      //Create/Insert new user in db
+      const userInserted = await usersCollection.insertOne(newUser);
+      if (!userInserted.acknowledged || !userInserted.insertedId)
+        throw 'Could not add user';
+      else if (userInserted.acknowledged) {
+        const newId = userInserted.insertedId;
+        const user = await getUserById(newId.toString());
+        return JSON.parse(JSON.stringify(user));
+      }
+      //return userInserted;
+      //return { authenticated: true };
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 }
 
 async function checkUser(username, password) {
@@ -109,62 +113,80 @@ async function checkUser(username, password) {
   if (!password || typeof password !== "string")
     throw 'Please provide password';
 
-
-  await validation.checkString(username, 'username');
-  await validation.checkPassword(password, 'password');
-  await validation.alphanumeric(username);
-  username = username.toLowerCase().trim();
-  //await validation.checkPassword(password);
-  password = password.trim();
-
-  let HASHED_PW_FROM_DB = null;
-  const usersCollection = await users();
-  //console.log("userscollection data is", usersCollection)
-  const userCheck = await usersCollection.findOne({ username: username });
-  //console.log("userCheck is ", userCheck)
-  if (userCheck === null) {
-    throw "Either the username or password is invalid";
-  }
-  else if (userCheck != null) {
-    HASHED_PW_FROM_DB = userCheck.password;
-  }
-  let match = false;
-
-  // console.log("HASHED_PW_FROM_DB is:  ", HASHED_PW_FROM_DB);
-  // console.log("password from req.body is:  ", password);
-
   try {
-    match = await bcrypt.compare(password, HASHED_PW_FROM_DB);
-  } catch (e) {
-    //no op
+    validation.checkString(username, 'username');
+    validation.checkPassword(password, 'password');
+    validation.alphanumeric(username);
+  } catch (error) {
+    console.log(error);
+    return null;
   }
-  //console.log("match is:", match)
-  if (match) {
-    return { authenticated: true };
-  } else {
-    throw "Either the username or password is invalid";
-  }
+    username = username.toLowerCase().trim();
+    //await validation.checkPassword(password);
+    password = password.trim();
+
+    let HASHED_PW_FROM_DB = null;
+    const usersCollection = await users();
+    //console.log("userscollection data is", usersCollection)
+    const userCheck = await usersCollection.findOne({ username: username });
+    //console.log("userCheck is ", userCheck)
+    if (userCheck === null) {
+      throw "Error: Either the username or password is invalid";
+    }
+    else if (userCheck != null) {
+      HASHED_PW_FROM_DB = userCheck.password;
+    }
+    let match = false;
+
+    // console.log("HASHED_PW_FROM_DB is:  ", HASHED_PW_FROM_DB);
+    // console.log("password from req.body is:  ", password);
+
+    try {
+      match = await bcrypt.compare(password, HASHED_PW_FROM_DB);
+    } catch (e) {
+      //no op
+    }
+    //console.log("match is:", match)
+    if (match) {
+      return { authenticated: true };
+    } else {
+      throw "Error: Either the username or password is invalid";
+    }
 }
 
 
 async function getUserById(id) {
-  id = validation.checkId(id, 'ID');
+  try {
+    id = validation.checkId(id, 'ID');
   const usersCollection = await users();
   const found_user = await usersCollection.findOne({ _id: ObjectId(id) });
 
   if (!found_user) throw 'User not found';
 
   return found_user;
+    
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+  
 }
 
 async function getUserByUsername(username) {
-  await validation.alphanumeric(username);
+
+  try {
+    await validation.alphanumeric(username);
   const usersCollection = await users();
   const found_user = await usersCollection.findOne({ username: username });
 
   if (!found_user) throw 'User not found';
 
   return found_user;
+    
+  } catch (error) {
+    console.log(error);
+    return null;
+  }  
 }
 
 function calculateAge(dob) {
@@ -179,8 +201,10 @@ function calculateAge(dob) {
 }
 
 async function userActivity(username, activity) {
-  await validation.alphanumeric(username);
-  await validation.checkActivity(activity);
+
+  try {
+    validation.alphanumeric(username);
+  validation.checkActivity(activity);
   const usersCollection = await users();
   // const found_user = await usersCollection.findOne({ username: username });
 
@@ -191,12 +215,17 @@ async function userActivity(username, activity) {
   let updatedInfo = await usersCollection.updateOne({ username: username }, { $set: { activities: found_user.activities } });
   //console.log(updatedInfo);
   return true;
-
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 }
 
 async function updateUserWithReports(username, reportLocation) {
-  await validation.alphanumeric(username);
-  await validation.checkStringWithSpaces(reportLocation);
+
+  try {
+    validation.alphanumeric(username);
+  validation.checkStringWithSpaces(reportLocation);
   const usersCollection = await users();
   // const found_user = await usersCollection.findOne({ username: username });
 
@@ -207,8 +236,12 @@ async function updateUserWithReports(username, reportLocation) {
   let updatedInfo = await usersCollection.updateOne({ username: username }, { $set: { reports: found_user.reports } });
   //console.log(updatedInfo);
   return true;
-
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 }
+
 
 async function setAdmin(id) {
   if (!id) throw 'You must provide an id';
@@ -218,7 +251,9 @@ async function setAdmin(id) {
   id = id.trim();
   if (!ObjectId.isValid(id)) throw 'invalid object ID';
   //let userObjId = ObjectId.createFromHexString(userId);
-  let userCollection = await users();
+
+  try {
+    let userCollection = await users();
   let userUpdateInfo = {
     Admin: true
   };
@@ -227,6 +262,10 @@ async function setAdmin(id) {
     throw 'could not set Admin access successfully';
   }
   return this.getUserById(id);
+  } catch (error) {
+    console.log(error);
+    return null;
+  }  
 };
 
 

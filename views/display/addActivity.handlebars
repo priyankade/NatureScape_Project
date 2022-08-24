@@ -1,16 +1,26 @@
 <div class="container">
-    <br>
-    <br>
-    <h1>Add a New Activity Here!</h1>
-    <form id="addActivity" action="/createActivity" method="POST">
-        <label>Enter Activity Name
-            <input type="text" id="newActivityName" placeholder="Activity name" name="activityName" required>
-        </label>
-        <br>
-        <label>Enter Description for activity
-            <input type="text" id="newActivityDesc" placeholder="Activity description" name="activityDescription" minlength="100" rows="4" cols="50" required>
-        </label>
-        <br>
-        <input type="submit" value="Add Activity" id="createActivitybtn" name="createActivityButton"><br>
-    </form>
+    <div class="row">
+        <div class="col-sm-4">
+            <h2>Add a New Activity Here!</h2>
+            <form id="addActivity" action="/createActivity" method="POST">
+                <div class="form-group">
+                    <label>Enter Activity Name
+                        <input type="text" id="newActivityName" placeholder="Activity name" name="activityName"
+                            required>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>Enter Description for activity
+                        <input type="text" id="newActivityDesc" placeholder="Activity description"
+                            name="activityDescription" minlength="100" required>
+                    </label>
+                </div>
+
+                {{!-- <input type="submit" value="Add Activity" id="createActivitybtn" name="createActivityButton"><br>
+                --}}
+                <input type="submit" class="btn btn-primary" name="addActivity" value="Add Activity">
+            </form>
+        </div>
+    </div>
 </div>
