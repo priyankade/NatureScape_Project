@@ -73,10 +73,10 @@ module.exports = {
 
     async checkDuplicateActivity(activityNameDup) {
         let activityName = activityNameDup;
-        try{
+        try {
             activityName = this.checkActivity(activityName);
         }
-        catch(error) {
+        catch (error) {
             errormessage = {
                 className: "Invalid Activity Name",
                 message: "Invalid Activity Name",
@@ -107,8 +107,7 @@ module.exports = {
         return obj;
     },
 
-    async checkDuplicateEvent(activityName, overview, location, city, state, date, organizer, expertise, price, faq) {
-        console.log("checkdupevent")
+    async checkDuplicateEvent(activityName, overview, location, city, state, date, organizer, orgEmail, expertise, price, faq) {
         activityName = activityName.toLowerCase();
         location = location.toLowerCase();
         city = city.toLowerCase();
@@ -126,8 +125,11 @@ module.exports = {
             let arr_state = activityTableList[i].state.toString();
             let arr_organizer = activityTableList[i].organizer.toString();
 
-            if (arr_activityName.toLowerCase() === activityName && arr_location.toLowerCase() === location && arr_city.toLowerCase() === city && arr_state.toLowerCase() === state && arr_organizer.toLowerCase() === organizer) {
-            //if (arr_activityName.toLowerCase() === activityName && arr_city.toLowerCase() === city) {
+            if (arr_activityName.toLowerCase() === activityName
+                && arr_location.toLowerCase() === location
+                && arr_city.toLowerCase() === city
+                && arr_state.toLowerCase() === state
+                && arr_organizer.toLowerCase() === organizer) {
                 throw "Event already exists";
             }
         }

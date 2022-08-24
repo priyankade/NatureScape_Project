@@ -5,7 +5,9 @@
             <form method="POST" id="addEvent" class="server-form" action="/events/createEvent">
                 <div class="form-group">
                     <label>Activity
-                        <input type="text" id="activityName" placeholder="activityName" name="activityName" disabled
+                        <input type="text" id="activityName" placeholder="activityName" disabled
+                            value="{{activityName}}">
+                        <input type="text" id="activityName" placeholder="activityName" name="activityName" hidden
                             value="{{activityName}}">
                     </label>
                 </div>
@@ -39,13 +41,17 @@
                 </div>
                 <div class="form-group">
                     <label>Enter Organizer
-                        <input type="text" id="organizer" placeholder="organizer" name="organizer" value="{{organizerUsername}}" disabled
+                        <input type="text" id="organizer" placeholder="organizer" value="{{organizerUsername}}" disabled
+                            required>
+                        <input type="text" id="organizer" placeholder="organizer" name="organizer" value="{{organizerUsername}}" hidden
                             required>
                     </label>
                 </div>
                 <div class="form-group">
                     <label>Enter Organizer email
-                        <input type="email" id="organizerEmail" placeholder="organizer email" name="organizerEmail" value="{{organizerEmail}}" disabled
+                        <input type="email" id="organizerEmail" placeholder="organizer email" value="{{organizerEmail}}" disabled
+                            required>
+                        <input type="email" id="organizerEmail" placeholder="organizer email" name="organizerEmail" value="{{organizerEmail}}" hidden
                             required>
                     </label>
                 </div>
