@@ -3,58 +3,54 @@ const activityTable = mongoCollections.activityTable;
 var validation = require('../validation');
 const { ObjectId } = require('mongodb');
 
-async function createactivityTable(activityName, overview, location, city, state, date, organizer, expertise, price, faq, registeredMembers, skipFutureCheck = false) {
-  try {
-    validation.checkActivity(activityName);
-    validation.checkDescription(overview);
-    validation.checkStringWithSpaces(location, 'location');
-    validation.checkString(city, 'city');
-    validation.checkState(state, 'state');
-    if (!skipFutureCheck) {
-      validation.checkDateforFutureActivities(date, 'date');
-    }
-    validation.checkStringWithSpaces(organizer, 'organizer');
-    validation.checkExpertise(expertise, 'expertise');
 
-    let checkdup = await validation.checkDuplicateEvent(activityName, overview, location, city, state, date, organizer, expertise, price);
-    if ("hasErrors" in checkdup) {
-      throw 'Event already exists';
-    }
-  } catch (error) {
-    errormessage = {
-      className: "Cannot add event",
-      message: error,
-      hasErrors: "Error",
-      title: "Error"
-    }
-    return error;
-  }
-  const activityTableCollection = await activityTable();
+async function createactivityTable(activityName, overview, location, city, state, date, organizer, orgEmail,expertise, price, faq, registeredMembers, skipFutureCheck = false) {
+    try {
+        validation.checkActivity(activityName);
+        validation.checkDescription(overview);
+        validation.checkStringWithSpaces(location, 'location');
+        validation.checkString(city, 'city');
+        validation.checkState(state, 'state');
+        if (!skipFutureCheck) {
+            validation.checkDateforFutureActivities(date, 'date');
+        }
+        validation.checkStringWithSpaces(organizer, 'organizer');
+        validation.checkEmail(orgEmail);
+        validation.checkExpertise(expertise, 'expertise');
+    } catch (error) {
+        errormessage = {
+            className: "Cannot add event",
+            message: error,
+            hasErrors: "Error",
+            title: "Error"
+        }
+        return errormessage;
+    const activityTableCollection = await activityTable();
 
-  let newactivityTable = {
-    activityName: activityName,
-    overview: overview,
-    location: location,
-    city: city,
-    state: state,
-    date: date,
-    organizer: organizer,
-    expertise: expertise,
-    price: price,
-    faq: faq,
-    registeredMembers: registeredMembers
-  };
+    let newactivityTable = {
+        activityName: activityName,
+        overview: overview,
+        location: location,
+        city: city,
+        state: state,
+        date: date,
+        organizer: organizer,
+        organizerEmail: orgEmail,
+        expertise: expertise,
+        price: price,
+        faq: faq,
+        registeredMembers: registeredMembers
+    };
 
-  //Create/Insert new activityTable activity in db
-  const insertInfo = await activityTableCollection.insertOne(newactivityTable);
-  if (!insertInfo.acknowledged || !insertInfo.insertedId)
-    throw 'Could not add new activityTable activity';
-  else if (insertInfo.acknowledged) {
-    const newId = insertInfo.insertedId;
-    const activityTable = await getActivityTableById(newId.toString());
-    return JSON.parse(JSON.stringify(activityTable));
-  }
-}
+    //Create/Insert new activityTable activity in db
+    const insertInfo = await activityTableCollection.insertOne(newactivityTable);
+    if (!insertInfo.acknowledged || !insertInfo.insertedId)
+        throw 'Could not add new activityTable activity';
+    else if (insertInfo.acknowledged) {
+        const newId = insertInfo.insertedId;
+        const activityTable = await getActivityTableById(newId.toString());
+        return JSON.parse(JSON.stringify(activityTable));
+
 
 async function getActivityTableById(Id) {
   try {
@@ -115,23 +111,25 @@ async function getActivityTableByName(activityName) {
   return JSON.parse(JSON.stringify(activityDetails));
 }
 
-async function createEvent(overview, location, city, state, date, organizer, expertise, price, faq, registeredMembers) {
-  try {
-    validation.checkStringWithSpaces(location, 'location');
-    validation.checkString(city, 'city');
-    validation.checkState(state, 'state');
-    validation.checkDateforFutureActivities(date, 'date');
-    validation.checkStringWithSpaces(organizer, 'organizer');
-    validation.checkExpertise(expertise, 'expertise');
-    validation.checkIsProperNumber(price, 'price');
-  } catch (error) {
-    errormessage = {
-      className: "Error in creating event",
-      message: error,
-      hasErrors: true,
-      title: "Error"
-    }
-    return errormessage;
+
+async function createEvent(overview, location, city, state, date, organizer,orgEmail, expertise, price, faq, registeredMembers) {
+    try {
+        validation.checkStringWithSpaces(location, 'location');
+        validation.checkString(city, 'city');
+        validation.checkState(state, 'state');
+        validation.checkDateforFutureActivities(date, 'date');
+        validation.checkStringWithSpaces(organizer, 'organizer');
+        validation.checkEmail(orgEmail);
+        validation.checkExpertise(expertise, 'expertise');
+        validation.checkIsProperNumber(price, 'price');
+    } catch (error) {
+        errormessage = {
+            className: "Error in creating event",
+            message: error,
+            hasErrors: true,
+            title: "Error"
+        }
+        return errormessage;
   }
   var checkdup = await validate.checkDuplicateActivity(activityName);
   if ("hasErrors" in checkdup) {
