@@ -6,25 +6,26 @@ const saltRounds = 16;
 const validation = require('../validation');
 
 async function createUser(fname, lname, username, gender, dob, email, phone, emer_phone, password, confirmPassword) {
-    if (!fname || typeof fname !== "string")
-        throw 'Please provide first name';
-    if (!lname || typeof lname !== "string")
-        throw 'Please provide last name';
-    if (!username || typeof username !== "string")
-        throw 'Please provide username';
-    if (!gender)
-        throw 'Please provide gender';
-    if (!dob)
-        throw 'Please enter valid date of birth';
-    if (!email)
-        throw 'Please provide email';
-    if (!phone)
-        throw 'Please provide phone number';
-    if (!emer_phone)
-        throw 'Please provide emergency phone number';
-    if (!password || !confirmPassword)
-        throw 'Please provide password';
     try {
+        if (!fname || typeof fname !== "string")
+            throw 'Please provide first name';
+        if (!lname || typeof lname !== "string")
+            throw 'Please provide last name';
+        if (!username || typeof username !== "string")
+            throw 'Please provide username';
+        if (!gender)
+            throw 'Please provide gender';
+        if (!dob)
+            throw 'Please enter valid date of birth';
+        if (!email)
+            throw 'Please provide email';
+        if (!phone)
+            throw 'Please provide phone number';
+        if (!emer_phone)
+            throw 'Please provide emergency phone number';
+        if (!password || !confirmPassword)
+            throw 'Please provide password';
+
         validation.checkString(fname, 'First Name');
         validation.checkString(lname, 'Last Name');
         validation.alphanumeric(username);
@@ -49,6 +50,7 @@ async function createUser(fname, lname, username, gender, dob, email, phone, eme
             hasErrors: "Error",
             title: "Error"
         }
+        return errormessage;
     }
 
     const hash = await bcrypt.hash(password, saltRounds);
@@ -58,7 +60,13 @@ async function createUser(fname, lname, username, gender, dob, email, phone, eme
     //Create user when username does not exist
     let usernamePresent = await usersCollection.findOne({ username: username });
     if (usernamePresent != null) {
-        throw 'Username already exists';
+        errormessage = {
+            className: "Cannot add user",
+            message: 'Username already exists',
+            hasErrors: "Error",
+            title: "Error"
+        };
+        return errormessage
     }
     else {
         //Create new user object
@@ -78,8 +86,16 @@ async function createUser(fname, lname, username, gender, dob, email, phone, eme
             Admin: false
         };
         const userInserted = await usersCollection.insertOne(newUser);
-        if (!userInserted.acknowledged || !userInserted.insertedId)
-            throw 'Could not add user';
+        if (!userInserted.acknowledged || !userInserted.insertedId) {
+            errormessage = {
+                className: "Cannot add user",
+                message: 'Could not add user',
+                hasErrors: "Error",
+                title: "Error"
+            };
+            return errormessage
+        }
+
         else if (userInserted.acknowledged) {
             const newId = userInserted.insertedId;
             const user = await getUserById(newId.toString());
@@ -243,7 +259,6 @@ async function setAdmin(id) {
     }
     return this.getUserById(id);
 };
-
 
 module.exports = {
     createUser,
