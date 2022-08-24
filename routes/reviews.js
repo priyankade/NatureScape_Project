@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
             res.status(400).send("Error in adding review");
             return;
         }
-        res.status(200).render('display/success', {'message': 'Successfully added review'});
+        res.status(200).send('Successfully added review');
     }
 });
 
