@@ -5,8 +5,7 @@
       <form action="/events/addEvent" method="POST">
         <input type="hidden" id="activityName" value={{activityName}} name="activityName">
         <input type="hidden" id="organizerEmail" value={{organizerEmail}} name="organizerEmail">
-        <input type="submit" class="btn btn-primary" id="createNewEventLink"
-          value="Create a new event">
+        <input type="submit" class="btn btn-primary" id="createNewEventLink" value="Create a new event">
       </form>
     </div>
   </div>
@@ -17,65 +16,69 @@
 
   <table id="eventTable" class="table table-hover">
     <thead>
-      <th scope="col">Location
-        <label for="locationFilter">
-          <input id="locationFilter" type="text" placeholder="Filter..">
-        </label>
-      </th>
-      <th scope="col">City
-        <label for="cityFilter">
-          <input id="cityFilter" type="text" placeholder="Filter.." size="10">
-        </label>
-      </th>
-      <th scope="col">State
-        <label for="stateFilter">
-          <input id="stateFilter" type="text" placeholder="Filter.." size="2">
-        </label>
-      </th>
-      <th scope="col">Date (YYYY-MM-DD)
-        <label for="dateFilter">
-          <input id="dateFilter" type="text" placeholder="Filter.." size="10">
-        </label>
-      </th>
-      <th scope="col">Organizer
-        <label for="organizerFilter">
-          <input id="organizerFilter" type="text" placeholder="Filter.." size="10">
-        </label>
-      </th>
-      <th scope="col">Expertise level
-        <label for="expertiseFilter">
-          <input id="expertiseFilter" type="text" placeholder="Filter.." size="10">
-        </label>
-      </th>
-      <th scope="col">Price($)
-        <label for="priceFilter">
-          <input id="priceFilter" type="text" placeholder="Filter.." size="10">
-        </label>
-      </th>
+      <tr>
+        <th>Location
+          <label for="locationFilter">
+            <input id="locationFilter" type="text" placeholder="Filter..">
+          </label>
+        </th>
+        <th scope="col">City
+          <label for="cityFilter">
+            <input id="cityFilter" type="text" placeholder="Filter.." size="10">
+          </label>
+        </th>
+        <th scope="col">State
+          <label for="stateFilter">
+            <input id="stateFilter" type="text" placeholder="Filter.." size="2">
+          </label>
+        </th>
+        <th scope="col">Date (YYYY-MM-DD)
+          <label for="dateFilter">
+            <input id="dateFilter" type="text" placeholder="Filter.." size="10">
+          </label>
+        </th>
+        <th scope="col">Organizer
+          <label for="organizerFilter">
+            <input id="organizerFilter" type="text" placeholder="Filter.." size="10">
+          </label>
+        </th>
+        <th scope="col">Expertise level
+          <label for="expertiseFilter">
+            <input id="expertiseFilter" type="text" placeholder="Filter.." size="10">
+          </label>
+        </th>
+        <th scope="col">Price($)
+          <label for="priceFilter">
+            <input id="priceFilter" type="text" placeholder="Filter.." size="10">
+          </label>
+        </th>
+      </tr>
     </thead>
     <tbody>
+
       {{#each activityTable}}
-      <td><a href="/event/{{urlEncode this.id}}">{{this.location}}</a>
+      <tr>
+        <td><a href="/event/{{urlEncode this.id}}">{{this.location}}</a>
 
-        {{#if ../isAdmin}}
-        <form class="deleteEventId" method="POST" action="/events/{{urlEncode this.id}}/deleteEvent">
-          <button type="submit" formmethod="post" class="btn btn-danger btn-sm">Delete</button>
-        </form>
+          {{#if ../isAdmin}}
+          <form class="deleteEventId" method="POST" action="/events/{{urlEncode this.id}}/deleteEvent">
+            <button type="submit" formmethod="post" class="btn btn-danger btn-sm">Delete</button>
+          </form>
 
-        {{else}}
-        <form hidden class="deleteEventId" method="POST" action="/eventId/{{urlEncode this.id}}/deleteEvent">
-          <button type="submit" formmethod="post" class="btn btn-danger btn-sm">Delete</button>
-        </form>
+          {{else}}
+          <form hidden class="deleteEventId" method="POST" action="/eventId/{{urlEncode this.id}}/deleteEvent">
+            <button type="submit" formmethod="post" class="btn btn-danger btn-sm">Delete</button>
+          </form>
 
-        {{/if}}
+          {{/if}}
 
-      </td>
-      <td>{{this.city}}</td>
-      <td>{{this.state}}</td>
-      <td>{{this.date}}</td>
-      <td>{{this.organizer}}</td>
-      <td>{{this.expertise}} </td>
-      <td>{{this.price}} </td>
+        </td>
+        <td>{{this.city}}</td>
+        <td>{{this.state}}</td>
+        <td>{{this.date}}</td>
+        <td>{{this.organizer}}</td>
+        <td>{{this.expertise}} </td>
+        <td>{{this.price}} </td>
       </tr>
       {{/each}}
     </tbody>
