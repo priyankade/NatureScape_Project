@@ -188,7 +188,7 @@ module.exports = {
         if ((input.match(letterNumber)))
             return true;
         else {
-            throw "Only alphanumeric input allowed in username";
+            throw "Only alphanumeric input allowed";
         }
     },
 

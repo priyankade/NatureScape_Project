@@ -18,6 +18,7 @@ router.get('/addEvent', async (req, res) => {
             className: "User not logged in",
             message: "User needs to log in to create Event",
             hasErrors: "Error",
+            showLoginLink: true,
             title: "Error"
         }
         res.status(401).render('display/error', errormessage);
@@ -209,11 +210,7 @@ router.get("/:id", async (req, res) => {
         1. User has not registered for the event
         2. Event is in the future
      */
-    console.log('isUserRegistered', isUserRegistered);
-    console.log('eventDate', eventDate);
-    console.log('today', today);
     let showRegisterButton = !isUserRegistered && eventDate >= today;
-    console.log('showRegisterButton', showRegisterButton);
 
     res.render('display/eventpage', {
         event: searchResult,

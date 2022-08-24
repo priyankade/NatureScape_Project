@@ -9,7 +9,10 @@ router.post('/', async (req, res) => {
     console.log('POST [/addReview]');
     let validationFailure = false;
     try {
-        console.log('Username', req.session.user);
+        xss(req.session.user);
+        xss(req.body.eventId);
+        xss(req.body.reviewRating);
+        xss(req.body.reviewText);
         validate.alphanumeric(req.session.user);
         validate.checkId(req.body.eventId);
         validate.checkRating(req.body.reviewRating);
