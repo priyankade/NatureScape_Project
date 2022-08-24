@@ -4,16 +4,17 @@
         <div class="heart"></div>
     </div>
 
-    <h1>{{event.location}}</h1>
-    <h6>{{event.overview}}</h6>
-    <h6>Address: {{event.city}},{{event.state}}</h6>
-    <h6>Date and Time: {{event.date}}</h6>
-    <h6>Organized by: {{event.organizer}} </h6>
-    <h6>Expertise Level: {{event.expertise}}</h6>
-    <h6>Price: {{event.price}}</h6>
+    <h2>{{event.location}}</h2>
+    <h4>{{event.overview}}</h4>
+    <br>
+    <p>Address: {{event.city}},{{event.state}}</p>
+    <p>Date and Time: {{event.date}}</p>
+    <p>Organized by: {{event.organizer}} </p>
+    <p>Expertise Level: {{event.expertise}}</p>
+    <p>Price: {{event.price}}</p>
 
     <div id="registered_members">
-        <h6>Registered Members:</h6><br>
+        <h4>Registered Members:</h4><br>
         <ul>
             {{#each event.registeredMembers}}
             <h5>
@@ -34,7 +35,7 @@
     {{/if}}
 
     <div id="faq">
-        <h6>Frequently Asked Questions</h6>
+        <h4>Frequently Asked Questions</h4>
         <ul>
             {{#each event.faq}}
             <li>Question- {{this.question}}</li>
@@ -91,7 +92,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-<script type="text/javascript">
+<script>
 
     var ID = $('.Event').attr('id');
 

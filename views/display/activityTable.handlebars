@@ -8,64 +8,67 @@
 
   <h1>{{activityName}} events</h1>
 
-<br>
-<br>
+  <br>
+  <br>
 
-<table id="eventTable" class="table table-hover">
-  <thead>
-    <th scope="col">Location
-      {{!-- <select class="table-filter" onchange="filter_rows()">
-        <option value="all"></option> --}}
-      </select>
-    </th>
-    <th scope="col">City
-      {{!-- <select class="table-filter" onchange="filter_rows()">
-        <option value="all"></option> --}}
-      </select>
-    </th>
-    <th scope="col">State
-      <select class="table-filter" onchange="filter_rows()">
-        <option value="all"></option>
-      </select>
-    </th>
-    <th scope="col">Date (YYYY-MM-DD)
-      {{!-- <select class="table-filter" onchange="filter_rows()">
-        <option value="all"></option>
-      </select> --}}
-    </th>
-    <th scope="col">Organizer
-      {{!-- <select class="table-filter" onchange="filter_rows()">
-        <option value="all"></option>
-      </select> --}}
-    </th>
-    <th scope="col">Expertise level
-      <select class="table-filter" onchange="filter_rows()">
-        {{!-- <option value="" selected></option> --}}
-        <option value="all"></option>
-        <option value="easy">Easy</option>
-        <option value="intermediate">Intermediate</option>
-        <option value="advanced">Advanced</option>
-      </select>
-    </th>
-    <th scope="col">Price($)
-      {{!-- <select class="table-filter" onchange="filter_rows()">
-        <option value="all"></option>
-      </select> --}}
-    </th>
-  </thead>
-  <tbody>
-    {{#each activityTable}}
-    <td><a href="/event/{{urlEncode this.id}}">{{this.location}}</a></td>
-    <td>{{this.city}}</td>
-    <td>{{this.state}}</td>
-    <td>{{this.date}}</td>
-    <td>{{this.organizer}}</td>
-    <td>{{this.expertise}} </td>
-    <td>{{this.price}} </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+  <table id="eventTable" class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Location
+          {{!-- <select class="table-filter" onchange="filter_rows()">
+            <option value="all"></option>
+          </select> --}}
+        </th>
+        <th scope="col">City
+          {{!-- <select class="table-filter" onchange="filter_rows()">
+            <option value="all"></option>
+          </select> --}}
+        </th>
+        <th scope="col">State
+          <select class="table-filter" onchange="filter_rows()">
+            <option value="all">Choose</option>
+          </select>
+        </th>
+        <th scope="col">Date (YYYY-MM-DD)
+          {{!-- <select class="table-filter" onchange="filter_rows()">
+            <option value="all"></option>
+          </select> --}}
+        </th>
+        <th scope="col">Organizer
+          {{!-- <select class="table-filter" onchange="filter_rows()">
+            <option value="all"></option>
+          </select> --}}
+        </th>
+        <th scope="col">Expertise level
+          <select class="table-filter" onchange="filter_rows()">
+            {{!-- <option value="" selected></option> --}}
+            <option value="all">Choose</option>
+            <option value="easy">Easy</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </th>
+        <th scope="col">Price($)
+          {{!-- <select class="table-filter" onchange="filter_rows()">
+            <option value="all"></option>
+          </select> --}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each activityTable}}
+      <tr>
+        <td><a href="/event/{{urlEncode this.id}}">{{this.location}}</a></td>
+        <td>{{this.city}}</td>
+        <td>{{this.state}}</td>
+        <td>{{this.date}}</td>
+        <td>{{this.organizer}}</td>
+        <td>{{this.expertise}} </td>
+        <td>{{this.price}} </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 
 </div>
 

@@ -201,7 +201,7 @@ module.exports = {
         if (strVal.length < 6)
             throw `Error: ${varName} should be at least 6 characters long`;
         if (!isNaN(strVal))
-            throw `Error: ${strVal} is not a valid value for ${varName} as it only contains digits`;
+            throw `Error: Invalid ${varName} as it only contains digits`;
         return strVal;
     },
 
