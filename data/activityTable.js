@@ -25,7 +25,6 @@ async function createactivityTable(activityName, overview, location, city, state
             title: "Error"
         }
         return errormessage;
-    }
     const activityTableCollection = await activityTable();
 
     let newactivityTable = {
@@ -51,8 +50,8 @@ async function createactivityTable(activityName, overview, location, city, state
         const newId = insertInfo.insertedId;
         const activityTable = await getActivityTableById(newId.toString());
         return JSON.parse(JSON.stringify(activityTable));
-    }
-}
+
+
 async function getActivityTableById(Id) {
   try {
     validation.checkId(Id);
@@ -191,4 +190,3 @@ module.exports = {
   getActivityTableById,
   deleteEvent
 }
-    
