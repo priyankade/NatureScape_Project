@@ -5,7 +5,17 @@ var validate = require('../validation');
 
 
 async function getEventById(Id) {
-    validate.checkId(Id);
+    try {
+        validate.checkId(Id);
+    }
+    catch (error) {
+        errormessage = {
+            className: "Cannot add activity",
+            message: error,
+            hasErrors: "Error",
+            title: "Error"
+        }
+    }
     let newObjId = ObjectId();
     if (!ObjectId.isValid(newObjId)) throw 'Object id is not valid'
     let parsedId = ObjectId(Id);
@@ -16,7 +26,17 @@ async function getEventById(Id) {
 }
 
 async function updateRegisteredMembers(eventId, username) {
-    validate.checkId(eventId);
+    try {
+        validate.checkId(eventId);
+    }
+    catch (error) {
+        errormessage = {
+            className: "Cannot insert registered member",
+            message: error,
+            hasErrors: "Error",
+            title: "Error"
+        }
+    }
     let { ObjectId } = require('mongodb');
     let parsedId = ObjectId(eventId);
     const eventCollection = await eventsCollection();

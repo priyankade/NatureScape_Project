@@ -21,14 +21,21 @@ async function main() {
     console.log('now seeding invalid data in activities table');
 
     const invalidHiking1 = await activities.createActivity('       ', 'Hiking is an activity of moderate difficulty, which involves walking across long distances generally on trails or paths. The duration of the activity varies between short half-day programs and longer itineraries of over 20 days. It is usually an activity that allows groups of different sizes.');
+    console.log(invalidHiking1);
+
     const invalidHiking2 = await activities.createActivity(12345, 'Hiking is an activity of moderate difficulty, which involves walking across long distances generally on trails or paths. The duration of the activity varies between short half-day programs and longer itineraries of over 20 days. It is usually an activity that allows groups of different sizes.');
+    console.log(invalidHiking2);
 
     const invalidHiking3 = await activities.createActivity('Hiking', '');
+    console.log(invalidHiking3);
 
     const invalidHiking4 = await activities.createActivity('Hiking', '              ');
+    console.log(invalidHiking4);
 
     const invalidHiking5 = await activities.createActivity('Hiking', 1234);
+    console.log(invalidHiking5);
 
+    console.log("done seeding activities");
     //===================SEEDING EVENTS START=================================//
     let hikingevent1 = await activityTableData.createactivityTable("hiking",
         "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park. In large part due to the highly varied elevations in the park, there is a wide range of plant and animal species. There are over 800 miles of trails, and a large section of the Appalachian Trail in the park as well as 80 historic structure", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
@@ -114,6 +121,165 @@ async function main() {
         }
         ], [], true);
 
+
+    //seeding invalid events
+
+
+    ///invalid activity names
+    let invalidhikingevent1 = await activityTableData.createactivityTable("      ",
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], true);
+    console.log(invalidhikingevent1);
+
+    let invalidhikingevent2 = await activityTableData.createactivityTable(1234,
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], true);
+    console.log(invalidhikingevent2);
+
+    let invalidhikingevent3 = await activityTableData.createactivityTable('',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], true);
+    console.log(invalidhikingevent3);
+
+    //invalid description
+    let invalidhikingevent4 = await activityTableData.createactivityTable('hiking',
+        "", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], true);
+    console.log(invalidhikingevent4);
+
+    let invalidhikingevent5 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], true);
+    console.log(invalidhikingevent5);
+    let invalidhikingevent6 = await activityTableData.createactivityTable('hiking',
+        "          ", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], true);
+    console.log(invalidhikingevent6);
+    // invalid location
+    let invalidhikingevent7 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], true);
+    console.log(invalidhikingevent7);
+    let invalidhikingevent8 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "          ", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], true);
+    console.log(invalidhikingevent8);
+    //invalid state and city
+    let invalidhikingevent9 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "", "Gatlinburg", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], true);
+    console.log(invalidhikingevent9);
+    let invalidhikingevent10 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", 1234, "Gatlinburg", "   ", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], true);
+    console.log(invalidhikingevent10);
+    let invalidhikingevent11 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", 1234, "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], true);
+    console.log(invalidhikingevent11);
+    let invalidhikingevent16 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "", "TN", "2022-08-01", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], true);
+    console.log(invalidhikingevent16);
+    //invalid dates 
+    let invalidhikingevent12 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-07-24", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], false);
+    console.log(invalidhikingevent12);
+    let invalidhikingevent13 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2020-09-10", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], false);
+    console.log(invalidhikingevent13);
+    let invalidhikingevent14 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-08-22", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], false);
+    console.log(invalidhikingevent14);
+    //invalid organizer
+    let invalidhikingevent15 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], false);
+    console.log(invalidhikingevent15);
+    let invalidhikingevent24 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "         ", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], false);
+    console.log(invalidhikingevent16);
+    let invalidhikingevent17 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", 1234, "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], false);
+    console.log(invalidhikingevent17);
+    let invalidhikingevent18 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", isNaN, "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], false);
+    console.log(invalidhikingevent18);
+    let invalidhikingevent19 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "Invisible Inc.", "Intermediate", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], false);
+    console.log(invalidhikingevent19);
+    //INVALID EXPERTISE
+    let invalidhikingevent20 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "Invisible Inc.", "very easy", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], false);
+    console.log(invalidhikingevent20);
+    let invalidhikingevent22 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "Invisible Inc.", "", 100, faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], false);
+    console.log(invalidhikingevent22);
+    //invalid price
+    let invalidhikingevent21 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "Invisible Inc.", "easy", '90', faq = [{
+            question: "Are trekking boots required?",
+            answer: "not neccessarily, it is an intermediate hike. Not a problem if you wear them either."
+        }], [], false);
+    console.log(invalidhikingevent21);
+    //invalid faq
+    let invalidhikingevent23 = await activityTableData.createactivityTable('hiking',
+        "The Great Smoky Mountains is in the Appalachian Mountains and is America's most visited National Park", "Smoky Mountains-Gatlinburg", "Gatlinburg", "TN", "2022-09-22", "Invisible Inc.", "easy", 90, faq = [], [], false);
+    console.log(invalidhikingevent23);
+    console.log("done seeding events");
     //===================SEEDING ACTIVITIES END=================================//
 
     let user1 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
@@ -131,6 +297,73 @@ async function main() {
 
     let user3 = await users.createUser("shubhangi", "dutt", "sdutt", "female", "1998-04-05", "shubhangidutt99@gmail.com", "4859585894", "8383838383", "sdutt1234", "sdutt1234");
 
+    //creating invalid users
+    //invalid fname
+
+    let invaliduser1 = await users.createUser("", "Doe", "jodoe", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser2 = await users.createUser("      ", "Doe", "jodoe", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser3 = await users.createUser(12345, "Doe", "jodoe", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    //invalid lname
+    let invaliduser4 = await users.createUser("John", "", "jodoe", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser5 = await users.createUser("John", "       ", "jodoe", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser6 = await users.createUser("John", 12345, "jodoe", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    //invalid username
+    let invaliduser7 = await users.createUser("John", "Doe", "$%^&&*", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser8 = await users.createUser("John", "Doe", "", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser9 = await users.createUser("John", "Doe", "      ", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    //invalid gender
+    let invaliduser10 = await users.createUser("John", "Doe", "      ", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser11 = await users.createUser("John", "Doe", "", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser12 = await users.createUser("John", "Doe", "gibberish", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser13 = await users.createUser("John", "Doe", "joDoe", "male", "1990-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    //invalid dob
+    let invaliduser14 = await users.createUser("John", "Doe", "joDoe", "male", "1989-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser15 = await users.createUser("John", "Doe", "joDoe", "male", "2023-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser16 = await users.createUser("John", "Doe", "joDoe", "male", "", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser17 = await users.createUser("John", "Doe", "joDoe", "male", "aplhabetagamma", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser18 = await users.createUser("John", "Doe", "joDoe", "male", "1989", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser19 = await users.createUser("John", "Doe", "joDoe", "male", "08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser20 = await users.createUser("John", "Doe", "joDoe", "male", "03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser21 = await users.createUser("John", "Doe", "joDoe", "male", "1989-08-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser22 = await users.createUser("John", "Doe", "joDoe", "male", "1989-02-31", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser23 = await users.createUser("John", "Doe", "joDoe", "male", "08-1998-03", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser24 = await users.createUser("John", "Doe", "joDoe", "male", "1998-30-07", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser25 = await users.createUser("John", "Doe", "joDoe", "male", "1998-00-07", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser26 = await users.createUser("John", "Doe", "joDoe", "male", "1998-13-07", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser27 = await users.createUser("John", "Doe", "joDoe", "male", "1998-04-32", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser28 = await users.createUser("John", "Doe", "joDoe", "male", "1998-05-00", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser29 = await users.createUser("John", "Doe", "joDoe", "male", "1998-30-07", "jodoe1234@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    //invalid email
+    let invaliduser30 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "     ", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser31 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "de@gm.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser32 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser33 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "gm.@@", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser35 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "123@gmail.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser36 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "123.com", "9999999999", "8888888888", "jodoe1234", "jodoe1234");
+    //invalid phone number
+    let invaliduser37 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser38 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "      ", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser39 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "phonenumber", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser40 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "phonenumber", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser41 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "99999999999", "8888888888", "jodoe1234", "jodoe1234");
+    let invaliduser42 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "9999999999", "phonenumber", "jodoe1234", "jodoe1234");
+    let invaliduser43 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "9999999999", "8888888888888", "jodoe1234", "jodoe1234");
+    let invaliduser44 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "9999999999", "8888888888888", "jodoe1234", "jodoe1234");
+    //invalid password and confirm password fields
+    let invaliduser45 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "9999999999", "8888888888", "", "jodoe1234");
+    let invaliduser47 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "9999999999", "8888888888", "jodoe1234", "");
+    let invaliduser48 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "9999999999", "8888888888", "        ", "jodoe1234");
+    let invaliduser49 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "9999999999", "8888888888", "jodoe1234", "       ");
+    let invaliduser50 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "9999999999", "8888888888", "jod", "jodoe1234");
+    let invaliduser51 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "9999999999", "8888888888", "jodoe1234", "jod");
+    let invaliduser52 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "9999999999", "8888888888", "1234", "jodoe1234");
+    let invaliduser53 = await users.createUser("John", "Doe", "jodoe", "male", "1990-08-03", "joDoe1234@.com", "9999999999", "8888888888", "jodoe1234", "1234");
+
+
+
+
+
+    console.log("done seeding users");
     //===================SEEDING USERS END=================================//
     //===================SEEDING REVIEWS START=================================//
     let review1 = await reviews.createReview(user1.username, hikingevent1._id, 4, 'This was the most amazing hike ever!!! created a new group of friends and the entire hike was very well organized. Vitnessed beautiful sunset');
@@ -150,7 +383,7 @@ async function main() {
     let invalidreview7 = await reviews.createReview(user2.username, 'kayakingevent2._id', 0, 'Would not recommend. The kayak was really unstable and proper training was not provided');
 
     let invalidreview8 = await reviews.createReview(user2.username, 'kayakingevent2._id', '0', 'Would not recommend. The kayak was really unstable and proper training was not provided');
-
+    console.log("done seeding reviews");
     //===================SEEDING REVIEWS END=================================//
     console.log('Done seeding database');
 

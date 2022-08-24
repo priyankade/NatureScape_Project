@@ -4,7 +4,6 @@
 
     function onclick_cb(event) {
         event.preventDefault();
-        console.log('Clicked');
 
         let reviewRating = $('#reviewRating').val();
         let reviewText = $('#reviewText').val();
@@ -23,8 +22,7 @@
 
         $.ajax(requestConfig).then(function (responseMessage) {
             $('#addReviewResponse')[0].innerHTML = responseMessage;
-        }).fail(function(responseMessage) {
-            console.log('Failed');
+        }).fail(function (responseMessage) {
             $('#addReviewResponse')[0].innerHTML = responseMessage.responseText;
         });
     }

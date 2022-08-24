@@ -4,14 +4,19 @@ const { ObjectId } = require('mongodb');
 var validate = require('../validation');
 
 async function createReview(reviewerName, eventId, rating, reviewText) {
-    try{
+    try {
         validate.alphanumeric(reviewerName);
         validate.checkId(eventId);
         validate.checkRating(rating);
         validate.checkReviewText(reviewText);
     }
-    catch(error) {
-        console.log(error);
+    catch (error) {
+        errormessage = {
+            className: "could not create review",
+            message: error,
+            hasErrors: "True",
+            title: "Error"
+        }
         return null;
     }
 
@@ -45,7 +50,16 @@ async function getAllReviewsForEvent(eventId) {
 }
 
 async function getReviewById(Id) {
-    validate.checkId(Id);
+    try {
+        validate.checkId(Id);
+    } catch (error) {
+        errormessage = {
+            className: "Cannot get reviews for given Id",
+            message: error,
+            hasErrors: "Error",
+            title: "Error"
+        }
+    }
     let newObjId = ObjectId();
     if (!ObjectId.isValid(newObjId)) throw 'Object id is not valid'
     let parsedId = ObjectId(Id);
