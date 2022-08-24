@@ -265,7 +265,7 @@ router.post('/:eventId/deleteEvent', async (req, res) => {
             res.status(400).render('display/error', "could not delete activity");
             return;
         }
-        res.status(200).render('display/success', { "message": "Successfully deleted activity" });
+        res.status(200).render('display/success', { "message": "Successfully deleted event" });
     }
 
 });
