@@ -1,6 +1,6 @@
 body {
-    background-color: #fff;
-    font: normal "Times New Roman", Times, serif;
+	background: #FFF0F5;
+	font-family: "Cambria", "Times New Roman", Times, serif;
 }
 
 p {
@@ -30,10 +30,9 @@ p {
 .footer {
     position: relative;
     height: 200px;
-    background-color: #77c1c5;
+    background-color: #ffffff;
     text-align: center;
     font-size: 12px;
-    line-height: 18px;
     padding-top: 20px;
     bottom: 0px;
     width: 100%;
@@ -44,7 +43,6 @@ p {
     background-color: #b0f1f5;
     text-align: center;
     font-size: 15px;
-    line-height: 18px;
     padding-top: 20px;
     bottom: 0px;
     width: 100%;
@@ -102,13 +100,6 @@ tr {
 }
 
 
-.wrapper {
-    padding: 50px;
-    margin: 0 auto;
-    display: block;
-    width: 100px;
-}
-
 .topright {
     position: absolute;
     top: 180px;
@@ -132,11 +123,14 @@ tr {
 
 .homepage {
     font-weight: bold;
-    background-image: url('../images/black-mountain.jpg');
+    background-image: url('../images/mountain3.jpg');
     background-attachment: fixed;
     background-position: center;
     background-size: 1800px;
-    color: rgb(208, 225, 236);
+    color: rgb(2, 11, 17);
     font-size: 120%;
 
 }
+
+
+

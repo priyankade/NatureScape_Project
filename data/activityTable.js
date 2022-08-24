@@ -2,7 +2,6 @@ const mongoCollections = require('../config/mongoCollections');
 const activityTable = mongoCollections.activityTable;
 var validation = require('../validation');
 const { ObjectId } = require('mongodb');
-const { getEventById } = require('./individualevent');
 
 async function createactivityTable(activityName, overview, location, city, state, date, organizer, expertise, price, faq, registeredMembers, skipFutureCheck = false) {
   try {

@@ -14,26 +14,39 @@
   <table id="eventTable" class="table table-hover">
     <thead>
       <th scope="col">Location
-        <input id="locationFilter" type="text" placeholder="Filter..">
+        <label for="locationFilter">
+          <input id="locationFilter" type="text" placeholder="Filter..">
+        </label>
       </th>
       <th scope="col">City
-        <input id="cityFilter" type="text" placeholder="Filter.." size="10">
-        </select>
+        <label for="cityFilter">
+          <input id="cityFilter" type="text" placeholder="Filter.." size="10">
+        </label>
       </th>
       <th scope="col">State
-        <input id="stateFilter" type="text" placeholder="Filter.." size="2">
+        <label for="stateFilter">
+          <input id="stateFilter" type="text" placeholder="Filter.." size="2">
+        </label>
       </th>
       <th scope="col">Date (YYYY-MM-DD)
-        <input id="dateFilter" type="text" placeholder="Filter.." size="10">
+        <label for="dateFilter">
+          <input id="dateFilter" type="text" placeholder="Filter.." size="10">
+        </label>
       </th>
       <th scope="col">Organizer
-        <input id="organizerFilter" type="text" placeholder="Filter.." size="10">
+        <label for="organizerFilter">
+          <input id="organizerFilter" type="text" placeholder="Filter.." size="10">
+        </label>
       </th>
       <th scope="col">Expertise level
-        <input id="expertiseFilter" type="text" placeholder="Filter.." size="10">
+        <label for="expertiseFilter">
+          <input id="expertiseFilter" type="text" placeholder="Filter.." size="10">
+        </label>
       </th>
       <th scope="col">Price($)
-        <input id="priceFilter" type="text" placeholder="Filter.." size="10">
+        <label for="priceFilter">
+          <input id="priceFilter" type="text" placeholder="Filter.." size="10">
+        </label>
       </th>
     </thead>
     <tbody>
@@ -41,14 +54,12 @@
       <td><a href="/event/{{urlEncode this.id}}">{{this.location}}</a>
 
         {{#if ../isAdmin}}
-        <form class="deleteEventId" method="POST"
-          action="/events/{{urlEncode this.id}}/deleteEvent">
+        <form class="deleteEventId" method="POST" action="/events/{{urlEncode this.id}}/deleteEvent">
           <button type="submit" formmethod="post" class="btn btn-danger btn-sm">Delete</button>
         </form>
 
         {{else}}
-        <form hidden class="deleteEventId" method="POST"
-          action="/eventId/{{urlEncode this.id}}/deleteEvent">
+        <form hidden class="deleteEventId" method="POST" action="/eventId/{{urlEncode this.id}}/deleteEvent">
           <button type="submit" formmethod="post" class="btn btn-danger btn-sm">Delete</button>
         </form>
 
