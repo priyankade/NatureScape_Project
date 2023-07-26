@@ -11,6 +11,11 @@ pipeline {
                 sh 'npm install' 
             }
         }
+        stage('Test') {
+           steps {
+             sh 'node test'
+           }
+        }
         stage('Seed database') { 
               steps {
                   sh 'npm run seed' 
